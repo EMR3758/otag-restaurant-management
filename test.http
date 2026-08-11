@@ -1,0 +1,43 @@
+POST http://localhost:8080/categories
+Content-Type: application/json
+
+{
+  "name":"Elektronik",
+  "description":"Elektronik Ürünler"
+}
+
+###
+
+GET http://localhost:8080/categories
+
+###
+
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Laptop",
+  "stock": 10,
+  "price": 35000,
+  "categoryId": 152
+}
+
+###
+
+GET http://localhost:8080/products
+
+###
+
+PUT http://localhost:8080/products/2
+Content-Type: application/json
+
+{
+  "name": "Gaming Laptop",
+  "stock": 20,
+  "price": 45000,
+  "categoryId": 152
+}
+
+###
+
+DELETE http://localhost:8080/products/1
