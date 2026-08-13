@@ -18,13 +18,18 @@ public class Order {
     private OrderStatus status;
     private Long total;
 
+    @ManyToOne
+    @JoinColumn(name="table_id")
+    private RestaurantTable table;
+
     public Order() {
     }
 
-    public Order(LocalDateTime orderDate, OrderStatus status,Long total) {
+    public Order(LocalDateTime orderDate, OrderStatus status,Long total,RestaurantTable table) {
         this.orderDate = orderDate;
         this.status = status;
         this.total = total;
+        this.table=table;
     }
 
     public Long getId() {
@@ -57,5 +62,13 @@ public class Order {
 
     public void setTotal(Long total) {
         this.total = total;
+    }
+
+    public RestaurantTable getTable() {
+        return table;
+    }
+
+    public void setTable(RestaurantTable table) {
+        this.table = table;
     }
 }

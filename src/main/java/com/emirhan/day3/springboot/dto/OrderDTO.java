@@ -1,6 +1,7 @@
 package com.emirhan.day3.springboot.dto;
 
 import com.emirhan.day3.springboot.model.OrderStatus;
+import com.emirhan.day3.springboot.model.RestaurantTable;
 
 import java.time.LocalDateTime;
 
@@ -9,14 +10,17 @@ public class OrderDTO {
     private LocalDateTime orderDate;
     private OrderStatus status;
     private Long total;
+    private RestaurantTable table;
+
 
     public OrderDTO() {
     }
-    public OrderDTO(Long id, LocalDateTime orderDate, OrderStatus status,Long total) {
+    public OrderDTO(Long id, LocalDateTime orderDate, OrderStatus status,Long total, RestaurantTable table) {
         this.id = id;
         this.orderDate = orderDate;
         this.status = status;
         this.total=total;
+        this.table=table;
     }
 
     public OrderStatus getStatus() {
@@ -49,5 +53,13 @@ public class OrderDTO {
 
     public void setTotal(Long total) {
         this.total = total;
+    }
+
+    public RestaurantTable getTable() {
+        return table;
+    }
+
+    public void setTable(RestaurantTable table) {
+        this.table = table;
     }
 }

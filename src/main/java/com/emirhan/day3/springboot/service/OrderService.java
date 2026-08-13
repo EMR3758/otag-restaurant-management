@@ -2,8 +2,15 @@ package com.emirhan.day3.springboot.service;
 
 import com.emirhan.day3.springboot.dto.OrderCreateDTO;
 import com.emirhan.day3.springboot.dto.OrderDTO;
+import com.emirhan.day3.springboot.dto.OrderItemCreateDTO;
 import com.emirhan.day3.springboot.model.Order;
+import com.emirhan.day3.springboot.model.OrderItem;
+import com.emirhan.day3.springboot.model.Product;
+import com.emirhan.day3.springboot.model.RestaurantTable;
+import com.emirhan.day3.springboot.repository.OrderItemRepository;
 import com.emirhan.day3.springboot.repository.OrderRepository;
+import com.emirhan.day3.springboot.repository.ProductRepository;
+import com.emirhan.day3.springboot.repository.RestaurantTableRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,9 +21,15 @@ import java.util.Optional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final RestaurantTableRepository restaurantTableRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final ProductRepository productRepository;
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository,RestaurantTableRepository restaurantTableRepository,OrderItemRepository orderItemRepository,ProductRepository productRepository) {
         this.orderRepository = orderRepository;
+        this.restaurantTableRepository=restaurantTableRepository;
+        this.orderItemRepository=orderItemRepository;
+        this.productRepository=productRepository;
     }
 
     private OrderDTO convertToDTO(Order order) {
@@ -24,16 +37,19 @@ public class OrderService {
                 order.getId(),
                 order.getOrderDate(),
                 order.getStatus(),
-                order.getTotal()
+                order.getTotal(),
+                order.getTable()
 
         );
     }
 
     private Order convertToOrder(OrderCreateDTO dto) {
+        RestaurantTable table = restaurantTableRepository.findById(dto.getTableId()).orElseThrow(()-> new RuntimeException("Masa bulunamadı"));
         return new Order(
                 dto.getOrderDate(),
                 dto.getStatus(),
-                dto.getTotal()
+                dto.getTotal(),
+                table
         );
     }
 
@@ -49,8 +65,31 @@ public class OrderService {
     }
 
     public OrderDTO createOrder(OrderCreateDTO dto) {
-        Order order = convertToOrder(dto);
+        //1.Masa Kontrolü
+        RestaurantTable table = restaurantTableRepository.findById(dto.getTableId()).orElseThrow(()->new RuntimeException("Masa bulunamadı"));
+        //2.Sipariş oluştur
+        Order order = new Order(
+                dto.getOrderDate(),
+                dto.getStatus(),
+                dto.getTotal(),
+                table
+        );
+        //3.Siparişi kaydet
         Order savedOrder = orderRepository.save(order);
+
+        //4.OrderItem'ları oluştur ve kaydet
+        for(OrderItemCreateDTO itemDto : dto.getItems()){
+            Product product = productRepository.findById(itemDto.getProductId()).orElseThrow(()->new RuntimeException("Ürün bulunamadı: "+itemDto.getProductId() ));
+            OrderItem orderItem = new OrderItem(
+                    savedOrder,
+                    product,
+                    itemDto.getQuantity(),
+                    product.getPrice(),
+                    itemDto.getNote()
+            );
+            orderItemRepository.save(orderItem);
+        }
+        //.Oluşturulan siparişi döndür
         return convertToDTO(savedOrder);
     }
 
@@ -74,6 +113,12 @@ public class OrderService {
             order.setOrderDate(dto.getOrderDate());
             order.setStatus(dto.getStatus());
             order.setTotal(dto.getTotal());
+
+            RestaurantTable table = restaurantTableRepository
+                    .findById(dto.getTableId())
+                    .orElseThrow(() -> new RuntimeException("Masa bulunamadı"));
+
+            order.setTable(table);
 
             Order updatedOrder = orderRepository.save(order);
 

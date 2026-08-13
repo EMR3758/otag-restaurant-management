@@ -1,6 +1,6 @@
 package com.emirhan.day3.springboot.dto;
 
-public class OrderItemCreateDTO {
+public class  OrderItemCreateDTO {
     private Long orderId;
     private Long productId;
     private int quantity;
