@@ -1,0 +1,520 @@
+/* =========================================================
+   ANA SAYFA
+========================================================= */
+
+.orders-page {
+    max-width: 1440px;
+
+    margin: 0 auto;
+    padding: 40px;
+
+    background: #fbf9f5;
+    color: #1b1c1a;
+
+    min-height: 100vh;
+
+    font-family:
+            "Hanken Grotesk",
+            "Segoe UI",
+            system-ui,
+            sans-serif;
+}
+
+
+/* =========================================================
+   SAYFA BAŞLIĞI
+========================================================= */
+
+.orders-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 24px;
+}
+
+.orders-header h1 {
+    margin: 0 0 8px;
+
+    color: #1b1c1a;
+
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.orders-header p {
+    margin: 0;
+
+    color: #5f5e5e;
+
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+
+.new-order-button {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+
+    padding: 12px 20px;
+
+    background: #9e3d00;
+    border: none;
+    border-radius: 2px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.new-order-button:hover {
+    background: #7c2e00;
+}
+
+.new-order-button .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   PANEL (FİLTRE + TABLO)
+========================================================= */
+
+.orders-panel {
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    box-shadow: 0 4px 20px rgba(27, 28, 26, 0.04);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   FİLTRELER
+========================================================= */
+
+.orders-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+
+    gap: 16px;
+
+    padding: 24px;
+
+    background: #f5f3ef;
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.filter-field label {
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+.filter-search {
+    flex: 1;
+
+    min-width: 220px;
+}
+
+.filter-search-input {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.filter-search-input .material-symbols-outlined {
+    position: absolute;
+    left: 12px;
+
+    color: #5f5e5e;
+
+    font-size: 18px;
+}
+
+.filter-search-input input {
+    width: 100%;
+
+    padding: 10px 12px 10px 38px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+
+    box-sizing: border-box;
+}
+
+
+.filter-field select,
+.filter-field > input[type="date"] {
+    width: 200px;
+
+    padding: 10px 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+
+    box-sizing: border-box;
+}
+
+
+.filter-search-input input:focus,
+.filter-field select:focus,
+.filter-field > input[type="date"]:focus {
+    outline: none;
+
+    border-color: #9e3d00;
+}
+
+
+.clear-button {
+    height: 42px;
+
+    padding: 0 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.clear-button:hover {
+    background: #eae8e4;
+}
+
+
+/* =========================================================
+   TABLO
+========================================================= */
+
+.orders-table-wrap {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+.orders-table {
+    width: 100%;
+    min-width: 800px;
+
+    border-collapse: collapse;
+}
+
+
+.orders-table thead tr {
+    background: #f5f3ef;
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+
+.orders-table th {
+    padding: 14px 24px;
+
+    text-align: left;
+
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+
+.orders-table tbody tr {
+    border-bottom: 1px solid #e0c0b2;
+
+    transition: background 0.2s ease;
+}
+
+.orders-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.orders-table tbody tr:hover {
+    background: #f5f3ef;
+}
+
+
+.orders-table td {
+    padding: 18px 24px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    line-height: 20px;
+
+    white-space: nowrap;
+}
+
+
+.text-right {
+    text-align: right;
+}
+
+.order-id {
+    font-weight: 700;
+}
+
+.order-date {
+    color: #5f5e5e;
+}
+
+.order-total {
+    font-weight: 700;
+}
+
+
+.orders-empty {
+    padding: 32px 24px !important;
+
+    text-align: center;
+
+    color: #5f5e5e;
+
+    white-space: normal !important;
+}
+
+
+/* =========================================================
+   DURUM ROZETİ
+========================================================= */
+
+.status {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 4px 10px;
+
+    border-radius: 2px;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+.status-waiting {
+    color: #5f5e5e;
+    background: #efeeea;
+}
+
+.status-preparing {
+    color: #5e5c56;
+    background: #e6e2db;
+}
+
+.status-ready {
+    color: #9e3d00;
+    background: rgba(158, 61, 0, 0.1);
+}
+
+.status-delivered {
+    color: #16a34a;
+    background: rgba(34, 197, 94, 0.12);
+}
+
+.status-cancelled {
+    color: #ba1a1a;
+    background: rgba(186, 26, 26, 0.1);
+}
+
+
+/* =========================================================
+   AKSİYON BUTONLARI
+========================================================= */
+
+.order-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 4px;
+}
+
+.action-button {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+    border-radius: 2px;
+
+    color: #5f5e5e;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.action-button:hover {
+    background: #eae8e4;
+    color: #9e3d00;
+}
+
+.action-button-delete:hover {
+    color: #ba1a1a;
+}
+
+.action-button .material-symbols-outlined {
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   SAYFALAMA
+========================================================= */
+
+.orders-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 16px 24px;
+
+    background: #f5f3ef;
+
+    border-top: 1px solid #e0c0b2;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+}
+
+
+.pagination-buttons {
+    display: flex;
+
+    gap: 8px;
+}
+
+.pagination-buttons button {
+    padding: 6px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.pagination-buttons button:hover:not(:disabled) {
+    background: #eae8e4;
+}
+
+.pagination-buttons button:disabled {
+    opacity: 0.4;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .orders-page {
+        padding: 24px;
+    }
+
+    .orders-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .orders-page {
+        padding: 16px;
+    }
+
+    .filter-field select,
+    .filter-field > input[type="date"] {
+        width: 100%;
+    }
+}
