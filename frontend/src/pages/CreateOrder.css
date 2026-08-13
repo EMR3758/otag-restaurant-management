@@ -1,0 +1,805 @@
+/* =========================================================
+   ANA SAYFA — İKİ SÜTUNLU GRID
+========================================================= */
+
+.create-order-page {
+    max-width: 1440px;
+
+    margin: 0 auto;
+    padding: 40px;
+
+    background: #fbf9f5;
+    color: #1b1c1a;
+
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 350px;
+
+    gap: 24px;
+
+    align-items: start;
+
+    font-family:
+            "Hanken Grotesk",
+            "Segoe UI",
+            system-ui,
+            sans-serif;
+}
+
+
+.create-order-main {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 48px;
+}
+
+
+/* =========================================================
+   SAYFA BAŞLIĞI
+========================================================= */
+
+.create-order-header h1 {
+    margin: 0 0 8px;
+
+    color: #1b1c1a;
+
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.create-order-header p {
+    margin: 0;
+
+    color: #5f5e5e;
+
+    font-size: 16px;
+    line-height: 24px;
+}
+
+
+/* =========================================================
+   ADIM KARTI (ORTAK)
+========================================================= */
+
+.order-section {
+    padding: 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    box-shadow: 0 4px 20px rgba(27, 28, 26, 0.04);
+}
+
+
+.order-section-title {
+    margin: 0 0 24px;
+
+    color: #1b1c1a;
+
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ADIM 1: MASA SEÇİMİ
+========================================================= */
+
+.table-select-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+.table-select-card {
+    position: relative;
+
+    padding: 16px;
+
+    background: #fbf9f5;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 8px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.table-select-card:hover:not(:disabled) {
+    border-color: rgba(158, 61, 0, 0.5);
+
+    box-shadow: 0 2px 8px rgba(27, 28, 26, 0.05);
+}
+
+.table-select-card.selected {
+    border: 2px solid #9e3d00;
+    padding: 15px;
+
+    background: rgba(158, 61, 0, 0.05);
+}
+
+.table-select-card.occupied {
+    background: #efeeea;
+
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+.table-select-label {
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+
+.table-select-seats {
+    color: #1b1c1a;
+
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+}
+
+
+.table-select-status {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: auto;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+}
+
+.table-select-status .status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #5e5c56;
+}
+
+.table-select-card.selected .table-select-status {
+    color: #9e3d00;
+}
+
+.table-select-card.selected .table-select-status .status-dot {
+    background: #9e3d00;
+}
+
+.table-select-card.occupied .table-select-status {
+    color: #ba1a1a;
+}
+
+.table-select-card.occupied .table-select-status .status-dot {
+    background: #ba1a1a;
+}
+
+
+/* =========================================================
+   ADIM 2: ÜRÜN EKLE
+========================================================= */
+
+.product-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 16px;
+
+    margin-bottom: 24px;
+}
+
+
+.category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+
+.category-tab {
+    padding: 8px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 999px;
+
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.category-tab:hover {
+    border-color: #9e3d00;
+    color: #9e3d00;
+}
+
+.category-tab.active {
+    background: #9e3d00;
+    border-color: #9e3d00;
+
+    color: #ffffff;
+}
+
+
+.product-search {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 260px;
+    flex-shrink: 0;
+}
+
+.product-search .material-symbols-outlined {
+    position: absolute;
+    left: 10px;
+
+    color: #5f5e5e;
+
+    font-size: 18px;
+}
+
+.product-search input {
+    width: 100%;
+
+    padding: 8px 12px 8px 36px;
+
+    background: #fbf9f5;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+
+    box-sizing: border-box;
+}
+
+.product-search input:focus {
+    outline: none;
+
+    border-color: #9e3d00;
+}
+
+
+.product-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    max-height: 400px;
+
+    overflow-y: auto;
+
+    padding-right: 4px;
+}
+
+
+.product-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 12px;
+
+    background: #fbf9f5;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    transition: border-color 0.2s ease;
+}
+
+.product-card:hover {
+    border-color: rgba(158, 61, 0, 0.4);
+}
+
+
+.product-card-info h4 {
+    margin: 0;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+}
+
+.product-price {
+    margin: 4px 0 0;
+
+    color: #9e3d00;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.product-add-button {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #5f5e5e;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.product-add-button:hover {
+    border-color: #9e3d00;
+    color: #9e3d00;
+}
+
+.product-add-button .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+.product-empty {
+    grid-column: 1 / -1;
+
+    margin: 0;
+    padding: 24px 0;
+
+    color: #5f5e5e;
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   SAĞ SÜTUN — MEVCUT SİPARİŞ
+========================================================= */
+
+.current-order-panel {
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    box-shadow: 0 4px 20px rgba(27, 28, 26, 0.04);
+
+    overflow: hidden;
+
+    position: sticky;
+    top: 88px;
+}
+
+
+.current-order-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 24px;
+
+    background: #fbf9f5;
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+.current-order-header h2 {
+    margin: 0;
+
+    color: #1b1c1a;
+
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+}
+
+.current-order-table {
+    padding: 4px 10px;
+
+    background: #efeeea;
+    border-radius: 2px;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+}
+
+
+.current-order-items {
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+    padding: 16px;
+
+    max-height: 400px;
+
+    overflow-y: auto;
+}
+
+
+.cart-empty {
+    margin: 0;
+    padding: 24px 0;
+
+    color: #5f5e5e;
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+
+.cart-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+.cart-item:last-child {
+    padding-bottom: 0;
+
+    border-bottom: none;
+}
+
+
+.cart-item-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.cart-item-top h4 {
+    margin: 0;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+}
+
+.cart-item-unit-price {
+    margin: 2px 0 0;
+
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+}
+
+.cart-item-line-total {
+    margin: 0;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.quantity-stepper {
+    display: flex;
+    align-items: center;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    background: #fbf9f5;
+}
+
+.quantity-stepper button {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+
+    color: #5f5e5e;
+
+    cursor: pointer;
+}
+
+.quantity-stepper button:hover {
+    color: #9e3d00;
+}
+
+.quantity-stepper button:first-child {
+    border-right: 1px solid #e0c0b2;
+}
+
+.quantity-stepper button:last-child {
+    border-left: 1px solid #e0c0b2;
+}
+
+.quantity-stepper span {
+    width: 32px;
+
+    text-align: center;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+}
+
+.quantity-stepper .material-symbols-outlined {
+    font-size: 16px;
+}
+
+
+.cart-item-remove {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+
+    border: none;
+    border-radius: 2px;
+
+    color: #ba1a1a;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.cart-item-remove:hover {
+    background: rgba(186, 26, 26, 0.1);
+}
+
+.cart-item-remove .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+.cart-item-note {
+    padding: 8px 10px;
+
+    background: #f5f3ef;
+
+    border: none;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 13px;
+
+    box-sizing: border-box;
+}
+
+.cart-item-note:focus {
+    outline: 1px solid #9e3d00;
+
+    background: #ffffff;
+}
+
+.cart-item-note::placeholder {
+    color: #8c7166;
+}
+
+
+/* =========================================================
+   TOPLAM + AKSİYONLAR
+========================================================= */
+
+.current-order-footer {
+    margin-top: auto;
+
+    padding: 24px;
+
+    background: #fbf9f5;
+
+    border-top: 1px solid #e0c0b2;
+}
+
+
+.current-order-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+}
+
+.current-order-total span {
+    color: #5f5e5e;
+
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+}
+
+.current-order-total strong {
+    color: #9e3d00;
+
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+
+.current-order-actions {
+    display: flex;
+
+    gap: 12px;
+}
+
+
+.cancel-button {
+    flex: 1;
+
+    padding: 12px 16px;
+
+    background: transparent;
+
+    border: 1px solid #8c7166;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.cancel-button:hover {
+    background: #eae8e4;
+}
+
+
+.create-button {
+    flex: 2;
+
+    padding: 12px 16px;
+
+    background: #9e3d00;
+
+    border: none;
+    border-radius: 2px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.create-button:hover:not(:disabled) {
+    background: #7c2e00;
+}
+
+.create-button:disabled {
+    background: #cac6bf;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .create-order-page {
+        grid-template-columns: 1fr;
+    }
+
+    .current-order-panel {
+        position: static;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .create-order-page {
+        padding: 20px;
+
+        gap: 16px;
+    }
+
+    .table-select-grid,
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-search {
+        width: 100%;
+    }
+}
