@@ -1,5 +1,6 @@
 import "./Dashboard.css";
 import { useEffect, useState } from "react";
+import Layout from "../components/Layout";
 
 function Dashboard() {
 
@@ -258,35 +259,244 @@ function Dashboard() {
                 a.totalQuantity
         )
 
+
         // Dashboard'da sadece ilk 5 ürünü gösteriyoruz.
         .slice(0, 5);
 
 
+    // =========================================================
+    // GÖRSEL YARDIMCI DEĞERLER (mevcut state'lerden türetilir)
+    // =========================================================
+
+    // Sipariş hacmi grafiğinde son barı (bugün) vurgulamak için.
+    const dailyEntries = Object.entries(dailyTotals);
+
+    // Masa kartında dolu/toplam formatı için.
+    const occupiedTablesCount = tables.filter(
+        (table) => !table.available
+    ).length;
+
+    // Popüler ürün ikonunu kategoriye göre seçiyoruz.
+    const categoryIcon = (categoryName) => {
+
+        switch (categoryName) {
+            case "Burgerler": return "lunch_dining";
+            case "Pizzalar": return "local_pizza";
+            case "Makarnalar": return "ramen_dining";
+            case "İçecekler": return "local_bar";
+            case "Tatlılar": return "cake";
+            case "Sıcak İçecekler": return "local_cafe";
+            default: return "restaurant";
+        }
+
+    };
+
+
     return (
+
+        <Layout navbarType="dashboard" title="Kontrol Paneli">
 
         <div className="dashboard">
 
 
-            {/* =================================================
-                SIDEBAR
-            ================================================= */}
+                {/* =================================================
+                    SAYFA BAŞLIĞI
+                ================================================= */}
 
-            <aside className="sidebar">
+                <div className="dashboard-header">
 
-                <div className="logo-area">
+                    <h1>
+                        Günaydın, Yönetici
+                    </h1>
 
-                    <div className="logo-circle">
-                        O
+                    <p>
+                        OTAĞ'da bugün olanlara genel bakış.
+                    </p>
+
+                </div>
+
+
+                {/* =================================================
+                    STAT CARDS
+                ================================================= */}
+
+                <div className="stats-container">
+
+
+                    {/* TOPLAM SİPARİŞ */}
+
+                    <div className="stat-card">
+
+                        <div className="stat-card-top">
+
+                            <h3 className="stat-label">
+                                Toplam Sipariş
+                            </h3>
+
+                            <span className="material-symbols-outlined stat-icon">
+                                receipt
+                            </span>
+
+                        </div>
+
+                        <p className="stat-value">
+                            {orders.length}
+                        </p>
+
                     </div>
 
-                    <div className="logo-text">
 
-                        <h1>
-                            OTAĞ
-                        </h1>
+                    {/* BEKLEYEN SİPARİŞLER */}
 
-                        <p>
-                            Restaurant Yönetimi
+                    <div className="stat-card">
+
+                        <div className="stat-card-top">
+
+                            <h3 className="stat-label">
+                                Bekleyen
+                            </h3>
+
+                            <span className="material-symbols-outlined stat-icon">
+                                schedule
+                            </span>
+
+                        </div>
+
+                        <p className="stat-value">
+                            {
+                                orders.filter(
+                                    order =>
+                                        order.status === "WAITING"
+                                ).length
+                            }
+                        </p>
+
+                    </div>
+
+
+                    {/* HAZIRLANAN SİPARİŞLER */}
+
+                    <div className="stat-card">
+
+                        <div className="stat-card-top">
+
+                            <h3 className="stat-label">
+                                Hazırlanıyor
+                            </h3>
+
+                            <span className="material-symbols-outlined stat-icon">
+                                skillet
+                            </span>
+
+                        </div>
+
+                        <p className="stat-value">
+                            {
+                                orders.filter(
+                                    order =>
+                                        order.status === "PREPARING"
+                                ).length
+                            }
+                        </p>
+
+                    </div>
+
+
+                    {/* HAZIR SİPARİŞLER */}
+
+                    <div className="stat-card">
+
+                        <div className="stat-card-top">
+
+                            <h3 className="stat-label">
+                                Hazır
+                            </h3>
+
+                            <span className="material-symbols-outlined stat-icon">
+                                room_service
+                            </span>
+
+                        </div>
+
+                        <p className="stat-value">
+                            {
+                                orders.filter(
+                                    order =>
+                                        order.status === "READY"
+                                ).length
+                            }
+                        </p>
+
+                    </div>
+
+
+                    {/* TOPLAM ÜRÜN */}
+
+                    <div className="stat-card">
+
+                        <div className="stat-card-top">
+
+                            <h3 className="stat-label">
+                                Ürünler
+                            </h3>
+
+                            <span className="material-symbols-outlined stat-icon">
+                                inventory_2
+                            </span>
+
+                        </div>
+
+                        <p className="stat-value">
+                            {products.length}
+                        </p>
+
+                    </div>
+
+
+                    {/* TOPLAM MASA */}
+
+                    <div className="stat-card">
+
+                        <div className="stat-card-top">
+
+                            <h3 className="stat-label">
+                                Masalar
+                            </h3>
+
+                            <span className="material-symbols-outlined stat-icon">
+                                table_bar
+                            </span>
+
+                        </div>
+
+                        <p className="stat-value">
+                            {occupiedTablesCount}
+                            <span className="stat-value-sub">
+                                /{tables.length}
+                            </span>
+                        </p>
+
+                    </div>
+
+
+                    {/* KULLANICILAR */}
+
+                    <div className="stat-card">
+
+                        <div className="stat-card-top">
+
+                            <h3 className="stat-label">
+                                Kullanıcılar
+                            </h3>
+
+                            <span className="material-symbols-outlined stat-icon">
+                                group
+                            </span>
+
+                        </div>
+
+                        <p className="stat-value">
+                            0
                         </p>
 
                     </div>
@@ -294,501 +504,273 @@ function Dashboard() {
                 </div>
 
 
-                <nav className="sidebar-menu">
-
-                    <a
-                        href="/dashboard"
-                        className="menu-item active"
-                    >
-
-                        <span className="material-symbols-outlined">
-                            dashboard
-                        </span>
-
-                        <span>
-                            Kontrol Paneli
-                        </span>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        className="menu-item"
-                    >
-
-                        <span className="material-symbols-outlined">
-                            receipt_long
-                        </span>
-
-                        <span>
-                            Siparişler
-                        </span>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        className="menu-item"
-                    >
-
-                        <span className="material-symbols-outlined">
-                            restaurant_menu
-                        </span>
-
-                        <span>
-                            Menü
-                        </span>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        className="menu-item"
-                    >
-
-                        <span className="material-symbols-outlined">
-                            category
-                        </span>
-
-                        <span>
-                            Kategoriler
-                        </span>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        className="menu-item"
-                    >
-
-                        <span className="material-symbols-outlined">
-                            table_restaurant
-                        </span>
-
-                        <span>
-                            Masalar
-                        </span>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        className="menu-item"
-                    >
-
-                        <span className="material-symbols-outlined">
-                            group
-                        </span>
-
-                        <span>
-                            Kullanıcılar
-                        </span>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        className="menu-item"
-                    >
-
-                        <span className="material-symbols-outlined">
-                            settings
-                        </span>
-
-                        <span>
-                            Ayarlar
-                        </span>
-
-                    </a>
-
-                </nav>
-
-
-                <button className="logout-button">
-
-                    <span className="material-symbols-outlined">
-                        logout
-                    </span>
-
-                    <span>
-                        ÇIKIŞ YAP
-                    </span>
-
-                </button>
-
-            </aside>
-
-
-            {/* =================================================
-                MAIN CONTENT
-            ================================================= */}
-
-            <main className="main-content">
-
-
                 {/* =================================================
-                    TOPBAR
+                    ANA GRID (Sol: grafikler + siparişler, Sağ: masa + popüler)
                 ================================================= */}
 
-                <header className="topbar">
+                <div className="dashboard-grid">
 
-                    <div>
 
-                        <h2>
-                            Kontrol Paneli
-                        </h2>
+                    <div className="dashboard-main">
 
-                        <p>
-                            Restoran genel görünümü
-                        </p>
 
-                    </div>
+                        {/* =========================================
+                            GRAFİKLER
+                        ========================================= */}
 
+                        <div className="charts-row">
 
-                    <div className="topbar-right">
 
-                        <span className="material-symbols-outlined">
-                            notifications
-                        </span>
+                            {/* SİPARİŞ HACMİ */}
 
+                            <div className="dashboard-card order-volume">
 
-                        <div className="user-info">
-
-                            <strong>
-                                Emirhan
-                            </strong>
-
-                            <span>
-                                Yönetici
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </header>
-
-
-                {/* =================================================
-                    DASHBOARD CONTENT
-                ================================================= */}
-
-                <section className="dashboard-content">
-
-
-                    <h1>
-                        Günaydın, Yönetici 👋
-                    </h1>
-
-                    <p>
-                        OTAĞ'da bugün olanlara genel bakış.
-                    </p>
-
-
-                    {/* =================================================
-                        STAT CARDS
-                    ================================================= */}
-
-                    <div className="stats-container">
-
-
-                        {/* TOPLAM SİPARİŞ */}
-
-                        <div className="stat-card">
-
-                            <div>
-
-                                <p>
-                                    TOPLAM SİPARİŞ
-                                </p>
-
-                                <h3>
-                                    {orders.length}
-                                </h3>
-
-                            </div>
-
-
-                            <span className="material-symbols-outlined">
-                                receipt_long
-                            </span>
-
-                        </div>
-
-
-                        {/* BEKLEYEN SİPARİŞLER */}
-
-                        <div className="stat-card">
-
-                            <div>
-
-                                <p>
-                                    BEKLEYEN
-                                </p>
-
-                                <h3>
-
-                                    {
-                                        orders.filter(
-                                            order =>
-                                                order.status === "WAITING"
-                                        ).length
-                                    }
-
-                                </h3>
-
-                            </div>
-
-
-                            <span className="material-symbols-outlined">
-                                schedule
-                            </span>
-
-                        </div>
-
-
-                        {/* HAZIRLANAN SİPARİŞLER */}
-
-                        <div className="stat-card">
-
-                            <div>
-
-                                <p>
-                                    HAZIRLANIYOR
-                                </p>
-
-                                <h3>
-
-                                    {
-                                        orders.filter(
-                                            order =>
-                                                order.status === "PREPARING"
-                                        ).length
-                                    }
-
-                                </h3>
-
-                            </div>
-
-
-                            <span className="material-symbols-outlined">
-                                restaurant
-                            </span>
-
-                        </div>
-
-
-                        {/* HAZIR SİPARİŞLER */}
-
-                        <div className="stat-card">
-
-                            <div>
-
-                                <p>
-                                    HAZIR
-                                </p>
-
-                                <h3>
-
-                                    {
-                                        orders.filter(
-                                            order =>
-                                                order.status === "READY"
-                                        ).length
-                                    }
-
-                                </h3>
-
-                            </div>
-
-
-                            <span className="material-symbols-outlined">
-                                room_service
-                            </span>
-
-                        </div>
-
-
-                        {/* TOPLAM ÜRÜN */}
-
-                        <div className="stat-card">
-
-                            <div>
-
-                                <p>
-                                    ÜRÜNLER
-                                </p>
-
-                                <h3>
-                                    {products.length}
-                                </h3>
-
-                            </div>
-
-
-                            <span className="material-symbols-outlined">
-                                inventory_2
-                            </span>
-
-                        </div>
-
-
-                        {/* TOPLAM MASA */}
-
-                        <div className="stat-card">
-
-                            <div>
-
-                                <p>
-                                    MASALAR
-                                </p>
-
-                                <h3>
-                                    {tables.length}
-                                </h3>
-
-                            </div>
-
-
-                            <span className="material-symbols-outlined">
-                                table_restaurant
-                            </span>
-
-                        </div>
-
-
-                        {/* KULLANICILAR */}
-
-                        <div className="stat-card">
-
-                            <div>
-
-                                <p>
-                                    KULLANICILAR
-                                </p>
-
-                                <h3>
-                                    0
-                                </h3>
-
-                            </div>
-
-
-                            <span className="material-symbols-outlined">
-                                group
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    {/* =================================================
-                        DASHBOARD GRID
-                    ================================================= */}
-
-                    <div className="dashboard-grid">
-
-
-                        {/* =================================================
-                            SİPARİŞ HACMİ
-                        ================================================= */}
-
-                        <div className="dashboard-card order-volume">
-
-                            <div className="card-header">
-
-                                <h3>
+                                <h3 className="card-title">
                                     Sipariş Hacmi (7 Gün)
                                 </h3>
 
+                                <div className="bar-chart">
+
+                                    {
+                                        dailyEntries.map(
+                                            ([day, total], index) => {
+
+                                                // Günün satış tutarını,
+                                                // en yüksek güne göre yüzdeye çeviriyoruz.
+                                                const height =
+                                                    (total / maxTotal) * 100;
+
+                                                // Son eleman bugüne ait.
+                                                const isToday =
+                                                    index === dailyEntries.length - 1;
+
+                                                return (
+
+                                                    <div
+                                                        className={`bar ${isToday ? "today" : ""}`}
+                                                        style={{
+                                                            height: `${height}%`
+                                                        }}
+                                                        key={day}
+                                                    >
+
+                                                        <span>
+                                                            {day}
+                                                        </span>
+
+                                                    </div>
+
+                                                );
+
+                                            }
+                                        )
+                                    }
+
+                                </div>
+
                             </div>
 
 
-                            <div className="bar-chart">
+                            {/* SİPARİŞ DURUMU */}
 
-                                {
-                                    Object.entries(dailyTotals).map(
-                                        ([day, total]) => {
+                            <div className="dashboard-card order-status">
 
-                                            // Günün satış tutarını,
-                                            // en yüksek güne göre yüzdeye çeviriyoruz.
-                                            const height =
-                                                (total / maxTotal) * 100;
-
-
-                                            return (
-
-                                                <div
-                                                    className="bar"
-                                                    style={{
-                                                        height: `${height}%`
-                                                    }}
-                                                    key={day}
-                                                >
-
-                                                    <span>
-                                                        {day}
-                                                    </span>
-
-                                                </div>
-
-                                            );
-
-                                        }
-                                    )
-                                }
-
-                            </div>
-
-                        </div>
-
-
-                        {/* =================================================
-                            SİPARİŞ DURUMU
-                        ================================================= */}
-
-                        <div className="dashboard-card order-status">
-
-                            <div className="card-header">
-
-                                <h3>
+                                <h3 className="card-title">
                                     Sipariş Durumu
                                 </h3>
 
-                            </div>
+                                <div className="donut-wrap">
 
+                                    <div className="donut">
 
-                            <div className="status-circle">
+                                        <div className="donut-arc donut-arc-a"></div>
+                                        <div className="donut-arc donut-arc-b"></div>
 
-                                <strong>
-                                    {orders.length}
-                                </strong>
+                                        <div className="donut-center">
 
-                                <span>
-                                    TOPLAM
-                                </span>
+                                            <strong>
+                                                {orders.length}
+                                            </strong>
+
+                                            <span>
+                                                TOPLAM
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
                         </div>
 
 
-                        {/* =================================================
+                        {/* =========================================
+                            SON SİPARİŞLER
+                        ========================================= */}
+
+                        <div className="dashboard-card recent-orders">
+
+                            <div className="card-header">
+
+                                <h3 className="card-title">
+                                    Son Siparişler
+                                </h3>
+
+                                <button className="view-all-button">
+                                    TÜMÜNÜ GÖR
+                                </button>
+
+                            </div>
+
+                            <div className="orders-table-wrap">
+
+                                <table className="orders-table">
+
+                                    <thead>
+
+                                        <tr>
+                                            <th>Sipariş ID</th>
+                                            <th>Tarih &amp; Saat</th>
+                                            <th>Durum</th>
+                                            <th className="text-right">Toplam</th>
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+                                        {
+                                            orders.map((order) => {
+
+                                                const date =
+                                                    new Date(order.orderDate);
+
+
+                                                // Sipariş tarihini Türkçe okunabilir
+                                                // bir formata çeviriyoruz.
+                                                const formattedDate =
+                                                    date.toLocaleDateString(
+                                                        "tr-TR",
+                                                        {
+                                                            day: "2-digit",
+                                                            month: "short",
+                                                            year: "numeric"
+                                                        }
+                                                    );
+
+
+                                                // Sipariş saatini alıyoruz.
+                                                const formattedTime =
+                                                    date.toLocaleTimeString(
+                                                        "tr-TR",
+                                                        {
+                                                            hour: "2-digit",
+                                                            minute: "2-digit"
+                                                        }
+                                                    );
+
+
+                                                // Backend'deki status değerini
+                                                // kullanıcıya göstereceğimiz Türkçe
+                                                // metne çeviriyoruz.
+                                                let statusText = "";
+                                                let statusClass = "";
+
+
+                                                if (
+                                                    order.status === "WAITING"
+                                                ) {
+
+                                                    statusText = "Bekliyor";
+                                                    statusClass = "pending";
+
+                                                }
+
+                                                else if (
+                                                    order.status === "PREPARING"
+                                                ) {
+
+                                                    statusText = "Hazırlanıyor";
+                                                    statusClass = "preparing";
+
+                                                }
+
+                                                else if (
+                                                    order.status === "READY"
+                                                ) {
+
+                                                    statusText = "Hazır";
+                                                    statusClass = "ready";
+
+                                                }
+
+
+                                                return (
+
+                                                    <tr key={order.id}>
+
+                                                        <td className="order-id">
+                                                            #{order.id}
+                                                        </td>
+
+                                                        <td className="order-date">
+                                                            {formattedDate}, {formattedTime}
+                                                        </td>
+
+                                                        <td>
+                                                            <span
+                                                                className={
+                                                                    `status ${statusClass}`
+                                                                }
+                                                            >
+                                                                <span className="status-dot"></span>
+                                                                {statusText}
+                                                            </span>
+                                                        </td>
+
+                                                        <td className="text-right order-total">
+                                                            ₺
+                                                            {
+                                                                order.total
+                                                                    ?.toLocaleString(
+                                                                        "tr-TR"
+                                                                    )
+                                                            }
+                                                        </td>
+
+                                                    </tr>
+
+                                                );
+
+                                            })
+                                        }
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div className="dashboard-side">
+
+
+                        {/* =========================================
                             MASA DURUMU
-                        ================================================= */}
+                        ========================================= */}
 
                         <div className="dashboard-card table-status">
 
                             <div className="card-header">
 
-                                <h3>
+                                <h3 className="card-title">
                                     Masa Durumu
                                 </h3>
 
@@ -806,7 +788,10 @@ function Dashboard() {
                                         key={table.id}
                                     >
                                         <strong>{table.tableNumber}</strong>
-                                        <span>{table.available ? "● Müsait" : "● Dolu"}</span>
+                                        <span>
+                                            <span className="table-dot"></span>
+                                            {table.available ? "Müsait" : "Dolu"}
+                                        </span>
                                         <small>{table.capacity} Kişilik</small>
                                     </div>
                                 ))}
@@ -824,295 +809,102 @@ function Dashboard() {
 
                         </div>
 
-                    </div>
 
+                        {/* =========================================
+                            POPÜLER ÜRÜNLER
+                        ========================================= */}
 
-                </section>
+                        <div className="dashboard-card popular-items">
 
+                            <div className="card-header">
 
-                {/* =================================================
-                    SON SİPARİŞLER + POPÜLER ÜRÜNLER
-                ================================================= */}
+                                <h3 className="card-title">
+                                    Popüler Ürünler
+                                </h3>
 
-                <div className="bottom-grid">
-
-
-                    {/* =================================================
-                        SON SİPARİŞLER
-                    ================================================= */}
-
-                    <div className="dashboard-card recent-orders">
-
-                        <div className="card-header">
-
-                            <h3>
-                                Son Siparişler
-                            </h3>
-
-
-                            <button className="view-all-button">
-                                TÜMÜNÜ GÖR
-                            </button>
-
-                        </div>
-
-
-                        <div className="orders-table">
-
-
-                            {/* TABLO BAŞLIKLARI */}
-
-                            <div className="order-row order-header">
-
-                                <span>
-                                    SİPARİŞ ID
-                                </span>
-
-                                <span>
-                                    TARİH
-                                </span>
-
-                                <span>
-                                    ZAMAN
-                                </span>
-
-                                <span>
-                                    DURUM
-                                </span>
-
-                                <span>
-                                    TOTAL
+                                <span className="material-symbols-outlined">
+                                    star
                                 </span>
 
                             </div>
 
 
-                            {/* BACKEND'DEN GELEN SİPARİŞLER */}
+                            <ul className="popular-list">
 
-                            {
-                                orders.map((order) => {
+                                {/* Backend'den hesaplanan
+                                    en popüler 5 ürünü gösteriyoruz. */}
 
-                                    const date =
-                                        new Date(order.orderDate);
+                                {
+                                    popularProducts.map((product, index) => (
 
-
-                                    // Sipariş tarihini Türkçe okunabilir
-                                    // bir formata çeviriyoruz.
-                                    const formattedDate =
-                                        date.toLocaleDateString(
-                                            "tr-TR",
-                                            {
-                                                day: "2-digit",
-                                                month: "short",
-                                                year: "numeric"
-                                            }
-                                        );
-
-
-                                    // Sipariş saatini alıyoruz.
-                                    const formattedTime =
-                                        date.toLocaleTimeString(
-                                            "tr-TR",
-                                            {
-                                                hour: "2-digit",
-                                                minute: "2-digit"
-                                            }
-                                        );
-
-
-                                    // Backend'deki status değerini
-                                    // kullanıcıya göstereceğimiz Türkçe
-                                    // metne çeviriyoruz.
-                                    let statusText = "";
-                                    let statusClass = "";
-
-
-                                    if (
-                                        order.status === "WAITING"
-                                    ) {
-
-                                        statusText = "Bekliyor";
-                                        statusClass = "pending";
-
-                                    }
-
-                                    else if (
-                                        order.status === "PREPARING"
-                                    ) {
-
-                                        statusText = "Hazırlanıyor";
-                                        statusClass = "preparing";
-
-                                    }
-
-                                    else if (
-                                        order.status === "READY"
-                                    ) {
-
-                                        statusText = "Hazır";
-                                        statusClass = "ready";
-
-                                    }
-
-
-                                    return (
-
-                                        <div
-                                            className="order-row"
-                                            key={order.id}
+                                        <li
+                                            className="popular-item"
+                                            key={product.id}
                                         >
 
-                                            <span>
-                                                #{order.id}
-                                            </span>
-
-                                            <span>
-                                                {formattedDate}
-                                            </span>
-
-                                            <span>
-                                                {formattedTime}
-                                            </span>
+                                            <div className="item-icon">
+                                                <span className="material-symbols-outlined">
+                                                    {categoryIcon(product.categoryName)}
+                                                </span>
+                                            </div>
 
 
-                                            <span
-                                                className={
-                                                    `status ${statusClass}`
-                                                }
-                                            >
-                                                {statusText}
-                                            </span>
+                                            <div className="item-info">
+
+                                                <strong>
+                                                    {product.name}
+                                                </strong>
+
+                                                <span>
+                                                    {product.categoryName}
+                                                </span>
+
+                                            </div>
 
 
-                                            <span>
-                                                ₺
-                                                {
-                                                    order.total
-                                                        ?.toLocaleString(
-                                                            "tr-TR"
-                                                        )
-                                                }
-                                            </span>
+                                            <div className="item-meta">
 
-                                        </div>
+                                                <strong>
+                                                    ₺{product.price}
+                                                </strong>
 
-                                    );
+                                                {index === 0 && (
+                                                    <span className="item-tag">
+                                                        ÇOK SATIYOR
+                                                    </span>
+                                                )}
 
-                                })
+                                            </div>
+
+                                        </li>
+
+                                    ))
+                                }
+
+                            </ul>
+
+
+                            {/* Satış verisi yoksa kullanıcıya bilgi veriyoruz. */}
+
+                            {
+                                popularProducts.length === 0 && (
+
+                                    <p className="empty-state-text">
+                                        Henüz satış verisi bulunmuyor.
+                                    </p>
+
+                                )
                             }
 
                         </div>
 
                     </div>
 
-
-                    {/* =================================================
-                        POPÜLER ÜRÜNLER
-                    ================================================= */}
-
-                    <div className="dashboard-card popular-items">
-
-                        <div className="card-header">
-
-                            <h3>
-                                Popüler Ürünler
-                            </h3>
-
-                            <span className="material-symbols-outlined">
-                                star
-                            </span>
-
-                        </div>
-
-
-                        {/* Backend'den hesaplanan
-                            en popüler 5 ürünü gösteriyoruz. */}
-
-                        {
-                            popularProducts.map((product) => (
-
-                                <div
-                                    className="popular-item"
-                                    key={product.id}
-                                >
-
-                                    <div className="item-icon">
-
-                                        {
-                                            product.categoryName === "Burgerler"
-                                            && "🍔"
-                                        }
-
-                                        {
-                                            product.categoryName === "Pizzalar"
-                                            && "🍕"
-                                        }
-
-                                        {
-                                            product.categoryName === "Makarnalar"
-                                            && "🍝"
-                                        }
-
-                                        {
-                                            product.categoryName === "İçecekler"
-                                            && "🥤"
-                                        }
-
-                                        {
-                                            product.categoryName === "Tatlılar"
-                                            && "🍰"
-                                        }
-
-                                        {
-                                            product.categoryName === "Sıcak İçecekler"
-                                            && "☕"
-                                        }
-
-                                    </div>
-
-
-                                    <div className="item-info">
-
-                                        <strong>
-                                            {product.name}
-                                        </strong>
-
-                                        <span>
-                                            {product.totalQuantity} sipariş
-                                        </span>
-
-                                    </div>
-
-
-                                    <strong>
-                                        ₺{product.price}
-                                    </strong>
-
-                                </div>
-
-                            ))
-                        }
-
-
-                        {/* Satış verisi yoksa kullanıcıya bilgi veriyoruz. */}
-
-                        {
-                            popularProducts.length === 0 && (
-
-                                <p>
-                                    Henüz satış verisi bulunmuyor.
-                                </p>
-
-                            )
-                        }
-
-                    </div>
-
                 </div>
 
-            </main>
-
         </div>
+
+        </Layout>
 
     );
 
