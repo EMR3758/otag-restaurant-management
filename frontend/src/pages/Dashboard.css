@@ -452,6 +452,114 @@
 
 
 /* =========================================================
+   SON SİPARİŞLER KARTI - SABİT YÜKSEKLİK + İÇ SCROLL
+
+   Kart yüksekliği sabit kalsın, sadece tablo satırları
+   (tbody) dikey scroll olsun. Başlık ve tablo başlıkları
+   (thead) sabit kalır.
+========================================================= */
+
+.recent-orders {
+    display: flex;
+    flex-direction: column;
+
+    height: 420px;
+}
+
+.recent-orders .card-header {
+    flex-shrink: 0;
+}
+
+.recent-orders .orders-table-wrap {
+    flex: 1;
+
+    /* flex item'ın içeriğe göre büyümesini engelleyip
+       overflow'un devreye girmesini sağlıyor. min-width:0
+       olmadan flex item, nowrap tablo içeriğinin content-box
+       genişliğine göre büyüyüp kartın dışına taşabiliyordu. */
+    min-height: 0;
+    min-width: 0;
+
+    overflow-y: auto;
+
+    /* Yatay scrollbar tamamen kapalı: tablo kartın
+       genişliğine sabit sütun oranlarıyla sığdırılıyor. */
+    overflow-x: hidden;
+}
+
+.recent-orders .orders-table thead th {
+    position: sticky;
+    top: 0;
+
+    background: #ffffff;
+
+    z-index: 1;
+}
+
+/* "TÜMÜNÜ GÖR" kaldırıldı. */
+.recent-orders .view-all-button {
+    display: none;
+}
+
+/* Tablo kartın iç genişliğine tam sığsın, taşmasın.
+   width: 100% tek başına, scroll'lu/flex container içindeki
+   nowrap içerikli tablolarda taşmayı engellemiyor; width: 1px
+   + min-width: 100% tablonun konteynerin genişliğini asla
+   aşmamasını garanti ediyor. */
+.recent-orders .orders-table {
+    table-layout: fixed;
+    width: 1px;
+    min-width: 100%;
+}
+
+/* Sütun genişliklerini dengeli dağıtıyoruz ki
+   hiçbir sütun sağdan kesilmesin. */
+.recent-orders .orders-table th:nth-child(1),
+.recent-orders .orders-table td:nth-child(1) {
+    width: 22%;
+}
+
+.recent-orders .orders-table th:nth-child(2),
+.recent-orders .orders-table td:nth-child(2) {
+    width: 28%;
+}
+
+.recent-orders .orders-table th:nth-child(3),
+.recent-orders .orders-table td:nth-child(3) {
+    width: 25%;
+}
+
+.recent-orders .orders-table th:nth-child(4),
+.recent-orders .orders-table td:nth-child(4) {
+    width: 25%;
+}
+
+/* Uzun içerikler hücreyi/tabloyu genişletmesin,
+   kendi sütun alanının içinde kalsın. Padding'in
+   genişliğe eklenmemesi (ve böylece tablonun kart
+   dışına taşmaması) için border-box kullanıyoruz. */
+.recent-orders .orders-table th,
+.recent-orders .orders-table td {
+    box-sizing: border-box;
+
+    /* Tablo hücrelerinin varsayılan min-width:auto davranışı,
+       nowrap içerik yüzünden hücreyi belirlenen genişlikten
+       daha geniş tutmaya zorluyordu; bunu sıfırlıyoruz. */
+    min-width: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /* orders-table th/td'deki white-space: nowrap, tablonun
+       kart genişliğine küçülmesini (table-layout: fixed
+       olsa bile) engelliyordu. Mevcut sütun genişlikleri
+       normal içerik için zaten tek satıra yetiyor; bu sadece
+       tablonun karttan taşmasını kesin olarak engelliyor. */
+    white-space: normal;
+}
+
+
+/* =========================================================
    DURUM ROZETİ
 ========================================================= */
 

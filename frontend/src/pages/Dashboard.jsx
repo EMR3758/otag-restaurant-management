@@ -1,6 +1,7 @@
 import "./Dashboard.css";
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import TablePickerModal from "../components/TablePickerModal";
 
 function Dashboard() {
 
@@ -20,7 +21,7 @@ function Dashboard() {
     // Backend'den gelen restoran masalarını tutuyoruz.
     const [tables, setTables] = useState([]);
 
-    const[showAllTables,setShowAllTables]=useState(false);
+    const [isTableModalOpen, setIsTableModalOpen] = useState(false);
 
 
     // =========================================================
@@ -782,7 +783,7 @@ function Dashboard() {
 
 
                             <div className="table-grid">
-                                {(showAllTables ? tables : tables.slice(0, 4)).map((table) => (
+                                {tables.slice(0, 4).map((table) => (
                                     <div
                                         className={`table-box ${table.available ? "available" : "occupied"}`}
                                         key={table.id}
@@ -800,9 +801,9 @@ function Dashboard() {
                             {tables.length > 4 && (
                                 <button
                                     className="map-button"
-                                    onClick={() => setShowAllTables(!showAllTables)}
+                                    onClick={() => setIsTableModalOpen(true)}
                                 >
-                                    {showAllTables ? "DAHA AZ GÖR" : "TÜM HARİTAYI GÖR"}
+                                    TÜM HARİTAYI GÖR
                                 </button>
                             )}
 
@@ -903,6 +904,13 @@ function Dashboard() {
                 </div>
 
         </div>
+
+        <TablePickerModal
+            open={isTableModalOpen}
+            onClose={() => setIsTableModalOpen(false)}
+            tables={tables}
+            title="Tüm Masalar"
+        />
 
         </Layout>
 
