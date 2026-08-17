@@ -2,6 +2,7 @@ package com.emirhan.day3.springboot.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -50,7 +51,21 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
-                        .requestMatchers("/restaurant-tables/**").permitAll()
+
+                        // Spring Boot varsayılan olarak güvenlik filtresini
+                        // /error forward'ında da çalıştırıyor.
+                        // /error permitAll değilse, controller/service
+                        // içinde oluşan gerçek hatalar (ör. 500) burada
+                        // "authenticated değil" denilerek 403'e dönüşüyor
+                        // ve asıl hatayı gizliyor. Bu yüzden /error'u
+                        // herkese açık bırakıyoruz.
+                        .requestMatchers("/error").permitAll()
+
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/orders/**").permitAll()
+                        .requestMatchers("/tables/**").permitAll()
+                        .requestMatchers("/orders/**").permitAll()
+                        .requestMatchers("/products/**").permitAll()
                         // Yukarıdakiler dışındaki bütün endpointler
                         // authentication (JWT) gerektirir.
                         .anyRequest().authenticated()

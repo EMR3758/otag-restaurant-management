@@ -12,6 +12,7 @@ import com.emirhan.day3.springboot.repository.OrderRepository;
 import com.emirhan.day3.springboot.repository.ProductRepository;
 import com.emirhan.day3.springboot.repository.RestaurantTableRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +90,11 @@ public class OrderService {
             );
             orderItemRepository.save(orderItem);
         }
+
+        //5.Sipariş başarıyla oluşturuldu, masayı dolu olarak işaretle
+        table.setAvailable(false);
+        restaurantTableRepository.save(table);
+
         //.Oluşturulan siparişi döndür
         return convertToDTO(savedOrder);
     }
@@ -128,7 +134,12 @@ public class OrderService {
         return null;
     }
 
+    @Transactional
     public void deleteOrder(Long id) {
+        // Order silinmeden önce, ona bağlı OrderItem'lar silinmeli.
+        // Aksi halde order_item.order_id foreign key kısıtlaması yüzünden
+        // orders satırı silinirken DataIntegrityViolationException oluşur.
+        orderItemRepository.deleteByOrder_Id(id);
         orderRepository.deleteById(id);
     }
 

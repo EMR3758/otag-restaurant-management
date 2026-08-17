@@ -51,6 +51,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
         /*
+         * OPTIONS isteklerinde JWT kontrolü yapmıyoruz.
+         *
+         * CORS preflight isteği olduğu için
+         * direkt Filter Chain'in devamına gönderiyoruz.
+         */
+
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
+        /*
          * Authorization header'ını alıyoruz.
          *
          * Örnek:
@@ -83,104 +96,122 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authHeader.substring(7);
 
 
-        /*
-         * Token içerisinden username/email çıkarıyoruz.
-         */
+        try {
 
-        final String username =
-                jwtService.extractUsername(token);
+            /*
+             * Token içerisinden username/email çıkarıyoruz.
+             */
 
-
-        /*
-         * Username bulunduysa ve SecurityContext'te
-         * zaten authentication yoksa devam ediyoruz.
-         */
-
-        if (username != null &&
-                SecurityContextHolder
-                        .getContext()
-                        .getAuthentication() == null) {
+            final String username =
+                    jwtService.extractUsername(token);
 
 
             /*
-             * Email ile DB'deki kullanıcıyı buluyoruz.
+             * Username bulunduysa ve SecurityContext'te
+             * zaten authentication yoksa devam ediyoruz.
              */
 
-            UserDetails userDetails =
-                    userDetailsService
-                            .loadUserByUsername(username);
+            if (username != null &&
+                    SecurityContextHolder
+                            .getContext()
+                            .getAuthentication() == null) {
 
 
-            /*
-             * Token'ın geçerli olup olmadığını kontrol ediyoruz.
-             */
+                /*
+                 * Email ile DB'deki kullanıcıyı buluyoruz.
+                 */
 
-            boolean valid =
-                    jwtService.isTokenValid(
-                            token,
-                            userDetails
-                    );
+                UserDetails userDetails =
+                        userDetailsService
+                                .loadUserByUsername(username);
 
 
-            /*
-             * GEÇİCİ DEBUG LOG'LARI
-             *
-             * Bunları birazdan 403 problemini bulmak için
-             * Console'da kontrol edeceğiz.
-             */
+                /*
+                 * Token'ın geçerli olup olmadığını kontrol ediyoruz.
+                 */
 
-            System.out.println(
-                    "JWT USERNAME: " + username
-            );
-
-            System.out.println(
-                    "TOKEN VALID: " + valid
-            );
-
-            System.out.println(
-                    "AUTHORITIES: " +
-                            userDetails.getAuthorities()
-            );
-
-
-            /*
-             * Token geçerliyse Authentication oluşturuyoruz.
-             */
-
-            if (valid) {
-
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
+                boolean valid =
+                        jwtService.isTokenValid(
+                                token,
+                                userDetails
                         );
 
 
                 /*
-                 * Request detaylarını ekliyoruz.
+                 * GEÇİCİ DEBUG LOG'LARI
+                 *
+                 * Bunları birazdan 403 problemini bulmak için
+                 * Console'da kontrol edeceğiz.
                  */
 
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource()
-                                .buildDetails(request)
+                System.out.println(
+                        "JWT USERNAME: " + username
+                );
+
+                System.out.println(
+                        "TOKEN VALID: " + valid
+                );
+
+                System.out.println(
+                        "AUTHORITIES: " +
+                                userDetails.getAuthorities()
                 );
 
 
                 /*
-                 * Kullanıcıyı SecurityContext'e koyuyoruz.
-                 *
-                 * Bundan sonra Spring Security:
-                 *
-                 * "Bu kullanıcı authenticated."
-                 *
-                 * diyebilir.
+                 * Token geçerliyse Authentication oluşturuyoruz.
                  */
 
-                SecurityContextHolder
-                        .getContext()
-                        .setAuthentication(authToken);
+                if (valid) {
+
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
+
+
+                    /*
+                     * Request detaylarını ekliyoruz.
+                     */
+
+                    authToken.setDetails(
+                            new WebAuthenticationDetailsSource()
+                                    .buildDetails(request)
+                    );
+
+
+                    /*
+                     * Kullanıcıyı SecurityContext'e koyuyoruz.
+                     *
+                     * Bundan sonra Spring Security:
+                     *
+                     * "Bu kullanıcı authenticated."
+                     *
+                     * diyebilir.
+                     */
+
+                    SecurityContextHolder
+                            .getContext()
+                            .setAuthentication(authToken);
+                }
             }
+
+        } catch (Exception e) {
+
+            /*
+             * JWT geçersiz veya bozuksa
+             * request'i burada kesmiyoruz.
+             *
+             * Filter Chain'in devam etmesine izin veriyoruz.
+             */
+
+            System.out.println(
+                    "JWT FILTER ERROR: " + e.getMessage()
+            );
+
+            SecurityContextHolder.clearContext();
         }
 
 
