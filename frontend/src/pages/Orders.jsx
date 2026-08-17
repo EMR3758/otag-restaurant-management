@@ -5,6 +5,13 @@ import "./Orders.css";
 import Layout from "../components/Layout";
 
 const STATUS_OPTIONS = ["WAITING", "PREPARING", "READY", "DELIVERED", "CANCELLED"];
+const STATUS_LABELS = {
+    WAITING: "Bekliyor",
+    PREPARING: "Hazırlanıyor",
+    READY: "Hazır",
+    DELIVERED: "Teslim Edildi",
+    CANCELLED: "İptal Edildi",
+};
 const ITEMS_PER_PAGE = 3;
 
 
@@ -174,28 +181,41 @@ function Orders() {
     };
 
     const handleView = (order) => {
-        alert(`Order #${order.id} details (coming soon).`);
+        navigate(`/orders/${order.id}`);
     };
 
     const handleEdit = (order) => {
-        alert(`Edit order #${order.id} (coming soon).`);
+        navigate(`/orders/${order.id}`);
     };
 
     const handleNewOrder = () => {
         navigate("/orders/create");
     };
 
-    const handleDelete = (order) => {
+    const handleDelete = async (order) => {
 
-        const confirmed = window.confirm(`Delete order #${order.id}?`);
+        const confirmed = window.confirm(`Sipariş #${order.id} silinsin mi?`);
 
         if (!confirmed) {
             return;
         }
 
-        setOrders((prev) =>
-            prev.filter((item) => item.id !== order.id)
-        );
+        try{
+            const response = await fetch(`http://localhost:8080/orders/${order.id}`,
+                {
+                    method:"DELETE",
+                }
+            );
+            if (!response.ok){
+                throw new Error("Sipariş silinemedi")
+            }
+            setOrders((prev) =>
+                prev.filter((item) => item.id !== order.id)
+            );
+        }catch (error){
+            console.error("Sipariş silme hatası:",error);
+            alert("Sipariş silinemedi. Backend endpointini kontrol et.");
+        }
 
     };
 
@@ -261,7 +281,7 @@ function Orders() {
                                 <option value="ALL">Tüm Durumlar</option>
                                 {STATUS_OPTIONS.map((status) => (
                                     <option value={status} key={status}>
-                                        {status}
+                                        {STATUS_LABELS[status] || status}
                                     </option>
                                 ))}
                             </select>
@@ -304,12 +324,12 @@ function Orders() {
 
                             <tbody>
 
-                                {pageOrders.map((order) => (
+                                {pageOrders.map((order,index) => (
 
                                     <tr key={order.id}>
 
                                         <td className="order-id">
-                                            #{order.id}
+                                            #{startIndex + index + 1}
                                         </td>
 
                                         <td className="order-date">
@@ -321,7 +341,7 @@ function Orders() {
                                                 className={`status status-${order.status.toLowerCase()}`}
                                             >
                                                 <span className="status-dot"></span>
-                                                {order.status}
+                                                {STATUS_LABELS[order.status] || order.status}
                                             </span>
                                         </td>
 
@@ -334,7 +354,7 @@ function Orders() {
 
                                                 <button
                                                     className="action-button"
-                                                    title="View"
+                                                    title="Görüntüle"
                                                     onClick={() => handleView(order)}
                                                 >
                                                     <span className="material-symbols-outlined">
@@ -344,7 +364,7 @@ function Orders() {
 
                                                 <button
                                                     className="action-button"
-                                                    title="Edit"
+                                                    title="Düzenle"
                                                     onClick={() => handleEdit(order)}
                                                 >
                                                     <span className="material-symbols-outlined">
@@ -354,7 +374,7 @@ function Orders() {
 
                                                 <button
                                                     className="action-button action-button-delete"
-                                                    title="Delete"
+                                                    title="Sil"
                                                     onClick={() => handleDelete(order)}
                                                 >
                                                     <span className="material-symbols-outlined">
@@ -373,7 +393,7 @@ function Orders() {
 
                                     <tr>
                                         <td className="orders-empty" colSpan={5}>
-                                            No orders match your filters.
+                                            Filtrelerinize uygun sipariş bulunamadı.
                                         </td>
                                     </tr>
 
@@ -391,7 +411,7 @@ function Orders() {
                     <div className="orders-pagination">
 
                         <span>
-                            Showing {rangeStart}-{rangeEnd} of {totalItems} orders
+                            {rangeStart}-{rangeEnd} / {totalItems} sipariş gösteriliyor
                         </span>
 
                         <div className="pagination-buttons">
@@ -400,14 +420,14 @@ function Orders() {
                                 onClick={goToPrevPage}
                                 disabled={safePage <= 1}
                             >
-                                Prev
+                                Önce
                             </button>
 
                             <button
                                 onClick={goToNextPage}
                                 disabled={safePage >= totalPages}
                             >
-                                Next
+                                Sonra
                             </button>
 
                         </div>
