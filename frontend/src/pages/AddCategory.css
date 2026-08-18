@@ -1,0 +1,280 @@
+/* =========================================================
+   ANA SAYFA
+========================================================= */
+
+.add-category-page {
+    max-width: 600px;
+
+    margin: 0 auto;
+    padding: 40px;
+
+    background: #fbf9f5;
+    color: #1b1c1a;
+
+    min-height: 100vh;
+
+    font-family:
+            "Hanken Grotesk",
+            "Segoe UI",
+            system-ui,
+            sans-serif;
+}
+
+
+/* =========================================================
+   BAŞLIK
+========================================================= */
+
+.add-category-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    margin-bottom: 32px;
+}
+
+.add-category-heading .back-button {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 50%;
+
+    color: #594238;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.add-category-heading .back-button:hover {
+    background: #eae8e4;
+    color: #9e3d00;
+}
+
+.add-category-heading .back-button:focus-visible {
+    outline: 2px solid #9e3d00;
+    outline-offset: 2px;
+}
+
+.add-category-heading h1 {
+    margin: 0 0 4px;
+
+    color: #1b1c1a;
+
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.add-category-heading p {
+    margin: 0;
+
+    color: #594238;
+
+    font-size: 14px;
+}
+
+
+.add-category-page .form-load-error {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+
+    background: rgba(186, 26, 26, 0.08);
+    border: 1px solid rgba(186, 26, 26, 0.3);
+    border-radius: 2px;
+
+    color: #ba1a1a;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FORM KARTI
+========================================================= */
+
+.add-category-card {
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    padding: 32px;
+
+    box-shadow: 0 4px 20px rgba(27, 28, 26, 0.04);
+}
+
+.add-category-card .form-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 24px;
+}
+
+.add-category-card .form-field:last-of-type {
+    margin-bottom: 0;
+}
+
+.add-category-card .form-field label {
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.add-category-card .required {
+    color: #ba1a1a;
+}
+
+.add-category-card .optional {
+    color: #594238;
+    font-weight: 400;
+}
+
+.add-category-card input[type="text"],
+.add-category-card textarea {
+    width: 100%;
+
+    padding: 10px 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-family: inherit;
+
+    box-sizing: border-box;
+}
+
+.add-category-card textarea {
+    resize: vertical;
+    min-height: 96px;
+}
+
+.add-category-card input::placeholder,
+.add-category-card textarea::placeholder {
+    color: #99928c;
+}
+
+.add-category-card input:focus,
+.add-category-card textarea:focus {
+    outline: none;
+    border-color: #9e3d00;
+}
+
+.add-category-card .field-error {
+    color: #ba1a1a;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   FORM AKSİYONLARI
+========================================================= */
+
+.add-category-card .form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 32px;
+    padding-top: 24px;
+
+    border-top: 1px solid #e0c0b2;
+}
+
+.add-category-card .secondary-button {
+    padding: 10px 20px;
+
+    background: transparent;
+
+    border: 1px solid #1b1c1a;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.add-category-card .secondary-button:hover {
+    background: #eae8e4;
+}
+
+.add-category-card .primary-button {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 20px;
+
+    background: #9e3d00;
+
+    border: none;
+    border-radius: 2px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.add-category-card .primary-button:hover:not(:disabled) {
+    background: #c64f00;
+}
+
+.add-category-card .primary-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.add-category-card .secondary-button:focus-visible,
+.add-category-card .primary-button:focus-visible {
+    outline: 2px solid #9e3d00;
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .add-category-page {
+        padding: 20px;
+    }
+
+    .add-category-card {
+        padding: 20px;
+    }
+}
