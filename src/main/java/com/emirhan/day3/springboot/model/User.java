@@ -19,17 +19,21 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private boolean active = true;
+
     public User() {
     }
 
     public User(String fullName,
                 String email,
                 String password,
-                Role role) {
+                Role role,
+                boolean active) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.active=active;
     }
 
     public Long getId() {
@@ -70,5 +74,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

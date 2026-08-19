@@ -40,7 +40,14 @@ public class AuthController {
 
         String token = jwtService.generateToken(userDetails);
 
-        return new AuthResponse(token);
+        // "ROLE_ADMIN" gibi Spring Security authority'sinden başındaki
+        // "ROLE_" önekini çıkarıp frontend'e düz enum değeri ("ADMIN") olarak veriyoruz.
+        String role = userDetails.getAuthorities().stream()
+                .findFirst()
+                .map(authority -> authority.getAuthority().replace("ROLE_", ""))
+                .orElse(null);
+
+        return new AuthResponse(token, role);
     }
 
 }

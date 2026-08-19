@@ -1,0 +1,651 @@
+/* =========================================================
+   ANA SAYFA
+========================================================= */
+
+.edit-user-page {
+    max-width: 900px;
+
+    margin: 0 auto;
+    padding: 40px;
+
+    background: #fbf9f5;
+    color: #1b1c1a;
+
+    min-height: 100vh;
+
+    font-family:
+            "Hanken Grotesk",
+            "Segoe UI",
+            system-ui,
+            sans-serif;
+}
+
+
+/* =========================================================
+   BAŞLIK
+========================================================= */
+
+.edit-user-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    margin-bottom: 32px;
+}
+
+.edit-user-heading .back-button {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 50%;
+
+    color: #594238;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.edit-user-heading .back-button:hover {
+    background: #eae8e4;
+    color: #9e3d00;
+}
+
+.edit-user-heading .back-button:focus-visible {
+    outline: 2px solid #9e3d00;
+    outline-offset: 2px;
+}
+
+.edit-user-heading h1 {
+    margin: 0 0 4px;
+
+    color: #1b1c1a;
+
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.edit-user-heading p {
+    margin: 0;
+
+    color: #594238;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   NOT FOUND
+========================================================= */
+
+.edit-user-not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 48px 0;
+}
+
+.edit-user-not-found h2 {
+    margin: 0;
+    color: #1b1c1a;
+}
+
+.edit-user-not-found p {
+    margin: 0;
+    color: #5f5e5e;
+}
+
+
+/* =========================================================
+   FORM YERLEŞİMİ
+========================================================= */
+
+.edit-user-form-wrap form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+
+/* =========================================================
+   KART (Genel Bilgiler / Güvenlik)
+========================================================= */
+
+.edit-user-card {
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    padding: 32px;
+
+    box-shadow: 0 4px 20px rgba(27, 28, 26, 0.04);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+.edit-user-card-head {
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+.edit-user-card-head h3 {
+    margin: 0;
+
+    color: #1b1c1a;
+
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   FORM ALANLARI
+========================================================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.form-field-full {
+    grid-column: 1 / -1;
+}
+
+.form-field label {
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.form-field input[type="text"],
+.form-field input[type="email"] {
+    width: 100%;
+
+    padding: 12px 16px;
+
+    background: #fbf9f5;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 4px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-family: inherit;
+
+    box-sizing: border-box;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-field input:focus {
+    outline: none;
+    border-color: #9e3d00;
+    box-shadow: 0 0 0 1px #9e3d00;
+}
+
+.form-field input.has-error,
+.select-wrap select.has-error {
+    border-color: #ba1a1a;
+}
+
+.form-field input.has-error:focus,
+.select-wrap select.has-error:focus {
+    box-shadow: 0 0 0 1px #ba1a1a;
+}
+
+.select-wrap {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.select-wrap select {
+    width: 100%;
+
+    appearance: none;
+
+    padding: 12px 40px 12px 16px;
+
+    background: #fbf9f5;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 4px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-family: inherit;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.select-wrap select:focus {
+    outline: none;
+    border-color: #9e3d00;
+    box-shadow: 0 0 0 1px #9e3d00;
+}
+
+.select-wrap .material-symbols-outlined {
+    position: absolute;
+    right: 12px;
+
+    font-size: 20px;
+    color: #594238;
+
+    pointer-events: none;
+}
+
+.field-error {
+    display: flex;
+    align-items: center;
+
+    gap: 4px;
+
+    color: #ba1a1a;
+
+    font-size: 12px;
+}
+
+.field-error .material-symbols-outlined {
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   HESAP DURUMU TOGGLE
+========================================================= */
+
+.account-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding-top: 20px;
+
+    border-top: 1px dashed #e0c0b2;
+}
+
+.account-status-text {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.account-status-title {
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.account-status-desc {
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+}
+
+
+.toggle-switch {
+    position: relative;
+
+    flex-shrink: 0;
+
+    width: 48px;
+    height: 26px;
+
+    padding: 0;
+
+    background: #e4e2de;
+    border: none;
+    border-radius: 999px;
+
+    cursor: pointer;
+
+    transition: background 0.3s ease;
+}
+
+.toggle-switch.on {
+    background: #9e3d00;
+}
+
+.toggle-switch:focus-visible {
+    outline: 2px solid #9e3d00;
+    outline-offset: 2px;
+}
+
+.toggle-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+
+    width: 22px;
+    height: 22px;
+
+    background: #ffffff;
+    border: 1px solid #e0c0b2;
+    border-radius: 999px;
+
+    box-shadow: 0 1px 2px rgba(27, 28, 26, 0.15);
+
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.toggle-switch.on .toggle-knob {
+    transform: translateX(22px);
+    border-color: #ffffff;
+}
+
+
+/* =========================================================
+   ŞİFRE YÖNETİMİ
+========================================================= */
+
+.password-management-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+}
+
+.password-management-text {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    max-width: 420px;
+}
+
+.password-management-title {
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.password-management-desc {
+    color: #5f5e5e;
+
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.reset-link-button {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+
+    padding: 10px 20px;
+
+    background: transparent;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 4px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.reset-link-button:hover {
+    background: #f5f3ef;
+}
+
+.reset-link-button .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   TEHLİKELİ ALAN
+========================================================= */
+
+.danger-zone-card {
+    padding: 32px;
+
+    background: rgba(186, 26, 26, 0.05);
+
+    border: 1px solid rgba(186, 26, 26, 0.3);
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+.danger-zone-card h3 {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 0;
+
+    color: #ba1a1a;
+
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+}
+
+.danger-zone-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+}
+
+.danger-zone-row p {
+    margin: 0;
+
+    max-width: 520px;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.delete-user-button {
+    flex-shrink: 0;
+
+    padding: 12px 24px;
+
+    background: #ba1a1a;
+
+    border: none;
+    border-radius: 4px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    box-shadow: 0 1px 2px rgba(27, 28, 26, 0.06);
+
+    transition: background 0.2s ease;
+}
+
+.delete-user-button:hover {
+    background: #93000a;
+}
+
+
+/* =========================================================
+   ALT AKSİYON ÇUBUĞU (sticky)
+========================================================= */
+
+.edit-user-actions {
+    position: sticky;
+    bottom: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 8px;
+    padding: 20px 0;
+
+    background: rgba(251, 249, 245, 0.9);
+    backdrop-filter: blur(6px);
+
+    border-top: 1px solid #e0c0b2;
+}
+
+.secondary-button {
+    padding: 12px 28px;
+
+    background: transparent;
+
+    border: 1px solid #8c7166;
+    border-radius: 4px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.secondary-button:hover {
+    background: #f5f3ef;
+}
+
+.primary-button {
+    padding: 12px 28px;
+
+    background: #9e3d00;
+
+    border: none;
+    border-radius: 4px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 1px 2px rgba(27, 28, 26, 0.06);
+
+    transition: background 0.2s ease;
+}
+
+.primary-button:hover {
+    background: #c64f00;
+}
+
+.secondary-button:focus-visible,
+.primary-button:focus-visible {
+    outline: 2px solid #9e3d00;
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .edit-user-page {
+        padding: 20px;
+    }
+
+    .edit-user-card,
+    .danger-zone-card {
+        padding: 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .password-management-row,
+    .danger-zone-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .reset-link-button,
+    .delete-user-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .edit-user-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .secondary-button,
+    .primary-button {
+        width: 100%;
+    }
+}

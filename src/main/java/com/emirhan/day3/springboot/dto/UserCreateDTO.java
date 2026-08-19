@@ -7,13 +7,15 @@ public class UserCreateDTO {
     private String email;
     private String password;
     private Role role;
+    private boolean active;
 
     public UserCreateDTO(){}
-    public UserCreateDTO(String fullName, String email, String password, Role role) {
+    public UserCreateDTO(String fullName, String email, String password, Role role,boolean active) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.active = active;
     }
 
     public String getFullName() {
@@ -46,5 +48,13 @@ public class UserCreateDTO {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

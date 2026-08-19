@@ -47,7 +47,6 @@ public class SecurityConfig {
                         // herkesin login endpoint'ine erişmesine izin veriyoruz.
                         .requestMatchers(
                                 "/auth/login",
-                                "/users",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
@@ -62,6 +61,22 @@ public class SecurityConfig {
                         .requestMatchers("/error").permitAll()
 
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // Personel (User) yönetimi yetkilendirmesi:
+                        // - Listeyi ADMIN, MANAGER ve CHEF görebilir.
+                        // - Personel ekleme/güncelleme/silme sadece ADMIN ve MANAGER'a açık.
+                        // - MANAGER'ın ADMIN hesaplarını düzenleyip silememesi (hiyerarşi
+                        //   kuralı) UserService içinde, hedef kullanıcının rolüne bakılarak
+                        //   ayrıca kontrol ediliyor (bu path bazlı kural bunu ayırt edemez).
+                        .requestMatchers(HttpMethod.GET, "/users", "/users/**")
+                                .hasAnyRole("ADMIN", "MANAGER", "CHEF")
+                        .requestMatchers(HttpMethod.POST, "/users")
+                                .hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/users/**")
+                                .hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, "/users/**")
+                                .hasAnyRole("ADMIN", "MANAGER")
+
                         .requestMatchers(HttpMethod.DELETE, "/orders/**").permitAll()
                         .requestMatchers("/tables/**").permitAll()
                         .requestMatchers("/orders/**").permitAll()
