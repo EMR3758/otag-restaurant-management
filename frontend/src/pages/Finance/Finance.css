@@ -1,0 +1,857 @@
+/* =========================================================
+   ANA SAYFA
+========================================================= */
+
+.finance-page {
+    max-width: 1600px;
+
+    margin: 0 auto;
+    padding: 24px 32px 40px;
+
+    background: #fbf9f5;
+    color: #1b1c1a;
+
+    min-height: 100vh;
+
+    font-family: "Hanken Grotesk", "Segoe UI", system-ui, sans-serif;
+}
+
+
+/* =========================================================
+   SAYFA BAŞLIĞI
+========================================================= */
+
+.finance-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 20px;
+}
+
+.finance-header h1 {
+    margin: 0 0 4px;
+
+    color: #1b1c1a;
+
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.finance-header p {
+    margin: 0;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+    line-height: 20px;
+}
+
+
+/* =========================================================
+   BAŞARI BANNER'I / DURUM METNİ
+========================================================= */
+
+.finance-success-banner {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 12px 16px;
+
+    margin-bottom: 20px;
+
+    background: rgba(22, 163, 74, 0.1);
+    border: 1px solid rgba(22, 163, 74, 0.3);
+    border-radius: 8px;
+
+    color: #16a34a;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.finance-status-text {
+    padding: 48px 24px;
+
+    margin: 0;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+    text-align: center;
+}
+
+
+/* =========================================================
+   ÖZET KARTLAR
+========================================================= */
+
+.finance-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 20px;
+}
+
+.finance-summary-card {
+    display: flex;
+    flex-direction: column;
+
+    padding: 18px 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e2de;
+    border-radius: 6px;
+
+    transition: border-color 0.2s ease;
+}
+
+.finance-summary-card:hover {
+    border-color: rgba(158, 61, 0, 0.5);
+}
+
+.finance-summary-highlight {
+    border-left: 4px solid #9e3d00;
+}
+
+.finance-summary-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.finance-summary-top span:first-child {
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+.finance-summary-top .material-symbols-outlined {
+    color: #5f5e5e;
+
+    font-size: 20px;
+}
+
+.finance-summary-value {
+    color: #1b1c1a;
+
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.finance-summary-value.accent {
+    color: #9e3d00;
+}
+
+.finance-summary-caption {
+    margin-top: 6px;
+
+    color: #5f5e5e;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ANA GRID (Sol geniş: grafik + tablo, Sağ dar: özet widget'lar)
+========================================================= */
+
+.finance-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+
+    gap: 20px;
+
+    align-items: start;
+}
+
+.finance-col-wide,
+.finance-col-narrow {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   ORTAK KART
+========================================================= */
+
+.finance-card {
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e2de;
+    border-radius: 6px;
+}
+
+.finance-table-card {
+    padding: 0;
+
+    overflow: hidden;
+}
+
+.finance-table-card .finance-card-header {
+    padding: 20px;
+
+    margin-bottom: 0;
+
+    border-bottom: 1px solid #e4e2de;
+}
+
+.finance-card-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+.finance-card-header h3 {
+    margin: 0;
+
+    color: #1b1c1a;
+
+    font-size: 17px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   GRAFİK FİLTRELERİ + LEGEND
+========================================================= */
+
+.finance-chart-filters {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 6px;
+}
+
+.finance-chart-filter-chip {
+    padding: 6px 14px;
+
+    background: #eae8e4;
+    border: none;
+    border-radius: 4px;
+
+    color: #1b1c1a;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.finance-chart-filter-chip:hover {
+    background: #e4e2de;
+}
+
+.finance-chart-filter-chip.active {
+    background: #9e3d00;
+
+    color: #ffffff;
+}
+
+.finance-chart-legend {
+    display: flex;
+
+    gap: 16px;
+
+    margin-bottom: 12px;
+}
+
+.finance-chart-legend-item {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: #5f5e5e;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.finance-chart-legend-item .dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+}
+
+.finance-chart-legend-item .dot.income {
+    background: #e0c0b2;
+}
+
+.finance-chart-legend-item .dot.expense {
+    background: #9e3d00;
+}
+
+
+/* =========================================================
+   GRAFİK (Gelir/Gider gruplu çubuk)
+========================================================= */
+
+.finance-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 4px;
+
+    height: 240px;
+
+    padding: 12px 8px 32px;
+
+    box-sizing: border-box;
+
+    border-bottom: 1px solid #e4e2de;
+}
+
+.finance-chart-group {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    flex: 1;
+
+    height: 100%;
+}
+
+.finance-chart-bars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    gap: 3px;
+
+    width: 100%;
+    height: 100%;
+}
+
+.finance-chart-bar {
+    width: 40%;
+    max-width: 18px;
+
+    min-height: 3px;
+
+    border-radius: 3px 3px 0 0;
+
+    transition: opacity 0.15s ease;
+}
+
+.finance-chart-bar:hover {
+    opacity: 0.75;
+}
+
+.finance-chart-bar.income {
+    background: #e0c0b2;
+}
+
+.finance-chart-bar.expense {
+    background: #9e3d00;
+}
+
+.finance-chart-label {
+    position: absolute;
+    bottom: -24px;
+
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   GİDER EKLE BUTONU
+========================================================= */
+
+.finance-add-expense-button {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 10px 18px;
+
+    background: #9e3d00;
+    border: none;
+    border-radius: 4px;
+
+    color: #ffffff;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.finance-add-expense-button:hover {
+    background: #7c2e00;
+}
+
+.finance-add-expense-button .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   GİDERLER TABLOSU
+========================================================= */
+
+.finance-table-wrap {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.finance-table {
+    width: 100%;
+    min-width: 780px;
+
+    border-collapse: collapse;
+}
+
+.finance-table thead tr {
+    background: #f5f3ef;
+
+    border-bottom: 1px solid #e4e2de;
+}
+
+.finance-table th {
+    padding: 12px 20px;
+
+    text-align: left;
+
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+
+    white-space: nowrap;
+}
+
+.finance-table tbody tr {
+    border-bottom: 1px solid #e4e2de;
+
+    transition: background 0.15s ease;
+}
+
+.finance-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.finance-table tbody tr:hover {
+    background: #f5f3ef;
+}
+
+.finance-table td {
+    padding: 14px 20px;
+
+    color: #1b1c1a;
+
+    font-size: 13px;
+    line-height: 18px;
+
+    white-space: nowrap;
+}
+
+.finance-table .text-right {
+    text-align: right;
+}
+
+.finance-table .text-center {
+    text-align: center;
+}
+
+.finance-expense-name {
+    font-weight: 600;
+}
+
+.finance-secondary-cell {
+    color: #5f5e5e;
+}
+
+.finance-amount-cell {
+    font-weight: 600;
+}
+
+.finance-description-cell {
+    max-width: 180px;
+
+    overflow: hidden;
+
+    color: #5f5e5e;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.finance-category-cell {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: #5f5e5e;
+}
+
+.finance-category-cell .dot {
+    width: 6px;
+    height: 6px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #9e3d00;
+}
+
+.finance-empty {
+    padding: 32px 24px !important;
+
+    text-align: center;
+
+    color: #5f5e5e;
+
+    white-space: normal !important;
+}
+
+
+/* =========================================================
+   SATIR İŞLEM BUTONLARI
+========================================================= */
+
+.finance-row-actions {
+    display: flex;
+    justify-content: center;
+
+    gap: 4px;
+}
+
+.finance-action-button {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+
+    color: #5f5e5e;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.finance-action-button:hover {
+    background: #eae8e4;
+    color: #9e3d00;
+}
+
+.finance-action-button.danger:hover {
+    background: rgba(186, 26, 26, 0.1);
+    color: #ba1a1a;
+}
+
+.finance-action-button .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   SAĞ KOLON WIDGET'LARI
+========================================================= */
+
+.finance-widget-title {
+    margin: 0 0 16px;
+
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #e4e2de;
+
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+.finance-widget-rows {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.finance-widget-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.finance-widget-row span {
+    color: #5f5e5e;
+
+    font-size: 13px;
+}
+
+.finance-widget-row strong {
+    color: #1b1c1a;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+/* ÖDEME YÖNTEMLERİ */
+
+.finance-payment-methods {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.finance-payment-method-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 6px;
+
+    color: #1b1c1a;
+
+    font-size: 13px;
+}
+
+.finance-payment-method-label {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    font-weight: 600;
+}
+
+.finance-payment-method-label .material-symbols-outlined {
+    color: #5f5e5e;
+
+    font-size: 18px;
+}
+
+.finance-progress-track {
+    width: 100%;
+    height: 5px;
+
+    background: #e4e2de;
+    border-radius: 999px;
+
+    overflow: hidden;
+}
+
+.finance-progress-fill {
+    height: 100%;
+
+    border-radius: 999px;
+
+    background: #9e3d00;
+}
+
+.finance-progress-fill.nakit {
+    background: #5e5c56;
+}
+
+.finance-progress-fill.diger {
+    background: #8c7166;
+}
+
+
+/* GİDER DAĞILIMI */
+
+.finance-distribution-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.finance-distribution-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.finance-distribution-label {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: #5f5e5e;
+
+    font-size: 13px;
+}
+
+.finance-distribution-label .dot {
+    width: 8px;
+    height: 8px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+}
+
+.finance-distribution-value {
+    color: #1b1c1a;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.finance-distribution-empty {
+    color: #5f5e5e;
+
+    font-size: 13px;
+}
+
+
+/* NET GELİR AÇIKLAMASI */
+
+.finance-formula-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 20px;
+
+    background: #f5f3ef;
+
+    border: 1px solid #e4e2de;
+    border-radius: 6px;
+
+    text-align: center;
+}
+
+.finance-formula-card .material-symbols-outlined {
+    color: #5e5c56;
+
+    font-size: 22px;
+}
+
+.finance-formula-card p {
+    margin: 0;
+
+    color: #5f5e5e;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .finance-main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .finance-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+
+    .finance-page {
+        padding: 20px;
+    }
+
+    .finance-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .finance-page {
+        padding: 14px;
+    }
+
+    .finance-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .finance-chart-filters {
+        width: 100%;
+    }
+
+    .finance-chart-filter-chip {
+        flex: 1;
+
+        text-align: center;
+    }
+}
