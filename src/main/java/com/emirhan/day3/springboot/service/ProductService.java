@@ -69,7 +69,9 @@ public class ProductService {
           product.getId(),
           product.getName(),
           product.getPrice(),
-          product.getCategory().getName()
+          product.getCategory().getName(),
+          product.getStock(),
+          product.getImageUrl()
         );
     }
 
@@ -79,12 +81,15 @@ public class ProductService {
                 .findById(dto.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Kategori bulunamadı"));
 
-        return new Product(
+        Product product = new Product(
                 dto.getName(),
                 dto.getStock(),
                 dto.getPrice(),
                 category
         );
+        product.setImageUrl(dto.getImageUrl());
+
+        return product;
     }
 
 
@@ -135,6 +140,9 @@ public class ProductService {
             product.setStock(dto.getStock());
             product.setPrice(dto.getPrice());
             product.setCategory(category);
+
+            // Görsel URL'si boş bırakılırsa imageUrl null/boş olarak kaydedilir.
+            product.setImageUrl(dto.getImageUrl());
 
             Product updatedProduct = productRepository.save(product);
 

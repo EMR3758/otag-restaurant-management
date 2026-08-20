@@ -1,0 +1,198 @@
+.delete-confirm-backdrop {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(27, 28, 26, 0.5);
+
+    backdrop-filter: blur(2px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    z-index: 2100;
+
+    animation: delete-confirm-fade 0.15s ease;
+}
+
+
+.delete-confirm-modal {
+    width: 100%;
+    max-width: 380px;
+
+    position: relative;
+
+    padding: 28px 24px 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 12px;
+
+    box-shadow: 0 24px 64px rgba(27, 28, 26, 0.28);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    font-family:
+            "Hanken Grotesk",
+            "Segoe UI",
+            system-ui,
+            sans-serif;
+
+    animation: delete-confirm-rise 0.18s ease;
+}
+
+.delete-confirm-modal::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 4px;
+
+    background: #ba1a1a;
+
+    border-radius: 12px 12px 0 0;
+}
+
+
+@keyframes delete-confirm-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes delete-confirm-rise {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+.delete-confirm-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 16px;
+
+    background: rgba(186, 26, 26, 0.12);
+    border-radius: 50%;
+
+    color: #ba1a1a;
+}
+
+
+.delete-confirm-modal h3 {
+    margin: 0 0 8px;
+
+    color: #1b1c1a;
+
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+}
+
+.delete-confirm-modal p {
+    margin: 0 0 24px;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+    line-height: 20px;
+}
+
+
+.delete-confirm-actions {
+    display: flex;
+    width: 100%;
+
+    gap: 12px;
+}
+
+.delete-confirm-cancel,
+.delete-confirm-confirm {
+    flex: 1;
+
+    padding: 10px 16px;
+
+    border-radius: 2px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.delete-confirm-cancel {
+    background: transparent;
+
+    border: 1px solid #1b1c1a;
+
+    color: #1b1c1a;
+}
+
+.delete-confirm-cancel:hover:not(:disabled) {
+    background: #eae8e4;
+}
+
+.delete-confirm-confirm {
+    background: #ba1a1a;
+
+    border: 1px solid #ba1a1a;
+
+    color: #ffffff;
+}
+
+.delete-confirm-confirm:hover:not(:disabled) {
+    background: #93000a;
+}
+
+.delete-confirm-cancel:disabled,
+.delete-confirm-confirm:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   NEUTRAL VARYANT (yıkıcı olmayan eylemler, örn. Masayı Boşalt)
+========================================================= */
+
+.delete-confirm-modal.neutral::before {
+    background: #9e3d00;
+}
+
+.delete-confirm-modal.neutral .delete-confirm-icon {
+    background: rgba(158, 61, 0, 0.1);
+
+    color: #9e3d00;
+}
+
+.delete-confirm-modal.neutral .delete-confirm-confirm {
+    background: #9e3d00;
+
+    border-color: #9e3d00;
+}
+
+.delete-confirm-modal.neutral .delete-confirm-confirm:hover:not(:disabled) {
+    background: #7c2e00;
+}

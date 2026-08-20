@@ -1,6 +1,19 @@
+import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
+import { useNotifications } from "../context/NotificationsContext";
 
 function Navbar({ type = "default", title, searchPlaceholder = "Ara...", onMenuClick = () => {} }) {
+
+    const navigate = useNavigate();
+    const { unreadCount } = useNotifications();
+
+    const handleNotificationsClick = () => {
+        navigate("/notifications");
+    };
+
+    const handleProfileClick = () => {
+        navigate("/settings");
+    };
 
     if (type === "dashboard") {
 
@@ -23,15 +36,27 @@ function Navbar({ type = "default", title, searchPlaceholder = "Ara...", onMenuC
 
                 <div className="topbar-right">
 
-                    <button className="notification-button">
+                    <button
+                        className="notification-button"
+                        onClick={handleNotificationsClick}
+                        aria-label="Bildirimler"
+                    >
                         <span className="material-symbols-outlined">
                             notifications
                         </span>
 
-                        <span className="notification-dot" />
+                        {unreadCount > 0 && (
+                            <span className="notification-dot">
+                                {unreadCount > 9 ? "9+" : unreadCount}
+                            </span>
+                        )}
                     </button>
 
-                    <div className="user-info">
+                    <button
+                        className="user-info"
+                        onClick={handleProfileClick}
+                        aria-label="Ayarlar"
+                    >
 
                         <div className="user-text">
                             <p className="user-name">Emirhan</p>
@@ -44,7 +69,7 @@ function Navbar({ type = "default", title, searchPlaceholder = "Ara...", onMenuC
                             </span>
                         </div>
 
-                    </div>
+                    </button>
 
                 </div>
 
@@ -79,10 +104,20 @@ function Navbar({ type = "default", title, searchPlaceholder = "Ara...", onMenuC
 
             <div className="topbar-right">
 
-                <button className="icon-button">
+                <button
+                    className="icon-button notification-button"
+                    onClick={handleNotificationsClick}
+                    aria-label="Bildirimler"
+                >
                     <span className="material-symbols-outlined">
                         notifications
                     </span>
+
+                    {unreadCount > 0 && (
+                        <span className="notification-dot">
+                            {unreadCount > 9 ? "9+" : unreadCount}
+                        </span>
+                    )}
                 </button>
 
                 {type === "tables" && (
@@ -93,7 +128,11 @@ function Navbar({ type = "default", title, searchPlaceholder = "Ara...", onMenuC
                     </button>
                 )}
 
-                <div className="user-info">
+                <button
+                    className="user-info"
+                    onClick={handleProfileClick}
+                    aria-label="Ayarlar"
+                >
 
                     <div className="user-avatar">
                         <span className="material-symbols-outlined">
@@ -105,7 +144,7 @@ function Navbar({ type = "default", title, searchPlaceholder = "Ara...", onMenuC
                         <strong>Profile Settings</strong>
                     </div>
 
-                </div>
+                </button>
 
             </div>
 

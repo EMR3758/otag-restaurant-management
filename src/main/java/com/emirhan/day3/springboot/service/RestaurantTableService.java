@@ -76,6 +76,7 @@ public class RestaurantTableService {
         restaurantTable.setCapacity(dto.getCapacity());
         restaurantTable.setTableType(dto.getTableType());
         restaurantTable.setLocation(dto.getLocation());
+        restaurantTable.setAvailable(dto.isAvailable());
 
         RestaurantTable updatedTable = restaurantTableRepository.save(restaurantTable);
         return convertToDTO(updatedTable);

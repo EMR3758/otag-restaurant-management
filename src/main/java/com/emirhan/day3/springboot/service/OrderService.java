@@ -120,11 +120,19 @@ public class OrderService {
             order.setStatus(dto.getStatus());
             order.setTotal(dto.getTotal());
 
-            RestaurantTable table = restaurantTableRepository
-                    .findById(dto.getTableId())
-                    .orElseThrow(() -> new RuntimeException("Masa bulunamadı"));
+            // tableId gönderilmediyse (ör. sadece durum güncellenirken,
+            // masasız bir sipariş için) mevcut masayı olduğu gibi bırakıyoruz.
+            // Aksi halde findById(null) IllegalArgumentException fırlatıp
+            // 500 hatasına sebep oluyordu.
+            if (dto.getTableId() != null) {
 
-            order.setTable(table);
+                RestaurantTable table = restaurantTableRepository
+                        .findById(dto.getTableId())
+                        .orElseThrow(() -> new RuntimeException("Masa bulunamadı"));
+
+                order.setTable(table);
+
+            }
 
             Order updatedOrder = orderRepository.save(order);
 

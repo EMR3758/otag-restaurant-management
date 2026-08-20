@@ -28,7 +28,13 @@ function Login() {
 
         if(response.ok){
             localStorage.setItem("token",data.token);
+            // Butonların role göre gösterilip gizlenmesi (ör. Personel Ekle)
+            // için rolü de saklıyoruz. Asıl yetkilendirme backend'de yapılıyor,
+            // bu sadece arayüz görünürlüğü içindir.
+            localStorage.setItem("userId",data.userId);
+            localStorage.setItem("role",data.role);
             console.log("Token kaydedildi.");
+            console.log("User ID kaydedildi",data.userId);
             navigate("/dashboard");
         }else {
             console.log("Login başarısız:",data)

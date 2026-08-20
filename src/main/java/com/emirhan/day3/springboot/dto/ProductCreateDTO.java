@@ -7,7 +7,16 @@ public class ProductCreateDTO {
     private int stock;
     private double price;
     private Long categoryId;
+    private String imageUrl;
     public ProductCreateDTO(){}
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public Long getCategoryId() {
         return categoryId;

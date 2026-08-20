@@ -1,0 +1,122 @@
+.contact-section {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-bottom: var(--site-section-gap);
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px;
+
+    background: var(--site-surface-lowest);
+    border: 1px solid var(--site-border);
+    border-radius: var(--site-radius-md);
+}
+
+.contact-info-item .material-symbols-outlined {
+    color: var(--site-primary);
+    font-size: 22px;
+}
+
+.contact-info-item h4 {
+    margin: 0 0 4px;
+    font-size: 14px;
+    color: var(--site-on-surface);
+}
+
+.contact-info-item p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--site-on-surface-variant);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    padding: 24px;
+    background: var(--site-surface-lowest);
+    border: 1px solid var(--site-border);
+    border-radius: var(--site-radius-lg);
+    box-shadow: var(--site-shadow-soft);
+}
+
+.contact-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contact-field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--site-on-surface);
+}
+
+.contact-field input,
+.contact-field textarea {
+    width: 100%;
+    padding: 12px 14px;
+
+    background: var(--site-surface);
+    border: 1px solid var(--site-border);
+    border-radius: var(--site-radius-sm);
+
+    font-family: var(--site-font-display);
+    font-size: 14px;
+    color: var(--site-on-surface);
+}
+
+.contact-field textarea {
+    resize: vertical;
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+    outline: none;
+    border-color: var(--site-primary);
+}
+
+.contact-submit-button {
+    padding: 14px 24px;
+
+    background: var(--site-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--site-radius-sm);
+
+    font-family: var(--site-font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.contact-submit-button:hover {
+    background: var(--site-primary-container);
+    transform: translateY(-1px);
+}
+
+@media (min-width: 900px) {
+    .contact-section {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .contact-info,
+    .contact-form {
+        flex: 1;
+    }
+}

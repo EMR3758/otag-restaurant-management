@@ -31,7 +31,8 @@ public class UserService {
                 user.getFullName(),
                 user.getEmail(),
                 user.getRole(),
-                user.isActive()
+                user.isActive(),
+                user.getPhone()
         );
     }
 
@@ -54,6 +55,7 @@ public class UserService {
         user.setRole(dto.getRole());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setActive(dto.isActive());
+        user.setPhone(dto.getPhone());
         return  user;
     }
 
@@ -97,6 +99,8 @@ public class UserService {
 
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());
+        user.setPhone(dto.getPhone());
+
         // Şifre alanı boş/eksik gönderildiyse (ör. EditUser.jsx formunda şifre
         // alanı hiç yok) mevcut şifre hash'ini olduğu gibi koruyoruz; aksi halde
         // null/boş şifre gerçek hash'in üzerine yazılıp kullanıcının girişini

@@ -58,26 +58,40 @@ function Sidebar({ open = false, onClose = () => {} }) {
                 </NavLink>
 
 
-                <a href="#" className="menu-item">
-                    <span className="material-symbols-outlined">
-                        restaurant_menu
-                    </span>
+                <NavLink
+                    to="/menu"
+                    className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
+                >
+                    {({ isActive }) => (
+                        <>
+                            <span className={`material-symbols-outlined${isActive ? " icon-fill" : ""}`}>
+                                restaurant_menu
+                            </span>
 
-                    <span>
-                        Menü
-                    </span>
-                </a>
+                            <span>
+                                Menü
+                            </span>
+                        </>
+                    )}
+                </NavLink>
 
 
-                <a href="#" className="menu-item">
-                    <span className="material-symbols-outlined">
-                        category
-                    </span>
+                <NavLink
+                    to="/categories"
+                    className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
+                >
+                    {({ isActive }) => (
+                        <>
+                            <span className={`material-symbols-outlined${isActive ? " icon-fill" : ""}`}>
+                                category
+                            </span>
 
-                    <span>
-                        Kategoriler
-                    </span>
-                </a>
+                            <span>
+                                Kategoriler
+                            </span>
+                        </>
+                    )}
+                </NavLink>
 
 
                 <NavLink
@@ -98,26 +112,76 @@ function Sidebar({ open = false, onClose = () => {} }) {
                 </NavLink>
 
 
-                <a href="#" className="menu-item">
-                    <span className="material-symbols-outlined">
-                        group
-                    </span>
+                <NavLink
+                    to="/stock"
+                    className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
+                >
+                    {({ isActive }) => (
+                        <>
+                            <span className={`material-symbols-outlined${isActive ? " icon-fill" : ""}`}>
+                                inventory_2
+                            </span>
 
-                    <span>
-                        Kullanıcılar
-                    </span>
-                </a>
+                            <span>
+                                Stok
+                            </span>
+                        </>
+                    )}
+                </NavLink>
 
 
-                <a href="#" className="menu-item">
-                    <span className="material-symbols-outlined">
-                        settings
-                    </span>
+                <NavLink
+                    to="/reservations"
+                    className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
+                >
+                    {({ isActive }) => (
+                        <>
+                            <span className={`material-symbols-outlined${isActive ? " icon-fill" : ""}`}>
+                                event
+                            </span>
 
-                    <span>
-                        Ayarlar
-                    </span>
-                </a>
+                            <span>
+                                Rezervasyonlar
+                            </span>
+                        </>
+                    )}
+                </NavLink>
+
+
+                <NavLink
+                    to="/users"
+                    className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
+                >
+                    {({ isActive }) => (
+                        <>
+                            <span className={`material-symbols-outlined${isActive ? " icon-fill" : ""}`}>
+                                group
+                            </span>
+
+                            <span>
+                                Personeller
+                            </span>
+                        </>
+                    )}
+                </NavLink>
+
+
+                <NavLink
+                    to="/settings"
+                    className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
+                >
+                    {({ isActive }) => (
+                        <>
+                            <span className={`material-symbols-outlined${isActive ? " icon-fill" : ""}`}>
+                                settings
+                            </span>
+
+                            <span>
+                                Ayarlar
+                            </span>
+                        </>
+                    )}
+                </NavLink>
 
             </nav>
 

@@ -1,0 +1,57 @@
+.quick-action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+
+    aspect-ratio: 1 / 1;
+    padding: 20px 12px;
+
+    background: var(--site-surface-lowest);
+    border: 1px solid var(--site-border);
+    border-radius: var(--site-radius-md);
+    box-shadow: var(--site-shadow-soft);
+
+    text-align: center;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quick-action-card:hover {
+    border-color: var(--site-primary);
+    transform: translateY(-3px);
+    box-shadow: var(--site-shadow-lift);
+}
+
+.quick-action-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--site-radius-full);
+    background: var(--site-surface-container);
+    color: var(--site-primary);
+    transition: background 0.2s ease;
+}
+
+.quick-action-card:hover .quick-action-icon {
+    background: rgba(158, 61, 0, 0.12);
+}
+
+.quick-action-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--site-on-surface);
+}
+
+@media (min-width: 900px) {
+    .quick-action-card {
+        aspect-ratio: auto;
+        height: 180px;
+    }
+
+    .quick-action-label {
+        font-size: 17px;
+    }
+}

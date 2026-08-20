@@ -2,6 +2,8 @@ package com.emirhan.day3.springboot.controller;
 
 import com.emirhan.day3.springboot.dto.AuthResponse;
 import com.emirhan.day3.springboot.dto.LoginRequest;
+import com.emirhan.day3.springboot.model.User;
+import com.emirhan.day3.springboot.repository.UserRepository;
 import com.emirhan.day3.springboot.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,13 +18,16 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtService jwtService;
+    private final UserRepository userRepository;
 
     public AuthController(AuthenticationManager authenticationManager,
                           UserDetailsService userDetailsService,
-                          JwtService jwtService) {
+                          JwtService jwtService,
+                          UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtService = jwtService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/login")
@@ -47,7 +52,13 @@ public class AuthController {
                 .map(authority -> authority.getAuthority().replace("ROLE_", ""))
                 .orElse(null);
 
-        return new AuthResponse(token, role);
+        //Setting.jsx kısmında "MUDUR","WAITER" felan bulması için
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow();
+
+        Long userId = user.getId();
+
+        return new AuthResponse(token, role, userId);
     }
 
 }

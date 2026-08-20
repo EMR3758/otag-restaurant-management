@@ -1,0 +1,97 @@
+/* =========================================================
+   OTAĞ CAFE — MÜŞTERİ SİTESİ TASARIM TOKENLARI
+   Bu değişkenler sadece .otag-site kapsayıcısı içinde geçerlidir,
+   admin panelinin global stillerini etkilemez.
+========================================================= */
+
+.otag-site {
+    --site-primary: #9E3D00;
+    --site-primary-container: #C64F00;
+    --site-secondary: #94492B;
+    --site-accent-gold: #C5A059;
+
+    --site-surface: #FCF9F5;
+    --site-surface-lowest: #FFFFFF;
+    --site-surface-container: #F3ECE3;
+    --site-surface-container-high: #EFE3D3;
+
+    --site-on-surface: #241A12;
+    --site-on-surface-variant: #6B5A4E;
+
+    --site-border: #E5E1DA;
+    --site-outline: #D8CDBF;
+
+    --site-shadow-soft: 0 12px 32px rgba(44, 30, 16, 0.08);
+    --site-shadow-lift: 0 20px 48px rgba(44, 30, 16, 0.14);
+
+    --site-radius-sm: 12px;
+    --site-radius-md: 16px;
+    --site-radius-lg: 24px;
+    --site-radius-full: 999px;
+
+    --site-font-display: "Hanken Grotesk", "Segoe UI", system-ui, sans-serif;
+    --site-font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+
+    --site-max-width: 1280px;
+    --site-gutter: 24px;
+    --site-section-gap: 80px;
+
+    width: 100%;
+    background: var(--site-surface);
+    color: var(--site-on-surface);
+    font-family: var(--site-font-display);
+    box-sizing: border-box;
+}
+
+.otag-site *,
+.otag-site *::before,
+.otag-site *::after {
+    box-sizing: border-box;
+}
+
+.otag-site .material-symbols-outlined {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-variation-settings:
+        "FILL" 0,
+        "wght" 400,
+        "GRAD" 0,
+        "opsz" 24;
+    -webkit-font-smoothing: antialiased;
+}
+
+.otag-site img {
+    display: block;
+    max-width: 100%;
+}
+
+.otag-site a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.otag-site button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.otag-site .site-container {
+    width: 100%;
+    max-width: var(--site-max-width);
+    margin: 0 auto;
+    padding: 0 var(--site-gutter);
+}
+
+@media (max-width: 640px) {
+    .otag-site {
+        --site-gutter: 20px;
+        --site-section-gap: 56px;
+    }
+}

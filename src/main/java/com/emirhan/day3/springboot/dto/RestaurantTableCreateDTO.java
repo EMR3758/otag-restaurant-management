@@ -5,16 +5,18 @@ public class RestaurantTableCreateDTO {
     private int capacity;
     private String tableType;
     private String location;
+    private boolean available;
 
 
     public RestaurantTableCreateDTO() {
     }
 
-    public RestaurantTableCreateDTO(String tableNumber, int capacity,String tableType,String location) {
+    public RestaurantTableCreateDTO(String tableNumber, int capacity,String tableType,String location,boolean available) {
         this.tableNumber = tableNumber;
         this.capacity = capacity;
         this.tableType=tableType;
         this.location=location;
+        this.available=available;
     }
 
     public String getTableNumber() {
@@ -47,5 +49,13 @@ public class RestaurantTableCreateDTO {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

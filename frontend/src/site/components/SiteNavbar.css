@@ -1,0 +1,110 @@
+.site-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+
+    background: rgba(252, 249, 245, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(229, 225, 218, 0.6);
+}
+
+.site-navbar-inner {
+    display: none;
+}
+
+.site-logo {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--site-primary);
+}
+
+.site-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.site-nav-link {
+    position: relative;
+    padding-bottom: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--site-on-surface-variant);
+    transition: color 0.2s ease;
+}
+
+.site-nav-link:hover {
+    color: var(--site-primary);
+}
+
+.site-nav-link.active {
+    color: var(--site-primary);
+    font-weight: 700;
+}
+
+.site-nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--site-primary);
+    border-radius: var(--site-radius-full);
+}
+
+.site-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.site-icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    border-radius: var(--site-radius-full);
+    color: var(--site-on-surface-variant);
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.site-icon-button:hover {
+    background: var(--site-surface-container);
+    color: var(--site-primary);
+}
+
+.site-cta-button {
+    background: var(--site-primary);
+    color: #ffffff;
+    border: none;
+    padding: 11px 24px;
+    border-radius: var(--site-radius-full);
+    font-family: var(--site-font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.site-cta-button:hover {
+    background: var(--site-primary-container);
+    transform: translateY(-1px);
+}
+
+@media (min-width: 900px) {
+    .site-navbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+}

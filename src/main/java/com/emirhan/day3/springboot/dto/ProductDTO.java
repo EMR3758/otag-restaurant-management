@@ -12,6 +12,8 @@ public class ProductDTO {
     private String name;
     private double price;
     private String categoryName;
+    private int stock;
+    private String imageUrl;
 
     public String getCategoryName() {
         return categoryName;
@@ -23,11 +25,13 @@ public class ProductDTO {
 
     public  ProductDTO(){
     }
-    public ProductDTO(Long id, String name, double price, String categoryName){
+    public ProductDTO(Long id, String name, double price, String categoryName, int stock, String imageUrl){
         this.id=id;
         this.name=name;
         this.price=price;
         this.categoryName=categoryName;
+        this.stock=stock;
+        this.imageUrl=imageUrl;
     }
 
 
@@ -43,6 +47,14 @@ public class ProductDTO {
         return price;
     }
 
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -53,5 +65,13 @@ public class ProductDTO {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

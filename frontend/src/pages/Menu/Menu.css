@@ -1,0 +1,758 @@
+/* =========================================================
+   ANA SAYFA
+========================================================= */
+
+.menu-page {
+    max-width: 1440px;
+
+    margin: 0 auto;
+    padding: 40px;
+
+    background: #fbf9f5;
+    color: #1b1c1a;
+
+    min-height: 100vh;
+
+    font-family:
+            "Hanken Grotesk",
+            "Segoe UI",
+            system-ui,
+            sans-serif;
+}
+
+
+/* =========================================================
+   SAYFA BAŞLIĞI
+========================================================= */
+
+.menu-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 24px;
+}
+
+.menu-header h1 {
+    margin: 0 0 8px;
+
+    color: #1b1c1a;
+
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.menu-header p {
+    margin: 0;
+
+    color: #594238;
+
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.add-product-button {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+
+    padding: 10px 20px;
+
+    background: #9e3d00;
+    border: none;
+    border-radius: 2px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.add-product-button:hover {
+    background: #c64f00;
+}
+
+.add-product-button:focus-visible {
+    outline: 2px solid #9e3d00;
+    outline-offset: 2px;
+}
+
+.add-product-button .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+.menu-load-error {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+
+    background: rgba(186, 26, 26, 0.08);
+    border: 1px solid rgba(186, 26, 26, 0.3);
+    border-radius: 2px;
+
+    color: #ba1a1a;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   ARAÇ ÇUBUĞU
+========================================================= */
+
+.menu-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+    padding: 16px;
+
+    background: #f5f3ef;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+}
+
+
+.menu-search {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.menu-search .material-symbols-outlined {
+    position: absolute;
+    left: 10px;
+
+    font-size: 18px;
+    color: #594238;
+}
+
+.menu-search input {
+    width: 100%;
+
+    height: 36px;
+
+    padding: 0 12px 0 34px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+
+    box-sizing: border-box;
+}
+
+.menu-search input::placeholder {
+    color: #99928c;
+}
+
+.menu-search input:focus {
+    outline: none;
+    border-color: #9e3d00;
+}
+
+
+.menu-select-field {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.menu-select-field select {
+    appearance: none;
+
+    height: 36px;
+
+    padding: 0 32px 0 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+.menu-select-field select:focus {
+    outline: none;
+    border-color: #9e3d00;
+}
+
+.menu-select-field .material-symbols-outlined {
+    position: absolute;
+    right: 8px;
+
+    font-size: 18px;
+    color: #594238;
+
+    pointer-events: none;
+}
+
+
+.clear-filters-text {
+    background: transparent;
+    border: none;
+
+    color: #9e3d00;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    padding: 8px 4px;
+}
+
+.clear-filters-text:hover {
+    text-decoration: underline;
+}
+
+
+.menu-view-toggle {
+    display: flex;
+
+    margin-left: auto;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.menu-view-toggle button {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+    border: none;
+
+    color: #5f5e5e;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.menu-view-toggle button + button {
+    border-left: 1px solid #e0c0b2;
+}
+
+.menu-view-toggle button:hover {
+    background: #efeeea;
+}
+
+.menu-view-toggle button.active {
+    background: rgba(158, 61, 0, 0.08);
+    color: #9e3d00;
+}
+
+.menu-view-toggle .material-symbols-outlined {
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   TABLO PANELİ (LIST VIEW)
+========================================================= */
+
+.menu-table-panel {
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    box-shadow: 0 4px 20px rgba(27, 28, 26, 0.04);
+
+    overflow: hidden;
+}
+
+.menu-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.menu-table {
+    width: 100%;
+    min-width: 760px;
+
+    border-collapse: collapse;
+}
+
+.menu-table thead tr {
+    background: #f5f3ef;
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+.menu-table th {
+    padding: 12px 24px;
+
+    text-align: left;
+
+    color: #594238;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+.menu-table tbody tr {
+    border-bottom: 1px solid #e0c0b2;
+
+    transition: background 0.2s ease;
+}
+
+.menu-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.menu-table tbody tr:hover {
+    background: #f5f3ef;
+}
+
+.menu-table td {
+    padding: 12px 24px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    line-height: 20px;
+
+    white-space: nowrap;
+}
+
+.text-right {
+    text-align: right;
+}
+
+
+.product-cell {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.product-thumb {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f5f3ef;
+    border: 1px solid #e0c0b2;
+    border-radius: 4px;
+
+    color: #9e3d00;
+
+    overflow: hidden;
+}
+
+.product-thumb .material-symbols-outlined {
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   ÜRÜN GÖRSELİ (imageUrl) — ikon her zaman altta durur,
+   görsel yüklenirse üstüne biner; yüklenemezse ikon görünür kalır.
+========================================================= */
+
+.thumb-image {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.product-name {
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.product-category {
+    color: #594238;
+    font-size: 14px;
+}
+
+.product-price-cell {
+    font-weight: 700;
+}
+
+
+.menu-row-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 4px;
+}
+
+.action-button {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+    border-radius: 2px;
+
+    color: #5f5e5e;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.action-button:hover {
+    background: #eae8e4;
+    color: #9e3d00;
+}
+
+.action-button:focus-visible {
+    outline: 2px solid #9e3d00;
+    outline-offset: 1px;
+}
+
+.action-button-delete:hover {
+    color: #ba1a1a;
+}
+
+.action-button .material-symbols-outlined {
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   STOK ROZETİ
+========================================================= */
+
+.stock-badge {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 4px 10px;
+
+    border-radius: 999px;
+    border: 1px solid transparent;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+.stock-dot {
+    width: 6px;
+    height: 6px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+.stock-in {
+    color: #16a34a;
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.25);
+}
+
+.stock-low {
+    color: #b45309;
+    background: rgba(217, 119, 6, 0.1);
+    border-color: rgba(217, 119, 6, 0.25);
+}
+
+.stock-out {
+    color: #ba1a1a;
+    background: rgba(186, 26, 26, 0.08);
+    border-color: rgba(186, 26, 26, 0.25);
+}
+
+
+/* =========================================================
+   BOŞ DURUM
+========================================================= */
+
+.menu-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 4px;
+
+    padding: 64px 24px;
+
+    text-align: center;
+
+    color: #594238;
+}
+
+.menu-empty-state .material-symbols-outlined {
+    font-size: 32px;
+    color: #99928c;
+
+    margin-bottom: 8px;
+}
+
+.menu-empty-state h3 {
+    margin: 0;
+
+    color: #1b1c1a;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.menu-empty-state p {
+    margin: 0 0 12px;
+
+    font-size: 14px;
+}
+
+.clear-filters-button {
+    padding: 8px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #9e3d00;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.clear-filters-button:hover {
+    background: #eae8e4;
+}
+
+
+/* =========================================================
+   GRID VIEW
+========================================================= */
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+
+    gap: 16px;
+}
+
+.menu-card {
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 20px rgba(27, 28, 26, 0.04);
+
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.menu-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(27, 28, 26, 0.06);
+}
+
+.menu-card-thumb {
+    position: relative;
+
+    height: 190px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f5f3ef;
+    border-bottom: 1px solid #e0c0b2;
+
+    color: #9e3d00;
+
+    overflow: hidden;
+}
+
+.menu-card-thumb .material-symbols-outlined {
+    font-size: 40px;
+}
+
+.menu-card-body {
+    padding: 12px 14px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.menu-card-body h3 {
+    margin: 0;
+
+    color: #1b1c1a;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.menu-card-category {
+    margin: 0;
+
+    color: #594238;
+
+    font-size: 13px;
+}
+
+.menu-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 6px;
+}
+
+.menu-card-price {
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.menu-card-footer .stock-badge {
+    padding: 3px 8px;
+
+    font-size: 10px;
+}
+
+.menu-card-actions {
+    height: 52px;
+
+    flex-shrink: 0;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 4px;
+
+    padding: 0 12px;
+
+    border-top: 1px solid #e0c0b2;
+    background: #f5f3ef;
+
+    margin-top: auto;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .menu-page {
+        padding: 24px;
+    }
+
+    .menu-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .menu-toolbar {
+        align-items: stretch;
+    }
+
+    .menu-search {
+        width: 100%;
+    }
+
+    .menu-select-field select {
+        width: 100%;
+    }
+
+    .menu-view-toggle {
+        margin-left: 0;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .menu-page {
+        padding: 16px;
+    }
+}

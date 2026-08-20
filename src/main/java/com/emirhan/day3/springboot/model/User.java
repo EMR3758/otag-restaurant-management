@@ -20,6 +20,19 @@ public class User {
     private Role role;
 
     private boolean active = true;
+    private String phone ;
+
+    @Column(nullable = false)
+    private Boolean emailNotifications = false;
+
+    @Column(nullable = false)
+    private Boolean orderAlerts = false;
+
+    @Column(nullable = false)
+    private Boolean systemUpdates = false;
+
+    @Column(nullable = false)
+    private Boolean twoFactorEnabled = false;
 
     public User() {
     }
@@ -28,12 +41,22 @@ public class User {
                 String email,
                 String password,
                 Role role,
-                boolean active) {
+                boolean active,
+                String phone,
+                Boolean emailNotifications,
+                Boolean orderAlerts,
+                Boolean systemUpdates,
+                Boolean twoFactorEnabled) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.role = role;
         this.active=active;
+        this.phone=phone;
+        this.emailNotifications=emailNotifications;
+        this.orderAlerts=orderAlerts;
+        this.systemUpdates=systemUpdates;
+        this.twoFactorEnabled=twoFactorEnabled;
     }
 
     public Long getId() {
@@ -82,5 +105,45 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Boolean getEmailNotifications() {
+        return emailNotifications;
+    }
+
+    public void setEmailNotifications(Boolean emailNotifications) {
+        this.emailNotifications = emailNotifications;
+    }
+
+    public Boolean getOrderAlerts() {
+        return orderAlerts;
+    }
+
+    public void setOrderAlerts(Boolean orderAlerts) {
+        this.orderAlerts = orderAlerts;
+    }
+
+    public Boolean getSystemUpdates() {
+        return systemUpdates;
+    }
+
+    public void setSystemUpdates(Boolean systemUpdates) {
+        this.systemUpdates = systemUpdates;
+    }
+
+    public Boolean getTwoFactorEnabled() {
+        return twoFactorEnabled;
+    }
+
+    public void setTwoFactorEnabled(Boolean twoFactorEnabled) {
+        this.twoFactorEnabled = twoFactorEnabled;
     }
 }

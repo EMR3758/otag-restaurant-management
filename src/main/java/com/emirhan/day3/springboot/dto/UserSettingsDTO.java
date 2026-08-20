@@ -1,6 +1,10 @@
 package com.emirhan.day3.springboot.dto;
 
 public class UserSettingsDTO {
+    private String fullName;
+    private String email;
+    private String phone;
+
     private boolean emailNotifications;
     private boolean orderAlerts;
     private boolean systemUpdates;
@@ -10,11 +14,17 @@ public class UserSettingsDTO {
     public UserSettingsDTO(boolean emailNotifications,
                            boolean orderAlerts,
                            boolean systemUpdates,
-                           boolean twoFactorEnabled) {
+                           boolean twoFactorEnabled,
+                           String fullName,
+                           String email,
+                           String phone) {
         this.emailNotifications = emailNotifications;
         this.orderAlerts = orderAlerts;
         this.systemUpdates = systemUpdates;
         this.twoFactorEnabled = twoFactorEnabled;
+        this.fullName=fullName;
+        this.email=email;
+        this.phone=phone;
     }
 
     public boolean isEmailNotifications() {
@@ -47,5 +57,29 @@ public class UserSettingsDTO {
 
     public void setTwoFactorEnabled(boolean twoFactorEnabled) {
         this.twoFactorEnabled = twoFactorEnabled;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

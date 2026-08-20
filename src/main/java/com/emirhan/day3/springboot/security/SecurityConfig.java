@@ -1,5 +1,6 @@
 package com.emirhan.day3.springboot.security;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -100,6 +101,12 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public CommandLineRunner testPassword(PasswordEncoder passwordEncoder) {
+        return args -> {
+            System.out.println("123456 HASH = " + passwordEncoder.encode("123456"));
+        };
     }
 
     // Login sırasında kullanıcının email ve şifresini

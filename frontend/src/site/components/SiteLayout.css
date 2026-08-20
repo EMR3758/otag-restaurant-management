@@ -1,0 +1,12 @@
+.site-main {
+    padding-top: 72px;
+    padding-bottom: 96px;
+    min-height: 100vh;
+}
+
+@media (min-width: 900px) {
+    .site-main {
+        padding-top: 80px;
+        padding-bottom: 0;
+    }
+}

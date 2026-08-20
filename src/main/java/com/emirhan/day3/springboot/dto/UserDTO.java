@@ -8,15 +8,17 @@ public class UserDTO {
     private String email;
     private Role role;
     private boolean active;
+    private String phone;
 
     public UserDTO(){}
 
-    public UserDTO(Long id, String fullName, String email, Role role,boolean active) {
+    public UserDTO(Long id, String fullName, String email, Role role,boolean active,String phone) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.role = role;
         this.active = active;
+        this.phone = phone;
     }
 
     public Long getId() {
@@ -57,5 +59,13 @@ public class UserDTO {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

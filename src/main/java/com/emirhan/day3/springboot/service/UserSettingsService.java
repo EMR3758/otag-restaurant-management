@@ -20,11 +20,15 @@ public class UserSettingsService {
     }
 
     private UserSettingsDTO convertToDTO(UserSettings userSettings){
+        User user = userSettings.getUser();
         return new UserSettingsDTO(
                 userSettings.isEmailNotifications(),
                 userSettings.isOrderAlerts(),
                 userSettings.isSystemUpdates(),
-                userSettings.isTwoFactorEnabled()
+                userSettings.isTwoFactorEnabled(),
+                user.getFullName(),
+                user.getPhone(),
+                user.getEmail()
         );
     }
 
@@ -41,6 +45,12 @@ public class UserSettingsService {
     }
 
     public UserSettingsDTO updateSettings(Long userId,UserSettingsDTO dto){
+        User user = userRepository.findById(userId).orElseThrow(()->new RuntimeException("Kullanıcı bululnamadı."));
+        user.setFullName(dto.getFullName());
+        user.setEmail(dto.getEmail());
+        user.setPhone(dto.getPhone());
+        userRepository.save(user);
+
         UserSettings settings = userSettingsRepository
                 .findByUserId(userId)
                 .orElseGet(() -> createDefaultSettings(userId));

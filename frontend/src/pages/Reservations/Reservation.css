@@ -1,0 +1,573 @@
+/* =========================================================
+   ANA SAYFA
+========================================================= */
+
+.reservations-page {
+    max-width: 1440px;
+
+    margin: 0 auto;
+    padding: 40px;
+
+    background: #fbf9f5;
+    color: #1b1c1a;
+
+    min-height: 100vh;
+
+    font-family:
+            "Hanken Grotesk",
+            "Segoe UI",
+            system-ui,
+            sans-serif;
+}
+
+
+/* =========================================================
+   SAYFA BAŞLIĞI
+========================================================= */
+
+.reservations-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 24px;
+}
+
+.reservations-header h1 {
+    margin: 0 0 8px;
+
+    color: #1b1c1a;
+
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.reservations-header p {
+    margin: 0;
+
+    color: #5f5e5e;
+
+    font-size: 16px;
+    line-height: 24px;
+}
+
+
+.new-reservation-button {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+
+    padding: 12px 20px;
+
+    background: #9e3d00;
+    border: none;
+    border-radius: 2px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.new-reservation-button:hover {
+    background: #7c2e00;
+}
+
+.new-reservation-button .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   BAŞARI BANNER'I
+========================================================= */
+
+.reservations-success-banner {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 12px 16px;
+
+    margin-bottom: 20px;
+
+    background: rgba(22, 163, 74, 0.1);
+    border: 1px solid rgba(22, 163, 74, 0.3);
+    border-radius: 8px;
+
+    color: #16a34a;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ÖZET KARTLAR
+========================================================= */
+
+.reservations-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 24px;
+}
+
+.reservation-summary-card {
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 10px;
+
+    transition: border-color 0.2s ease;
+}
+
+.reservation-summary-card:hover {
+    border-color: #9e3d00;
+}
+
+.reservation-summary-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.reservation-summary-card-top span:first-child {
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.reservation-summary-card-top .material-symbols-outlined {
+    color: #9e3d00;
+
+    font-size: 18px;
+}
+
+.reservation-summary-card strong {
+    display: block;
+
+    color: #1b1c1a;
+
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+
+/* =========================================================
+   PANEL (FİLTRE + TABLO)
+========================================================= */
+
+.reservations-panel {
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    box-shadow: 0 4px 20px rgba(27, 28, 26, 0.04);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   FİLTRELER
+========================================================= */
+
+.reservations-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+
+    gap: 16px;
+
+    padding: 24px;
+
+    background: #f5f3ef;
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.filter-field label {
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.filter-search {
+    flex: 1;
+
+    min-width: 220px;
+}
+
+.filter-search-input {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.filter-search-input .material-symbols-outlined {
+    position: absolute;
+    left: 12px;
+
+    color: #5f5e5e;
+
+    font-size: 18px;
+}
+
+.filter-search-input input {
+    width: 100%;
+
+    padding: 10px 12px 10px 38px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+
+    box-sizing: border-box;
+}
+
+.filter-field select,
+.filter-field > input[type="date"] {
+    width: 200px;
+
+    padding: 10px 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+
+    box-sizing: border-box;
+}
+
+.filter-search-input input:focus,
+.filter-field select:focus,
+.filter-field > input[type="date"]:focus {
+    outline: none;
+    border-color: #9e3d00;
+}
+
+.clear-button {
+    height: 42px;
+
+    padding: 0 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 2px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.clear-button:hover {
+    background: #eae8e4;
+}
+
+
+/* =========================================================
+   DURUM METNİ (yükleniyor / hata)
+========================================================= */
+
+.reservations-status-text {
+    padding: 32px 24px;
+
+    margin: 0;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+    text-align: center;
+}
+
+
+/* =========================================================
+   TABLO
+========================================================= */
+
+.reservations-table-wrap {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.reservations-table {
+    width: 100%;
+    min-width: 960px;
+
+    border-collapse: collapse;
+}
+
+.reservations-table thead tr {
+    background: #f5f3ef;
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+.reservations-table th {
+    padding: 14px 24px;
+
+    text-align: left;
+
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+.reservations-table tbody tr {
+    border-bottom: 1px solid #e0c0b2;
+
+    transition: background 0.2s ease;
+}
+
+.reservations-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.reservations-table tbody tr:hover {
+    background: #f5f3ef;
+}
+
+.reservations-table td {
+    padding: 16px 24px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    line-height: 20px;
+
+    white-space: nowrap;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.reservation-customer {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+
+    font-weight: 700;
+}
+
+.reservation-note {
+    max-width: 220px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #5f5e5e;
+
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.reservations-empty {
+    padding: 32px 24px !important;
+
+    text-align: center;
+
+    color: #5f5e5e;
+
+    white-space: normal !important;
+}
+
+
+/* =========================================================
+   DURUM SEÇİCİ (tablo satırındaki select)
+========================================================= */
+
+.reservation-status-select {
+    padding: 6px 10px;
+
+    background: #efeeea;
+
+    border: 1px solid transparent;
+    border-radius: 2px;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
+
+.reservation-status-select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.reservation-status-select.status-pending {
+    color: #5f5e5e;
+    background: #efeeea;
+}
+
+.reservation-status-select.status-confirmed {
+    color: #9e3d00;
+    background: rgba(158, 61, 0, 0.1);
+}
+
+.reservation-status-select.status-arrived {
+    color: #16a34a;
+    background: rgba(34, 197, 94, 0.12);
+}
+
+.reservation-status-select.status-completed {
+    color: #5e5c56;
+    background: #e6e2db;
+}
+
+.reservation-status-select.status-cancelled,
+.reservation-status-select.status-no_show {
+    color: #ba1a1a;
+    background: rgba(186, 26, 26, 0.1);
+}
+
+
+/* =========================================================
+   AKSİYON BUTONLARI
+========================================================= */
+
+.reservation-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 4px;
+}
+
+.action-button {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+    border-radius: 2px;
+
+    color: #5f5e5e;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.action-button:hover {
+    background: #eae8e4;
+    color: #9e3d00;
+}
+
+.action-button-delete:hover {
+    color: #ba1a1a;
+}
+
+.action-button .material-symbols-outlined {
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .reservations-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+
+    .reservations-page {
+        padding: 24px;
+    }
+
+    .reservations-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .reservations-page {
+        padding: 16px;
+    }
+
+    .reservations-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-field select,
+    .filter-field > input[type="date"] {
+        width: 100%;
+    }
+}

@@ -1,0 +1,409 @@
+.stock-detail-backdrop {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(27, 28, 26, 0.5);
+
+    backdrop-filter: blur(2px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    z-index: 2100;
+
+    animation: stock-detail-fade 0.15s ease;
+}
+
+@keyframes stock-detail-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes stock-detail-rise {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.stock-detail-modal {
+    width: 100%;
+    max-width: 600px;
+    max-height: 88vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 12px;
+
+    box-shadow: 0 24px 64px rgba(27, 28, 26, 0.28);
+
+    font-family:
+            "Hanken Grotesk",
+            "Segoe UI",
+            system-ui,
+            sans-serif;
+
+    overflow: hidden;
+
+    animation: stock-detail-rise 0.18s ease;
+}
+
+
+.stock-detail-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 20px 24px;
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+.stock-detail-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 4px;
+}
+
+.stock-detail-title-row h3 {
+    margin: 0;
+
+    color: #1b1c1a;
+
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+}
+
+.stock-detail-category {
+    margin: 0;
+
+    color: #5f5e5e;
+
+    font-size: 13px;
+}
+
+.stock-detail-close {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+
+    color: #5f5e5e;
+
+    cursor: pointer;
+}
+
+.stock-detail-close:hover {
+    color: #1b1c1a;
+}
+
+
+.stock-status-badge {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 4px 10px;
+
+    border-radius: 999px;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.stock-status-badge .dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+.stock-status-badge.status-normal {
+    color: #5f5e5e;
+    background: #efeeea;
+}
+
+.stock-status-badge.status-critical {
+    color: #9e3d00;
+    background: rgba(158, 61, 0, 0.1);
+}
+
+.stock-status-badge.status-out_of_stock {
+    color: #ba1a1a;
+    background: rgba(186, 26, 26, 0.1);
+}
+
+
+.stock-detail-body {
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+.stock-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+.stock-detail-card {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    padding: 14px 16px;
+
+    background: #f5f3ef;
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+}
+
+.stock-detail-card.highlight {
+    background: rgba(158, 61, 0, 0.05);
+    border-color: #9e3d00;
+}
+
+.stock-detail-card span {
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.stock-detail-card strong {
+    color: #1b1c1a;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.stock-detail-card strong small {
+    color: #5f5e5e;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+.stock-detail-history h4 {
+    margin: 0 0 12px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.stock-detail-empty {
+    margin: 0;
+
+    padding: 16px;
+
+    background: #f5f3ef;
+    border-radius: 8px;
+
+    color: #5f5e5e;
+
+    font-size: 13px;
+    text-align: center;
+}
+
+.stock-detail-history-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.stock-detail-history-row {
+    display: grid;
+    grid-template-columns: 100px 110px 80px 1fr;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 12px;
+
+    background: #f5f3ef;
+    border-radius: 6px;
+}
+
+.stock-detail-history-date {
+    color: #5f5e5e;
+
+    font-size: 12px;
+}
+
+.stock-detail-history-type {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.stock-detail-history-type .dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+.stock-detail-history-type.in {
+    color: #16a34a;
+}
+
+.stock-detail-history-type.out {
+    color: #9e3d00;
+}
+
+.stock-detail-history-quantity {
+    font-weight: 700;
+
+    font-size: 13px;
+}
+
+.stock-detail-history-quantity.in {
+    color: #16a34a;
+}
+
+.stock-detail-history-quantity.out {
+    color: #9e3d00;
+}
+
+.stock-detail-history-note {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #5f5e5e;
+
+    font-size: 12px;
+}
+
+
+.stock-detail-footer {
+    display: flex;
+
+    gap: 12px;
+
+    padding: 16px 24px;
+
+    border-top: 1px solid #e0c0b2;
+
+    background: #f5f3ef;
+}
+
+.stock-detail-entry,
+.stock-detail-exit {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 10px 16px;
+
+    border-radius: 2px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.stock-detail-entry .material-symbols-outlined,
+.stock-detail-exit .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.stock-detail-entry {
+    background: #9e3d00;
+
+    border: 1px solid #9e3d00;
+
+    color: #ffffff;
+}
+
+.stock-detail-entry:hover {
+    background: #7c2e00;
+}
+
+.stock-detail-exit {
+    background: transparent;
+
+    border: 1px solid #ba1a1a;
+
+    color: #ba1a1a;
+}
+
+.stock-detail-exit:hover {
+    background: rgba(186, 26, 26, 0.08);
+}
+
+
+@media (max-width: 560px) {
+
+    .stock-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stock-detail-history-row {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 4px;
+    }
+
+    .stock-detail-history-note {
+        grid-column: 1 / -1;
+
+        white-space: normal;
+    }
+}

@@ -1,0 +1,525 @@
+/* =========================================================
+   ANA SAYFA (minimal task-flow düzeni — sidebar/navbar yok)
+========================================================= */
+
+.add-table-page {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #fbf9f5;
+    color: #1b1c1a;
+
+    font-family:
+            "Hanken Grotesk",
+            "Segoe UI",
+            system-ui,
+            sans-serif;
+}
+
+.add-table-page input[type="number"]::-webkit-inner-spin-button,
+.add-table-page input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.add-table-page input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+/* =========================================================
+   MİNİMAL ÜST BAR
+========================================================= */
+
+.add-table-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 20px 40px;
+
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(6px);
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+.back-to-tables-button {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    background: transparent;
+    border: none;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.back-to-tables-button:hover {
+    color: #9e3d00;
+}
+
+.back-to-tables-button:focus-visible {
+    outline: 2px solid #9e3d00;
+    outline-offset: 2px;
+}
+
+.back-to-tables-button .material-symbols-outlined {
+    font-size: 20px;
+}
+
+.add-table-wordmark {
+    color: #9e3d00;
+
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.add-table-topbar-spacer {
+    width: 96px;
+}
+
+@media (max-width: 700px) {
+
+    .add-table-topbar-spacer {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   ORTALANMIŞ FORM ALANI
+========================================================= */
+
+.add-table-main {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+}
+
+.add-table-card {
+    width: 100%;
+    max-width: 520px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    box-shadow: 0 4px 24px rgba(27, 28, 26, 0.04);
+
+    overflow: hidden;
+}
+
+.add-table-card-head {
+    padding: 48px 48px 24px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+}
+
+.add-table-icon {
+    width: 48px;
+    height: 48px;
+
+    margin-bottom: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffdbcd;
+    border-radius: 999px;
+
+    color: #9e3d00;
+}
+
+.add-table-icon .material-symbols-outlined {
+    font-size: 24px;
+}
+
+.add-table-card-head h1 {
+    margin: 0 0 8px;
+
+    color: #1b1c1a;
+
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.add-table-card-head p {
+    margin: 0;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.add-table-card form {
+    padding: 0 48px 48px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+.add-table-card .form-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.add-table-card .form-field label {
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.add-table-card .required {
+    color: #9e3d00;
+}
+
+.add-table-card input[type="text"],
+.add-table-card input[type="number"] {
+    width: 100%;
+
+    padding: 12px 16px;
+
+    background: #fbf9f5;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 4px;
+
+    color: #1b1c1a;
+
+    font-size: 16px;
+    font-family: inherit;
+
+    box-sizing: border-box;
+
+    box-shadow: 0 1px 2px rgba(27, 28, 26, 0.02);
+
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-table-card input::placeholder {
+    color: #c8c6c5;
+}
+
+.add-table-card input:focus {
+    background: #ffffff;
+    border-color: #9e3d00;
+    box-shadow: 0 0 0 1px #9e3d00;
+}
+
+.add-table-card .input-icon-wrap {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.add-table-card .input-icon-wrap input {
+    padding-left: 44px;
+}
+
+.add-table-card .input-icon-wrap .material-symbols-outlined {
+    position: absolute;
+    left: 16px;
+
+    font-size: 20px;
+    color: #c8c6c5;
+
+    pointer-events: none;
+
+    transition: color 0.2s ease;
+}
+
+.add-table-card .input-icon-wrap:focus-within .material-symbols-outlined {
+    color: #9e3d00;
+}
+
+.add-table-card .field-error {
+    color: #ba1a1a;
+
+    font-size: 12px;
+}
+
+.add-table-card .form-divider {
+    margin: 0;
+    border: none;
+    border-top: 1px solid #e0c0b2;
+}
+
+
+/* =========================================================
+   MÜSAİT AÇMA/KAPAMA
+========================================================= */
+
+.available-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    cursor: pointer;
+}
+
+.available-toggle-text {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.available-toggle-title {
+    color: #1b1c1a;
+
+    font-size: 20px;
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+}
+
+.available-toggle-row:hover .available-toggle-title {
+    color: #9e3d00;
+}
+
+.available-toggle-desc {
+    color: #5f5e5e;
+
+    font-size: 14px;
+}
+
+.toggle-switch {
+    position: relative;
+
+    flex-shrink: 0;
+
+    width: 56px;
+    height: 28px;
+
+    padding: 0;
+
+    background: #e4e2de;
+    border: none;
+    border-radius: 999px;
+
+    cursor: pointer;
+
+    transition: background 0.3s ease;
+}
+
+.toggle-switch.on {
+    background: #9e3d00;
+}
+
+.toggle-switch:focus-visible {
+    outline: 2px solid #9e3d00;
+    outline-offset: 2px;
+}
+
+.toggle-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+
+    width: 24px;
+    height: 24px;
+
+    background: #ffffff;
+    border: 1px solid #c8c6c5;
+    border-radius: 999px;
+
+    box-shadow: 0 1px 2px rgba(27, 28, 26, 0.15);
+
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.toggle-switch.on .toggle-knob {
+    transform: translateX(28px);
+    border-color: #9e3d00;
+}
+
+
+/* =========================================================
+   FORM AKSİYONLARI
+========================================================= */
+
+.add-table-card .form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 8px;
+    padding-top: 24px;
+
+    border-top: 1px solid #e0c0b2;
+}
+
+.add-table-card .secondary-button {
+    padding: 12px 24px;
+
+    background: transparent;
+
+    border: 1px solid #8c7166;
+    border-radius: 4px;
+
+    color: #1b1c1a;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.add-table-card .secondary-button:hover {
+    background: #fbf9f5;
+}
+
+.add-table-card .primary-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 12px 32px;
+
+    background: #9e3d00;
+
+    border: none;
+    border-radius: 4px;
+
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    box-shadow: 0 1px 2px rgba(27, 28, 26, 0.06);
+
+    transition: background 0.2s ease;
+}
+
+.add-table-card .primary-button:hover:not(:disabled) {
+    background: #c64f00;
+}
+
+.add-table-card .primary-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.add-table-card .primary-button .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.add-table-card .secondary-button:focus-visible,
+.add-table-card .primary-button:focus-visible {
+    outline: 2px solid #9e3d00;
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   İKON FONTU (Layout dışı standalone sayfa — Login.css ile aynı yaklaşım)
+========================================================= */
+
+.add-table-page .material-symbols-outlined {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+    font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .add-table-topbar {
+        padding: 16px 20px;
+    }
+
+    .add-table-main {
+        padding: 20px;
+        align-items: flex-start;
+    }
+
+    .add-table-card-head {
+        padding: 32px 24px 20px;
+    }
+
+    .add-table-card form {
+        padding: 0 24px 32px;
+    }
+
+    .add-table-card .form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .add-table-card .secondary-button,
+    .add-table-card .primary-button {
+        width: 100%;
+    }
+
+}

@@ -101,15 +101,30 @@
 .notification-dot {
     position: absolute;
 
-    top: 0;
-    right: 0;
+    top: -4px;
+    right: -6px;
 
-    width: 8px;
-    height: 8px;
+    min-width: 16px;
+    height: 16px;
+
+    padding: 0 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     background: #9e3d00;
+    border: 2px solid #fbf9f5;
+    border-radius: 999px;
 
-    border-radius: 50%;
+    box-sizing: border-box;
+
+    color: #ffffff;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
 }
 
 
@@ -211,11 +226,30 @@
 
     margin-left: 8px;
 
-    padding-left: 24px;
+    padding: 0 0 0 24px;
 
+    background: transparent;
+    border: none;
     border-left: 1px solid #e0c0b2;
+    border-radius: 0;
 
     height: 38px;
+
+    font: inherit;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: opacity 0.2s ease;
+}
+
+.user-info:hover {
+    opacity: 0.8;
+}
+
+.user-info:focus-visible {
+    outline: 2px solid #9e3d00;
+    outline-offset: 2px;
 }
 
 .user-text {
