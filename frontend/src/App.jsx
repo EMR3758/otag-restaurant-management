@@ -27,6 +27,10 @@ import Settings from "./pages/Settings/Settings.jsx";
 import Notifications from "./pages/Notifications";
 import Reservations from "./pages/Reservations/Reservation.jsx";
 import Stock from "./pages/Stock/Stock.jsx";
+import Mutfak from "./pages/Mutfak/Mutfak.jsx";
+import Bar from "./pages/Bar/Bar.jsx";
+import Nargile from "./pages/Nargile/Nargile.jsx";
+import Finance from "./pages/Finance/Finance.jsx";
 
 function App() {
     return (
@@ -155,6 +159,21 @@ function App() {
                     />
 
                     <Route
+                        path="/mutfak"
+                        element={<Mutfak />}
+                    />
+
+                    <Route
+                        path="/bar"
+                        element={<Bar />}
+                    />
+
+                    <Route
+                        path="/nargile"
+                        element={<Nargile />}
+                    />
+
+                    <Route
                         path="/users"
                         element={<Users />}
                     />
@@ -167,6 +186,11 @@ function App() {
                     <Route
                         path="/users/:id/edit"
                         element={<EditUser />}
+                    />
+
+                    <Route
+                        path="/finance"
+                        element={<Finance />}
                     />
 
                     <Route

@@ -7,42 +7,19 @@ import {
     CHART_PERIODS,
     CHART_PERIOD_LABELS,
     FINANCE_PALETTE,
-    fetchFinanceOverview,
-    fetchChartData,
     getExpenseCategoryBreakdown,
     formatCurrency,
     formatDate,
     categoryLabel,
     paymentMethodLabel
 } from "./financeMockData.js";
-
-// NOT (backend entegrasyonu):
-// - Finans özeti (GÜNLÜK CİRO/GİDER/NET, AYLIK NET, Sipariş Sayısı, Ortalama
-//   Sipariş) GERÇEK backend'den geliyor: GET /api/finance/overview.
-// - Gider listesi GERÇEK backend'den geliyor: GET /api/expenses. Ekle/
-//   Düzenle/Sil işlemleri POST/PUT/DELETE /api/expenses ile backend'e yazıyor.
-//   (NOT: src/main/java/.../controller altında henüz bir ExpenseController
-//   yok — bu 5 istek controller eklenene kadar 404 dönecektir.)
-// - ÖDEME YÖNTEMLERİ (paymentMethodBreakdown) için backend'de henüz bir
-//   endpoint/DTO alanı yok (FinanceOverviewDTO bu alanı içermiyor) — bu
-//   widget şimdilik financeMockData.js'teki mock veriden besleniyor.
-// - Gelir/Gider grafiği (Günlük/Haftalık/Bu Ay/Bu Yıl) için backend'de henüz
-//   bir analytics endpoint'i yok — chartData şimdilik mock'tan geliyor.
-// - Gider Dağılımı widget'ı ayrı bir backend endpoint'i DEĞİL; gerçek
-//   /api/expenses listesinden frontend'deki getExpenseCategoryBreakdown()
-//   fonksiyonuyla türetiliyor.
+import {useRouteError} from "react-router-dom";
 
 function authHeaders() {
     return {
         Authorization: `Bearer ${localStorage.getItem("token")}`
     };
 }
-
-// GEÇİCİ EŞLEME — backend'deki PaymentMethod enum'u sadece CARD/CASH/OTHER
-// değerlerini kabul ediyor; frontend'in kart/nakit/banka seçenekleriyle
-// birebir örtüşmüyor ("Banka Transferi" için backend'de karşılık yok, en
-// yakın seçenek olan OTHER'a eşleniyor). Backend enum'u genişlerse
-// (örn. BANK_TRANSFER eklenirse) bu eşleme güncellenmeli.
 const PAYMENT_METHOD_TO_BACKEND = { kart: "CARD", nakit: "CASH", banka: "OTHER" };
 const PAYMENT_METHOD_FROM_BACKEND = { CARD: "kart", CASH: "nakit", OTHER: "banka" };
 
@@ -75,14 +52,7 @@ function Finance() {
             throw new Error("Finans özeti alınamadı.");
         }
         const backendOverview = await response.json();
-
-        // paymentMethodBreakdown backend'de henüz yok, mock'tan tamamlanıyor.
-        const mockOverview = await fetchFinanceOverview();
-
-        setOverview({
-            ...backendOverview,
-            paymentMethodBreakdown: mockOverview.paymentMethodBreakdown
-        });
+        setOverview(backendOverview);
     };
 
     const loadExpenses = async () => {
@@ -94,11 +64,7 @@ function Finance() {
         }
         const data = await response.json();
 
-        // Backend "date" alanını LocalDateTime ("YYYY-MM-DDT00:00:00") olarak
-        // döndürür; mevcut formatDate()/getExpenseCategoryBreakdown() ise sade
-        // "YYYY-MM-DD" bekliyor — ilk 10 karakter alınarak normalize ediliyor.
-        // "paymentMethod" da backend enum'undan (CARD/CASH/OTHER) frontend'in
-        // kart/nakit/banka anahtarlarına çevriliyor (bkz. üstteki GEÇİCİ EŞLEME).
+
         const normalized = (data ?? []).map((expense) => ({
             ...expense,
             date: expense.date ? String(expense.date).slice(0, 10) : expense.date,
@@ -121,13 +87,36 @@ function Finance() {
 
     useEffect(() => {
         let cancelled = false;
-        fetchChartData(chartPeriod).then((data) => {
-            if (!cancelled) {
-                setChartData(data);
+        const loadChart = async () => {
+            try{
+                const response = await fetch(`http://localhost:8080/api/finance/chart?period=${chartPeriod}`,
+                    {
+                        headers:authHeaders()
+                    });
+                if (!response.ok){
+                    throw new Error("Finans grafiği alınamadı.");
+                }
+
+                const data = await response.json();
+                if(!cancelled){
+                    setChartData(data);
+                }
+            }catch (error){
+                console.error("Finans grafiği yüklenirken hata:",error);
+                if(!cancelled){
+                    setChartData({
+                        labels:[],
+                        income:[],
+                        expense:[]
+                    });
+                }
             }
-        });
+        };
+
+        loadChart();
+
         return () => {
-            cancelled = true;
+            cancelled=true;
         };
     }, [chartPeriod]);
 

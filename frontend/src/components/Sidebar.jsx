@@ -22,6 +22,11 @@ function Sidebar({ open = false, onClose = () => {} }) {
 
             <nav className="sidebar-menu" onClick={onClose}>
 
+                <p className="menu-section-label menu-section-label-first">
+                    Genel
+                </p>
+
+
                 <NavLink
                     to="/dashboard"
                     className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
@@ -130,6 +135,70 @@ function Sidebar({ open = false, onClose = () => {} }) {
                 </NavLink>
 
 
+                <p className="menu-section-label">
+                    Operasyon
+                </p>
+
+
+                <NavLink
+                    to="/mutfak"
+                    className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
+                >
+                    {({ isActive }) => (
+                        <>
+                            <span className={`material-symbols-outlined${isActive ? " icon-fill" : ""}`}>
+                                soup_kitchen
+                            </span>
+
+                            <span>
+                                Mutfak
+                            </span>
+                        </>
+                    )}
+                </NavLink>
+
+
+                <NavLink
+                    to="/bar"
+                    className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
+                >
+                    {({ isActive }) => (
+                        <>
+                            <span className={`material-symbols-outlined${isActive ? " icon-fill" : ""}`}>
+                                local_bar
+                            </span>
+
+                            <span>
+                                Bar
+                            </span>
+                        </>
+                    )}
+                </NavLink>
+
+
+                <NavLink
+                    to="/nargile"
+                    className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
+                >
+                    {({ isActive }) => (
+                        <>
+                            <span className={`material-symbols-outlined${isActive ? " icon-fill" : ""}`}>
+                                smoking_rooms
+                            </span>
+
+                            <span>
+                                Nargile
+                            </span>
+                        </>
+                    )}
+                </NavLink>
+
+
+                <p className="menu-section-label">
+                    Yönetim
+                </p>
+
+
                 <NavLink
                     to="/reservations"
                     className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
@@ -160,6 +229,24 @@ function Sidebar({ open = false, onClose = () => {} }) {
 
                             <span>
                                 Personeller
+                            </span>
+                        </>
+                    )}
+                </NavLink>
+
+
+                <NavLink
+                    to="/finance"
+                    className={({ isActive }) => `menu-item${isActive ? " active" : ""}`}
+                >
+                    {({ isActive }) => (
+                        <>
+                            <span className={`material-symbols-outlined${isActive ? " icon-fill" : ""}`}>
+                                account_balance
+                            </span>
+
+                            <span>
+                                Finans
                             </span>
                         </>
                     )}
