@@ -65,16 +65,19 @@ public class ProductService {
     }
 
     private ProductDTO convertToDTO(Product product){
-        return new ProductDTO(
-          product.getId(),
-          product.getName(),
-          product.getPrice(),
-          product.getCategory().getName(),
-          product.getStock(),
-          product.getImageUrl()
+        ProductDTO dto = new ProductDTO(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getCategory().getName(),
+                product.getStock(),
+                product.getImageUrl()
         );
-    }
 
+        dto.setKdsStation(product.getKdsStation());
+
+        return dto;
+    }
     private Product convertToProduct(ProductCreateDTO dto) {
 
         Category category = categoryRepository
@@ -88,6 +91,7 @@ public class ProductService {
                 category
         );
         product.setImageUrl(dto.getImageUrl());
+        product.setKdsStation(dto.getKdsStation());
 
         return product;
     }
@@ -140,6 +144,7 @@ public class ProductService {
             product.setStock(dto.getStock());
             product.setPrice(dto.getPrice());
             product.setCategory(category);
+            product.setKdsStation(dto.getKdsStation());
 
             // Görsel URL'si boş bırakılırsa imageUrl null/boş olarak kaydedilir.
             product.setImageUrl(dto.getImageUrl());

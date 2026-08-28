@@ -3,6 +3,7 @@ import "./Finance.css";
 import Layout from "../../components/Layout.jsx";
 import AddExpenseModal from "../../components/AddExpenseModal.jsx";
 import DeleteConfirmModal from "../../components/DeleteConfirmModal.jsx";
+import ExpenseEntryModal from "../../components/ExpenseEntryModal.jsx";
 import {
     CHART_PERIODS,
     CHART_PERIOD_LABELS,
@@ -35,6 +36,7 @@ function Finance() {
 
     // { open, mode: "create" | "edit" | "view", expense }
     const [expenseModal, setExpenseModal] = useState({ open: false, mode: "create", expense: null });
+    const [entryModalOpen, setEntryModalOpen] = useState(false);
     const [deleteTarget, setDeleteTarget] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -154,6 +156,16 @@ function Finance() {
     // =====================================================
 
     const openCreateModal = () => setExpenseModal({ open: true, mode: "create", expense: null });
+
+    // ExpenseEntryModal ("+ Gider Ekle") akışı: OCR ile okunan/gözden geçirilen
+    // kalemler onaylandığında çağrılır. Henüz kalıcı bir kayıt API'si bağlanmadı
+    // (bkz. görev kapsamı) — bu adım sadece frontend akışını (yükle -> oku ->
+    // göster -> düzenle) tamamlar, veritabanına yazma sonraki adımda eklenecek.
+    const handleReceiptExpensesSaved = (reviewedExpenses) => {
+        setSuccessMessage(
+            `${reviewedExpenses.length} gider kalemi incelendi. Veritabanına kayıt özelliği bir sonraki adımda eklenecek.`
+        );
+    };
     const openViewModal = (expense) => setExpenseModal({ open: true, mode: "view", expense });
     const openEditModal = (expense) => setExpenseModal({ open: true, mode: "edit", expense });
     const closeExpenseModal = () => setExpenseModal({ open: false, mode: "create", expense: null });
@@ -245,6 +257,10 @@ function Finance() {
                         <h1>Finans</h1>
                         <p>Gelir, gider ve işletme finansal durumunu takip edin.</p>
                     </div>
+                    <button className="finance-header-add-button" onClick={() => setEntryModalOpen(true)}>
+                        <span className="material-symbols-outlined">add_circle</span>
+                        GİDER EKLE
+                    </button>
                 </div>
 
                 {successMessage && (
@@ -540,6 +556,16 @@ function Finance() {
                 )}
 
             </div>
+
+            <ExpenseEntryModal
+                open={entryModalOpen}
+                onClose={() => setEntryModalOpen(false)}
+                onManualAdd={() => {
+                    setEntryModalOpen(false);
+                    openCreateModal();
+                }}
+                onSaved={handleReceiptExpensesSaved}
+            />
 
             <AddExpenseModal
                 open={expenseModal.open}

@@ -31,6 +31,39 @@
     margin-bottom: 20px;
 }
 
+.finance-header-add-button {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+
+    gap: 8px;
+
+    padding: 12px 22px;
+
+    background: #9e3d00;
+    border: none;
+    border-radius: 4px;
+
+    color: #ffffff;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.finance-header-add-button:hover {
+    background: #7c2e00;
+}
+
+.finance-header-add-button .material-symbols-outlined {
+    font-size: 20px;
+}
+
 .finance-header h1 {
     margin: 0 0 4px;
 

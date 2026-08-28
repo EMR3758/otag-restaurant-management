@@ -2,6 +2,7 @@ package com.emirhan.day3.springboot.controller;
 
 import com.emirhan.day3.springboot.dto.OrderItemCreateDTO;
 import com.emirhan.day3.springboot.dto.OrderItemDTO;
+import com.emirhan.day3.springboot.model.OrderStatus;
 import com.emirhan.day3.springboot.service.OrderItemService;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,10 @@ public class OrderItemController {
     public OrderItemDTO updateOrderItem(@PathVariable Long id,
                                         @RequestBody OrderItemCreateDTO dto) {
         return orderItemService.updateOrderItem(id, dto);
+    }
+    @PutMapping("/{id}/status")
+    public OrderItemDTO updateStatus(@PathVariable Long id, @RequestParam OrderStatus status){
+        return orderItemService.updateStatus(id, status);
     }
 
     @DeleteMapping("/{id}")

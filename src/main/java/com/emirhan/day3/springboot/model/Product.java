@@ -14,6 +14,9 @@ public class Product {
     private double price;
     private String imageUrl;
 
+    @Enumerated(EnumType.STRING)
+    private KdsStation kdsStation;
+
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
@@ -25,6 +28,14 @@ public class Product {
         this.stock=stock;
         this.price=price;
         this.category=category;
+    }
+
+    public Product(String name, int stock, double price, Category category, KdsStation kdsStation) {
+        this.name = name;
+        this.stock = stock;
+        this.price = price;
+        this.category = category;
+        this.kdsStation = kdsStation;
     }
 
     public Long getId() {
@@ -73,5 +84,12 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    public KdsStation getKdsStation() {
+        return kdsStation;
+    }
+
+    public void setKdsStation(KdsStation kdsStation) {
+        this.kdsStation = kdsStation;
     }
 }

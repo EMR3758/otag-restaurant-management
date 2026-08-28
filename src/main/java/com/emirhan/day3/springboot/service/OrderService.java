@@ -1,16 +1,8 @@
 package com.emirhan.day3.springboot.service;
 
-import com.emirhan.day3.springboot.dto.OrderCreateDTO;
-import com.emirhan.day3.springboot.dto.OrderDTO;
-import com.emirhan.day3.springboot.dto.OrderItemCreateDTO;
-import com.emirhan.day3.springboot.model.Order;
-import com.emirhan.day3.springboot.model.OrderItem;
-import com.emirhan.day3.springboot.model.Product;
-import com.emirhan.day3.springboot.model.RestaurantTable;
-import com.emirhan.day3.springboot.repository.OrderItemRepository;
-import com.emirhan.day3.springboot.repository.OrderRepository;
-import com.emirhan.day3.springboot.repository.ProductRepository;
-import com.emirhan.day3.springboot.repository.RestaurantTableRepository;
+import com.emirhan.day3.springboot.dto.*;
+import com.emirhan.day3.springboot.model.*;
+import com.emirhan.day3.springboot.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,22 +17,32 @@ public class OrderService {
     private final RestaurantTableRepository restaurantTableRepository;
     private final OrderItemRepository orderItemRepository;
     private final ProductRepository productRepository;
+    private final NotificationService notificationService;
+    private final OrderItemService orderItemService;
 
-    public OrderService(OrderRepository orderRepository,RestaurantTableRepository restaurantTableRepository,OrderItemRepository orderItemRepository,ProductRepository productRepository) {
+    public OrderService(OrderRepository orderRepository,RestaurantTableRepository restaurantTableRepository,OrderItemRepository orderItemRepository,ProductRepository productRepository,NotificationService notificationService,OrderItemService orderItemService) {
         this.orderRepository = orderRepository;
         this.restaurantTableRepository=restaurantTableRepository;
         this.orderItemRepository=orderItemRepository;
         this.productRepository=productRepository;
+        this.notificationService=notificationService;
+        this.orderItemService=orderItemService;
     }
 
     private OrderDTO convertToDTO(Order order) {
+        String tableNumber;
+        if (order.getTable() != null) {
+            tableNumber = order.getTable().getTableNumber();
+        } else {
+            tableNumber = "Dışarıdan Sipariş";
+        }
         return new OrderDTO(
                 order.getId(),
                 order.getOrderDate(),
                 order.getStatus(),
                 order.getTotal(),
-                order.getTable()
-
+                order.getTable(),
+                tableNumber
         );
     }
 
@@ -88,12 +90,21 @@ public class OrderService {
                     product.getPrice(),
                     itemDto.getNote()
             );
+            orderItem.setStation(product.getKdsStation());
+            orderItem.setStatus(OrderStatus.WAITING);
             orderItemRepository.save(orderItem);
         }
 
         //5.Sipariş başarıyla oluşturuldu, masayı dolu olarak işaretle
         table.setAvailable(false);
         restaurantTableRepository.save(table);
+
+        notificationService.createNotification(
+                1L,
+                 "Yeni Sipariş",
+                 "Yeni bir sipariş oluşturuldu.Masa: " +table.getId(),
+                "ORDER"
+        );
 
         //.Oluşturulan siparişi döndür
         return convertToDTO(savedOrder);
@@ -109,6 +120,7 @@ public class OrderService {
         return null;
     }
 
+    @Transactional
     public OrderDTO updateOrder(Long id, OrderCreateDTO dto) {
         Optional<Order> optionalOrder = orderRepository.findById(id);
 
@@ -120,10 +132,6 @@ public class OrderService {
             order.setStatus(dto.getStatus());
             order.setTotal(dto.getTotal());
 
-            // tableId gönderilmediyse (ör. sadece durum güncellenirken,
-            // masasız bir sipariş için) mevcut masayı olduğu gibi bırakıyoruz.
-            // Aksi halde findById(null) IllegalArgumentException fırlatıp
-            // 500 hatasına sebep oluyordu.
             if (dto.getTableId() != null) {
 
                 RestaurantTable table = restaurantTableRepository
@@ -136,6 +144,17 @@ public class OrderService {
 
             Order updatedOrder = orderRepository.save(order);
 
+            // Sipariş iptal edildiğinde, ona bağlı bütün OrderItem'lar da CANCELLED
+            // yapılmalı (aksi halde KDS ekranı bu kalemleri hâlâ aktif gösterir).
+            // Stok geri ekleme/idempotentlik dahil mevcut kural OrderItemService.updateStatus()
+            // içinde zaten var; burada tekrar yazmak yerine aynen o metot çağrılıyor.
+            if (dto.getStatus() == OrderStatus.CANCELLED) {
+                List<OrderItem> items = orderItemRepository.findByOrder_Id(id);
+                for (OrderItem item : items) {
+                    orderItemService.updateStatus(item.getId(), OrderStatus.CANCELLED);
+                }
+            }
+
             return convertToDTO(updatedOrder);
         }
 
@@ -144,9 +163,6 @@ public class OrderService {
 
     @Transactional
     public void deleteOrder(Long id) {
-        // Order silinmeden önce, ona bağlı OrderItem'lar silinmeli.
-        // Aksi halde order_item.order_id foreign key kısıtlaması yüzünden
-        // orders satırı silinirken DataIntegrityViolationException oluşur.
         orderItemRepository.deleteByOrder_Id(id);
         orderRepository.deleteById(id);
     }

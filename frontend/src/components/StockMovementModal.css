@@ -124,8 +124,11 @@
 }
 
 .stock-field select,
-.stock-field textarea {
+.stock-field textarea,
+.stock-field input {
     padding: 10px 12px;
+
+    width: 100%;
 
     background: #ffffff;
 
@@ -140,7 +143,8 @@
     box-sizing: border-box;
 }
 
-.stock-field select:disabled {
+.stock-field select:disabled,
+.stock-field input:disabled {
     background: #f5f3ef;
     color: #5f5e5e;
     cursor: not-allowed;
@@ -151,7 +155,8 @@
 }
 
 .stock-field select:focus,
-.stock-field textarea:focus {
+.stock-field textarea:focus,
+.stock-field input:focus {
     outline: none;
     border-color: #9e3d00;
 }
@@ -170,54 +175,6 @@
     font-weight: 700;
 }
 
-.stock-amount-input {
-    display: flex;
-    align-items: stretch;
-}
-
-.stock-amount-input input {
-    flex: 1;
-    min-width: 0;
-
-    padding: 10px 12px;
-
-    background: #ffffff;
-
-    border: 1px solid #e0c0b2;
-    border-right: none;
-    border-radius: 4px 0 0 4px;
-
-    color: #1b1c1a;
-
-    font-size: 14px;
-
-    box-sizing: border-box;
-}
-
-.stock-amount-input input:focus {
-    outline: none;
-    border-color: #9e3d00;
-}
-
-.stock-unit-suffix {
-    display: flex;
-    align-items: center;
-
-    padding: 0 12px;
-
-    background: #f5f3ef;
-
-    border: 1px solid #e0c0b2;
-    border-radius: 0 4px 4px 0;
-
-    color: #5f5e5e;
-
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 12px;
-    font-weight: 600;
-
-    white-space: nowrap;
-}
 
 
 .stock-modal-error {

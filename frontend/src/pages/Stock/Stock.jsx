@@ -4,21 +4,14 @@ import Layout from "../../components/Layout.jsx";
 import StockMovementModal from "../../components/StockMovementModal.jsx";
 import StockDetailModal from "../../components/StockDetailModal.jsx";
 import {
-    STOCK_CATEGORIES,
     STOCK_STATUS,
     STOCK_STATUS_LABELS,
     getStockStatus,
-    fetchStockItems,
-    fetchStockMovements,
-    addStockEntry,
-    addStockExit
-} from "./stockMockData.js";
-
-// NOT: Bu sayfadaki TÜM veri okuma/yazma işlemleri stockMockData.js
-// içindeki fetchStockItems / fetchStockMovements / addStockEntry /
-// addStockExit fonksiyonları üzerinden yapılır. Gerçek backend
-// geldiğinde bu component DEĞİŞMEDEN kalabilir — tek değişiklik
-// noktası stockMockData.js'teki fonksiyon gövdeleridir.
+    fetchStocks,
+    createStock,
+    increaseStock,
+    decreaseStock
+} from "./stockApi.js";
 
 function Stock() {
 
@@ -27,15 +20,12 @@ function Stock() {
     const [loadError, setLoadError] = useState(null);
 
     const [search, setSearch] = useState("");
-    const [categoryFilter, setCategoryFilter] = useState("ALL");
     const [statusFilter, setStatusFilter] = useState("ALL");
 
-    // { open, mode: "IN" | "OUT", initialItemId }
-    const [movementModal, setMovementModal] = useState({ open: false, mode: "IN", initialItemId: null });
+    // { open, mode: "CREATE" | "INCREASE" | "DECREASE", item }
+    const [movementModal, setMovementModal] = useState({ open: false, mode: "CREATE", item: null });
 
     const [detailItem, setDetailItem] = useState(null);
-    const [detailMovements, setDetailMovements] = useState([]);
-    const [detailMovementsLoading, setDetailMovementsLoading] = useState(false);
 
     const [successMessage, setSuccessMessage] = useState(null);
 
@@ -47,11 +37,11 @@ function Stock() {
         setLoading(true);
         setLoadError(null);
         try {
-            const data = await fetchStockItems();
+            const data = await fetchStocks();
             setItems(data ?? []);
         } catch (error) {
             console.error("Stok verileri yüklenirken hata:", error);
-            setLoadError("Stok bilgileri yüklenemedi. Lütfen tekrar deneyin.");
+            setLoadError(error.message || "Stok bilgileri yüklenemedi. Lütfen tekrar deneyin.");
         } finally {
             setLoading(false);
         }
@@ -69,6 +59,17 @@ function Stock() {
         return () => clearTimeout(timer);
     }, [successMessage]);
 
+    // Detay modalı açıksa ve o ürün güncellendiyse, gösterilen veriyi de tazele.
+    useEffect(() => {
+        if (!detailItem) {
+            return;
+        }
+        const updated = items.find((candidate) => candidate.id === detailItem.id);
+        if (updated && updated !== detailItem) {
+            setDetailItem(updated);
+        }
+    }, [items, detailItem]);
+
     // =====================================================
     // FİLTRELEME
     // =====================================================
@@ -77,11 +78,10 @@ function Stock() {
         const term = search.trim().toLowerCase();
         return items.filter((item) => {
             const matchesSearch = term === "" || item.productName.toLowerCase().includes(term);
-            const matchesCategory = categoryFilter === "ALL" || item.category === categoryFilter;
             const matchesStatus = statusFilter === "ALL" || getStockStatus(item) === statusFilter;
-            return matchesSearch && matchesCategory && matchesStatus;
+            return matchesSearch && matchesStatus;
         });
-    }, [items, search, categoryFilter, statusFilter]);
+    }, [items, search, statusFilter]);
 
     const totalCount = items.length;
     const normalCount = items.filter((item) => getStockStatus(item) === STOCK_STATUS.NORMAL).length;
@@ -90,45 +90,49 @@ function Stock() {
 
     const attentionItems = items.filter((item) => getStockStatus(item) !== STOCK_STATUS.NORMAL);
 
-    // =====================================================
-    // STOK GİRİŞİ / ÇIKIŞI
-    // =====================================================
 
-    const openEntryModal = (itemId = null) => {
-        setMovementModal({ open: true, mode: "IN", initialItemId: itemId });
+    const openCreateModal = () => {
+        setMovementModal({ open: true, mode: "CREATE", item: null });
     };
 
-    const openExitModal = (itemId) => {
-        setMovementModal({ open: true, mode: "OUT", initialItemId: itemId });
+    const openIncreaseModal = (item) => {
+        setMovementModal({ open: true, mode: "INCREASE", item });
+    };
+
+    const openDecreaseModal = (item) => {
+        setMovementModal({ open: true, mode: "DECREASE", item });
     };
 
     const closeMovementModal = () => {
-        setMovementModal({ open: false, mode: "IN", initialItemId: null });
+        setMovementModal({ open: false, mode: "CREATE", item: null });
     };
 
-    const loadDetailMovements = async (itemId) => {
-        setDetailMovementsLoading(true);
-        try {
-            const data = await fetchStockMovements(itemId);
-            setDetailMovements(data ?? []);
-        } catch (error) {
-            console.error("Stok hareketleri yüklenirken hata:", error);
-            setDetailMovements([]);
-        } finally {
-            setDetailMovementsLoading(false);
-        }
+    const upsertItem = (updatedStock) => {
+        setItems((prev) => {
+            const exists = prev.some((candidate) => candidate.id === updatedStock.id);
+            if (exists) {
+                return prev.map((candidate) =>
+                    candidate.id === updatedStock.id ? updatedStock : candidate
+                );
+            }
+            return [...prev, updatedStock];
+        });
     };
 
-    const handleMovementSubmit = async (itemId, amount, note) => {
-        if (movementModal.mode === "IN") {
-            await addStockEntry(itemId, amount, note);
+    const handleMovementSubmit = async (payload) => {
+        if (movementModal.mode === "CREATE") {
+            const created = await createStock(payload);
+            upsertItem(created);
+            setSuccessMessage(`${created.productName} stok listesine eklendi.`);
+        } else if (movementModal.mode === "INCREASE") {
+            const updated = await increaseStock(movementModal.item.id, payload.amount);
+            upsertItem(updated);
+            setSuccessMessage("Stok girişi kaydedildi.");
         } else {
-            await addStockExit(itemId, amount, note);
+            const updated = await decreaseStock(movementModal.item.id, payload.amount);
+            upsertItem(updated);
+            setSuccessMessage("Stok çıkışı kaydedildi.");
         }
-        await loadItems();
-        setSuccessMessage(
-            movementModal.mode === "IN" ? "Stok girişi kaydedildi." : "Stok çıkışı kaydedildi."
-        );
         closeMovementModal();
     };
 
@@ -138,33 +142,26 @@ function Stock() {
 
     const openDetail = (item) => {
         setDetailItem(item);
-        loadDetailMovements(item.id);
     };
 
     const closeDetail = () => {
         setDetailItem(null);
-        setDetailMovements([]);
     };
 
     const handleRequestEntryFromDetail = (item) => {
         closeDetail();
-        openEntryModal(item.id);
+        openIncreaseModal(item);
     };
 
     const handleRequestExitFromDetail = (item) => {
         closeDetail();
-        openExitModal(item.id);
+        openDecreaseModal(item);
     };
 
     const handleClearFilters = () => {
         setSearch("");
-        setCategoryFilter("ALL");
         setStatusFilter("ALL");
     };
-
-    // =====================================================
-    // RENDER
-    // =====================================================
 
     return (
         <Layout navbarType="dashboard" title="Stok Yönetimi">
@@ -176,9 +173,9 @@ function Stock() {
                         <h1>Stok Yönetimi</h1>
                         <p>Ürün stoklarını takip edin ve envanter hareketlerini yönetin.</p>
                     </div>
-                    <button className="new-stock-entry-button" onClick={() => openEntryModal(null)}>
+                    <button className="new-stock-entry-button" onClick={openCreateModal}>
                         <span className="material-symbols-outlined">add</span>
-                        Stok Girişi
+                        Yeni Stok Kalemi
                     </button>
                 </div>
 
@@ -238,7 +235,7 @@ function Stock() {
                                     >
                                         <span className="stock-attention-name">{item.productName}</span>
                                         <span className="stock-attention-ratio">
-                                            {item.currentStock} / {item.minimumStock} {item.unit}
+                                            {item.quantity} / {item.minimumQuantity}
                                         </span>
                                     </button>
                                 );
@@ -263,20 +260,6 @@ function Stock() {
                                     onChange={(event) => setSearch(event.target.value)}
                                 />
                             </div>
-                        </div>
-
-                        <div className="filter-field">
-                            <label htmlFor="stock-category">Kategori</label>
-                            <select
-                                id="stock-category"
-                                value={categoryFilter}
-                                onChange={(event) => setCategoryFilter(event.target.value)}
-                            >
-                                <option value="ALL">Tüm Kategoriler</option>
-                                {STOCK_CATEGORIES.map((category) => (
-                                    <option value={category} key={category}>{category}</option>
-                                ))}
-                            </select>
                         </div>
 
                         <div className="filter-field">
@@ -309,10 +292,8 @@ function Stock() {
                                 <thead>
                                     <tr>
                                         <th>Ürün</th>
-                                        <th>Kategori</th>
                                         <th className="text-right">Mevcut Stok</th>
                                         <th className="text-right">Minimum Stok</th>
-                                        <th>Birim</th>
                                         <th>Durum</th>
                                         <th className="text-right">İşlemler</th>
                                     </tr>
@@ -323,10 +304,8 @@ function Stock() {
                                         return (
                                             <tr key={item.id}>
                                                 <td className="stock-product-name">{item.productName}</td>
-                                                <td className="stock-category-cell">{item.category}</td>
-                                                <td className="text-right stock-current">{item.currentStock}</td>
-                                                <td className="text-right stock-minimum">{item.minimumStock}</td>
-                                                <td className="stock-unit-cell">{item.unit}</td>
+                                                <td className="text-right stock-current">{item.quantity}</td>
+                                                <td className="text-right stock-minimum">{item.minimumQuantity}</td>
                                                 <td>
                                                     <span className={`stock-status-badge status-${status.toLowerCase()}`}>
                                                         <span className="dot"></span>
@@ -338,15 +317,15 @@ function Stock() {
                                                         <button
                                                             className="action-button"
                                                             title="Stok Girişi"
-                                                            onClick={() => openEntryModal(item.id)}
+                                                            onClick={() => openIncreaseModal(item)}
                                                         >
                                                             <span className="material-symbols-outlined">add_box</span>
                                                         </button>
                                                         <button
                                                             className="action-button"
                                                             title="Stok Çıkışı"
-                                                            onClick={() => openExitModal(item.id)}
-                                                            disabled={item.currentStock === 0}
+                                                            onClick={() => openDecreaseModal(item)}
+                                                            disabled={Number(item.quantity) === 0}
                                                         >
                                                             <span className="material-symbols-outlined">indeterminate_check_box</span>
                                                         </button>
@@ -365,7 +344,7 @@ function Stock() {
 
                                     {filteredItems.length === 0 && (
                                         <tr>
-                                            <td className="stock-empty" colSpan={7}>
+                                            <td className="stock-empty" colSpan={5}>
                                                 Filtrelerinize uygun ürün bulunamadı.
                                             </td>
                                         </tr>
@@ -382,8 +361,7 @@ function Stock() {
             <StockMovementModal
                 open={movementModal.open}
                 mode={movementModal.mode}
-                items={items}
-                initialItemId={movementModal.initialItemId}
+                item={movementModal.item}
                 onCancel={closeMovementModal}
                 onSubmit={handleMovementSubmit}
             />
@@ -392,8 +370,6 @@ function Stock() {
                 item={detailItem}
                 status={detailItem ? getStockStatus(detailItem) : null}
                 statusLabel={detailItem ? STOCK_STATUS_LABELS[getStockStatus(detailItem)] : null}
-                movements={detailMovements}
-                movementsLoading={detailMovementsLoading}
                 onClose={closeDetail}
                 onRequestEntry={handleRequestEntryFromDetail}
                 onRequestExit={handleRequestExitFromDetail}

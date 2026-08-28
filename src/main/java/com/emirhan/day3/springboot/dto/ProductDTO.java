@@ -6,6 +6,7 @@ package com.emirhan.day3.springboot.dto;
 // → Oluşturduğum DTO'yu geri döndür
 
 import com.emirhan.day3.springboot.model.Category;
+import com.emirhan.day3.springboot.model.KdsStation;
 
 public class ProductDTO {
     private Long id;
@@ -14,6 +15,7 @@ public class ProductDTO {
     private String categoryName;
     private int stock;
     private String imageUrl;
+    private KdsStation kdsStation;
 
     public String getCategoryName() {
         return categoryName;
@@ -73,5 +75,12 @@ public class ProductDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    public KdsStation getKdsStation() {
+        return kdsStation;
+    }
+
+    public void setKdsStation(KdsStation kdsStation) {
+        this.kdsStation = kdsStation;
     }
 }

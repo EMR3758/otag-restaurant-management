@@ -18,10 +18,12 @@ public class Expense {
     private PaymentMethod paymentMethod;
     private LocalDateTime date;
     private String Description;
+    private double quantity;
+    private String unit;
 
     public Expense(){}
 
-    public Expense(Long id, String name, String category, double amount, PaymentMethod paymentMethod, LocalDateTime date, String description) {
+    public Expense(Long id, String name, String category, double amount, PaymentMethod paymentMethod, LocalDateTime date, String description,double quantity,String unit) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -29,6 +31,8 @@ public class Expense {
         this.paymentMethod = paymentMethod;
         this.date = date;
         Description = description;
+        this.quantity=quantity;
+        this.unit=unit;
     }
 
     public Long getId() {
@@ -85,5 +89,21 @@ public class Expense {
 
     public void setDescription(String description) {
         Description = description;
+    }
+
+    public double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

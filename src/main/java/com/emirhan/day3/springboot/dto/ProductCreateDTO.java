@@ -1,6 +1,7 @@
 package com.emirhan.day3.springboot.dto;
 
 import com.emirhan.day3.springboot.model.Category;
+import com.emirhan.day3.springboot.model.KdsStation;
 
 public class ProductCreateDTO {
     private String name;
@@ -8,6 +9,8 @@ public class ProductCreateDTO {
     private double price;
     private Long categoryId;
     private String imageUrl;
+    private KdsStation kdsStation;
+
     public ProductCreateDTO(){}
 
     public String getImageUrl() {
@@ -48,5 +51,12 @@ public class ProductCreateDTO {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+    public KdsStation getKdsStation() {
+        return kdsStation;
+    }
+
+    public void setKdsStation(KdsStation kdsStation) {
+        this.kdsStation = kdsStation;
     }
 }

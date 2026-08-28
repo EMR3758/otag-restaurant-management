@@ -92,14 +92,6 @@
     font-weight: 600;
 }
 
-.stock-detail-category {
-    margin: 0;
-
-    color: #5f5e5e;
-
-    font-size: 13px;
-}
-
 .stock-detail-close {
     flex-shrink: 0;
 
@@ -225,107 +217,6 @@
 }
 
 
-.stock-detail-history h4 {
-    margin: 0 0 12px;
-
-    color: #1b1c1a;
-
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.stock-detail-empty {
-    margin: 0;
-
-    padding: 16px;
-
-    background: #f5f3ef;
-    border-radius: 8px;
-
-    color: #5f5e5e;
-
-    font-size: 13px;
-    text-align: center;
-}
-
-.stock-detail-history-list {
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
-}
-
-.stock-detail-history-row {
-    display: grid;
-    grid-template-columns: 100px 110px 80px 1fr;
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 10px 12px;
-
-    background: #f5f3ef;
-    border-radius: 6px;
-}
-
-.stock-detail-history-date {
-    color: #5f5e5e;
-
-    font-size: 12px;
-}
-
-.stock-detail-history-type {
-    display: inline-flex;
-    align-items: center;
-
-    gap: 6px;
-
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.stock-detail-history-type .dot {
-    width: 6px;
-    height: 6px;
-
-    border-radius: 50%;
-
-    background: currentColor;
-}
-
-.stock-detail-history-type.in {
-    color: #16a34a;
-}
-
-.stock-detail-history-type.out {
-    color: #9e3d00;
-}
-
-.stock-detail-history-quantity {
-    font-weight: 700;
-
-    font-size: 13px;
-}
-
-.stock-detail-history-quantity.in {
-    color: #16a34a;
-}
-
-.stock-detail-history-quantity.out {
-    color: #9e3d00;
-}
-
-.stock-detail-history-note {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    color: #5f5e5e;
-
-    font-size: 12px;
-}
-
-
 .stock-detail-footer {
     display: flex;
 
@@ -389,21 +280,16 @@
     background: rgba(186, 26, 26, 0.08);
 }
 
+.stock-detail-entry:disabled,
+.stock-detail-exit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 
 @media (max-width: 560px) {
 
     .stock-detail-grid {
         grid-template-columns: 1fr;
-    }
-
-    .stock-detail-history-row {
-        grid-template-columns: 1fr 1fr;
-        row-gap: 4px;
-    }
-
-    .stock-detail-history-note {
-        grid-column: 1 / -1;
-
-        white-space: normal;
     }
 }

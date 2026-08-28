@@ -1,28 +1,12 @@
 import "./StockDetailModal.css";
 
-function formatDateTime(isoString) {
-    const date = new Date(isoString);
-    if (Number.isNaN(date.getTime())) {
-        return isoString;
-    }
-    return date.toLocaleString("tr-TR", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-    });
-}
-
 // Tamamen sunum (presentational) bileşeni: veri çekme işini Stock.jsx yapar,
-// bu component sadece kendisine verilen item/status/movements'ı gösterir.
+// bu component sadece kendisine verilen item/status'ü gösterir.
 //
-// item: null ise kapalı, doluysa açık
+// item: null ise kapalı, doluysa açık — { id, productName, quantity, minimumQuantity }
 // status: "NORMAL" | "CRITICAL" | "OUT_OF_STOCK"
 // statusLabel: ekranda gösterilecek Türkçe metin
-// movements: bu ürüne ait stok hareketleri listesi
-// movementsLoading: hareketler yükleniyor mu
-function StockDetailModal({ item, status, statusLabel, movements, movementsLoading, onClose, onRequestEntry, onRequestExit }) {
+function StockDetailModal({ item, status, statusLabel, onClose, onRequestEntry, onRequestExit }) {
 
     if (!item) {
         return null;
@@ -41,7 +25,6 @@ function StockDetailModal({ item, status, statusLabel, movements, movementsLoadi
                                 {statusLabel}
                             </span>
                         </div>
-                        <p className="stock-detail-category">{item.category}</p>
                     </div>
                     <button type="button" className="stock-detail-close" onClick={onClose}>
                         <span className="material-symbols-outlined">close</span>
@@ -53,54 +36,23 @@ function StockDetailModal({ item, status, statusLabel, movements, movementsLoadi
                     <div className="stock-detail-grid">
                         <div className="stock-detail-card highlight">
                             <span>Mevcut Stok</span>
-                            <strong>{item.currentStock} <small>{item.unit}</small></strong>
+                            <strong>{item.quantity}</strong>
                         </div>
                         <div className="stock-detail-card">
                             <span>Minimum Stok</span>
-                            <strong>{item.minimumStock} <small>{item.unit}</small></strong>
+                            <strong>{item.minimumQuantity}</strong>
                         </div>
-                        <div className="stock-detail-card">
-                            <span>Birim</span>
-                            <strong>{item.unit}</strong>
-                        </div>
-                        <div className="stock-detail-card">
-                            <span>Kategori</span>
-                            <strong>{item.category}</strong>
-                        </div>
-                    </div>
-
-                    <div className="stock-detail-history">
-                        <h4>Son Stok Hareketleri</h4>
-
-                        {movementsLoading ? (
-                            <p className="stock-detail-empty">Yükleniyor...</p>
-                        ) : movements.length === 0 ? (
-                            <p className="stock-detail-empty">Bu ürün için henüz stok hareketi yok.</p>
-                        ) : (
-                            <div className="stock-detail-history-list">
-                                {movements.map((movement) => (
-                                    <div className="stock-detail-history-row" key={movement.id}>
-                                        <span className="stock-detail-history-date">
-                                            {formatDateTime(movement.date)}
-                                        </span>
-                                        <span className={`stock-detail-history-type ${movement.type === "IN" ? "in" : "out"}`}>
-                                            <span className="dot"></span>
-                                            {movement.type === "IN" ? "Stok Girişi" : "Stok Çıkışı"}
-                                        </span>
-                                        <span className={`stock-detail-history-quantity ${movement.type === "IN" ? "in" : "out"}`}>
-                                            {movement.type === "IN" ? "+" : "-"}{movement.quantity} {item.unit}
-                                        </span>
-                                        <span className="stock-detail-history-note">{movement.note}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
                     </div>
 
                 </div>
 
                 <div className="stock-detail-footer">
-                    <button type="button" className="stock-detail-exit" onClick={() => onRequestExit(item)}>
+                    <button
+                        type="button"
+                        className="stock-detail-exit"
+                        onClick={() => onRequestExit(item)}
+                        disabled={Number(item.quantity) === 0}
+                    >
                         <span className="material-symbols-outlined">remove</span>
                         Stok Çıkışı
                     </button>

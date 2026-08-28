@@ -2,6 +2,15 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./AddProduct.css";
 import Layout from "../../components/Layout.jsx";
+import { KDS_STATIONS } from "../../data/mockKdsOrders.js";
+
+// Backend'deki KdsStation enum değerleri (KITCHEN, BAR, NARGILE) value olarak,
+// Türkçe etiketler sadece görünüm için kullanılır.
+const KDS_STATION_OPTIONS = [
+    { value: KDS_STATIONS.KITCHEN, label: "Mutfak" },
+    { value: KDS_STATIONS.BAR, label: "Bar" },
+    { value: KDS_STATIONS.NARGILE, label: "Nargile" }
+];
 
 function authHeaders() {
     return {
@@ -21,6 +30,7 @@ function AddProduct() {
     const [name, setName] = useState("");
     const [categoryId, setCategoryId] = useState("");
     const [stock, setStock] = useState("");
+    const [kdsStation, setKdsStation] = useState("");
     const [price, setPrice] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [imagePreviewFailed, setImagePreviewFailed] = useState(false);
@@ -77,6 +87,7 @@ function AddProduct() {
                 setPrice(String(product.price ?? ""));
                 setImageUrl(product.imageUrl ?? "");
                 setLoadedCategoryName(product.categoryName ?? "");
+                setKdsStation(product.kdsStation ?? "");
             })
             .catch((error) => {
                 console.error("Product load error:", error);
@@ -130,6 +141,10 @@ function AddProduct() {
             nextErrors.stock = "Geçerli bir stok miktarı girin.";
         }
 
+        if (!kdsStation) {
+            nextErrors.kdsStation = "Lütfen bir KDS istasyonu seçin.";
+        }
+
         setErrors(nextErrors);
 
         return Object.keys(nextErrors).length === 0;
@@ -153,7 +168,8 @@ function AddProduct() {
             stock: Number(stock),
             price: Number(price),
             categoryId: Number(categoryId),
-            imageUrl: trimmedImageUrl === "" ? null : trimmedImageUrl
+            imageUrl: trimmedImageUrl === "" ? null : trimmedImageUrl,
+            kdsStation: kdsStation
         };
 
         try {
@@ -318,6 +334,28 @@ function AddProduct() {
                                         />
                                     </div>
                                     {errors.stock && <span className="field-error">{errors.stock}</span>}
+                                </div>
+
+                                <div className="form-field">
+                                    <label htmlFor="kds_station">
+                                        KDS İstasyonu <span className="required">*</span>
+                                    </label>
+                                    <div className="select-wrap">
+                                        <select
+                                            id="kds_station"
+                                            value={kdsStation}
+                                            onChange={(event) => setKdsStation(event.target.value)}
+                                        >
+                                            <option value="" disabled>Bir KDS istasyonu seçin</option>
+                                            {KDS_STATION_OPTIONS.map((option) => (
+                                                <option value={option.value} key={option.value}>
+                                                    {option.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <span className="material-symbols-outlined">expand_more</span>
+                                    </div>
+                                    {errors.kdsStation && <span className="field-error">{errors.kdsStation}</span>}
                                 </div>
 
                                 <div className="form-field form-field-full">

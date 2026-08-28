@@ -1,48 +1,82 @@
 import { useEffect, useState } from "react";
 import "./StockMovementModal.css";
 
-// mode: "IN" (Stok Girişi) | "OUT" (Stok Çıkışı)
-// items: tüm stok kalemleri (header'daki "+ Stok Girişi" ürün seçimi için)
-// initialItemId: satırdan tetiklendiyse önceden seçili/kilitli ürün
+// mode: "CREATE" (yeni stok kalemi) | "INCREASE" (+ buton) | "DECREASE" (- buton)
+// item: INCREASE/DECREASE için hedef stok kalemi (CREATE'de null)
 // onCancel: () => void
-// onSubmit: (stockItemId, amount, note) => Promise
-function StockMovementModal({ open, mode, items, initialItemId, onCancel, onSubmit }) {
+// onSubmit: (payload) => Promise
+//   CREATE     -> { productName, quantity, minimumQuantity }
+//   INCREASE/DECREASE -> { amount }
+function StockMovementModal({ open, mode, item, onCancel, onSubmit }) {
 
-    const [selectedItemId, setSelectedItemId] = useState(initialItemId ?? "");
+    const isCreate = mode === "CREATE";
+    const isIncrease = mode === "INCREASE";
+
+    const [productName, setProductName] = useState("");
+    const [initialQuantity, setInitialQuantity] = useState("");
+    const [minimumQuantity, setMinimumQuantity] = useState("");
+
     const [amount, setAmount] = useState("");
-    const [note, setNote] = useState("");
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         if (open) {
-            setSelectedItemId(initialItemId ?? "");
+            setProductName("");
+            setInitialQuantity("");
+            setMinimumQuantity("");
             setAmount("");
-            setNote("");
             setError(null);
         }
-    }, [open, initialItemId]);
+    }, [open, mode, item]);
 
     if (!open) {
         return null;
     }
 
-    const selectedItem = items.find((item) => item.id === Number(selectedItemId));
-    const isEntry = mode === "IN";
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (!selectedItemId) {
-            setError("Bir ürün seçmelisiniz.");
+        if (isCreate) {
+            if (!productName.trim()) {
+                setError("Ürün adı girmelisiniz.");
+                return;
+            }
+            const quantityValue = Number(initialQuantity);
+            const minimumValue = Number(minimumQuantity);
+            if (!(quantityValue >= 0)) {
+                setError("Başlangıç stok miktarı 0 veya daha büyük olmalı.");
+                return;
+            }
+            if (!(minimumValue >= 0)) {
+                setError("Minimum stok miktarı 0 veya daha büyük olmalı.");
+                return;
+            }
+
+            setIsSubmitting(true);
+            setError(null);
+            try {
+                await onSubmit({
+                    productName: productName.trim(),
+                    quantity: quantityValue,
+                    minimumQuantity: minimumValue
+                });
+            } catch (submitError) {
+                console.error("Stok kalemi oluşturulurken hata:", submitError);
+                setError(submitError.message || "Stok kalemi oluşturulamadı.");
+            } finally {
+                setIsSubmitting(false);
+            }
             return;
         }
+
         const numericAmount = Number(amount);
         if (!(numericAmount > 0)) {
             setError("Miktar 0'dan büyük olmalı.");
             return;
         }
-        if (!isEntry && selectedItem && numericAmount > selectedItem.currentStock) {
+        if (!isIncrease && item && numericAmount > Number(item.quantity)) {
             setError("Çıkış miktarı mevcut stoktan fazla olamaz.");
             return;
         }
@@ -50,21 +84,23 @@ function StockMovementModal({ open, mode, items, initialItemId, onCancel, onSubm
         setIsSubmitting(true);
         setError(null);
         try {
-            await onSubmit(Number(selectedItemId), numericAmount, note);
+            await onSubmit({ amount: numericAmount });
         } catch (submitError) {
-            console.error("Stok hareketi kaydedilirken hata:", submitError);
-            setError(submitError.message || "Stok hareketi kaydedilemedi.");
+            console.error("Stok miktarı güncellenirken hata:", submitError);
+            setError(submitError.message || "Stok miktarı güncellenemedi.");
         } finally {
             setIsSubmitting(false);
         }
     };
+
+    const title = isCreate ? "Yeni Stok Kalemi" : isIncrease ? "Stok Girişi" : "Stok Çıkışı";
 
     return (
         <div className="stock-modal-backdrop" onClick={onCancel}>
             <div className="stock-modal" onClick={(event) => event.stopPropagation()}>
 
                 <div className="stock-modal-header">
-                    <h3>{isEntry ? "Stok Girişi" : "Stok Çıkışı"}</h3>
+                    <h3>{title}</h3>
                     <button type="button" className="stock-modal-close" onClick={onCancel}>
                         <span className="material-symbols-outlined">close</span>
                     </button>
@@ -74,60 +110,83 @@ function StockMovementModal({ open, mode, items, initialItemId, onCancel, onSubm
 
                     <div className="stock-modal-body">
 
-                        <div className="stock-field">
-                            <label htmlFor="stock-product">Ürün</label>
-                            <select
-                                id="stock-product"
-                                value={selectedItemId}
-                                onChange={(event) => setSelectedItemId(event.target.value)}
-                                disabled={!!initialItemId}
-                            >
-                                <option value="" disabled>Ürün seçin</option>
-                                {items.map((item) => (
-                                    <option value={item.id} key={item.id}>
-                                        {item.productName} ({item.category})
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div className="stock-modal-grid">
-                            <div className="stock-field">
-                                <label>Mevcut Stok</label>
-                                <div className="stock-readonly-value">
-                                    {selectedItem ? `${selectedItem.currentStock} ${selectedItem.unit}` : "—"}
-                                </div>
-                            </div>
-
-                            <div className="stock-field">
-                                <label htmlFor="stock-amount">
-                                    {isEntry ? "Eklenecek Miktar" : "Çıkış Miktarı"}
-                                </label>
-                                <div className="stock-amount-input">
+                        {isCreate ? (
+                            <>
+                                <div className="stock-field">
+                                    <label htmlFor="stock-product-name">Ürün Adı</label>
                                     <input
-                                        id="stock-amount"
-                                        type="number"
-                                        min="0"
-                                        step="0.1"
-                                        value={amount}
-                                        onChange={(event) => setAmount(event.target.value)}
-                                        placeholder="0"
+                                        id="stock-product-name"
+                                        type="text"
+                                        value={productName}
+                                        onChange={(event) => setProductName(event.target.value)}
+                                        placeholder="Örn: Filtre Kahve"
+                                        autoFocus
                                     />
-                                    <span className="stock-unit-suffix">{selectedItem?.unit ?? ""}</span>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div className="stock-field">
-                            <label htmlFor="stock-note">{isEntry ? "Not" : "Çıkış Nedeni"}</label>
-                            <textarea
-                                id="stock-note"
-                                rows="3"
-                                placeholder={isEntry ? "Örn: Haftalık tedarikçi alımı" : "Örn: Mutfak kullanımı, fire..."}
-                                value={note}
-                                onChange={(event) => setNote(event.target.value)}
-                            />
-                        </div>
+                                <div className="stock-modal-grid">
+                                    <div className="stock-field">
+                                        <label htmlFor="stock-initial-quantity">Başlangıç Stok</label>
+                                        <input
+                                            id="stock-initial-quantity"
+                                            type="number"
+                                            min="0"
+                                            step="any"
+                                            value={initialQuantity}
+                                            onChange={(event) => setInitialQuantity(event.target.value)}
+                                            placeholder="0"
+                                        />
+                                    </div>
+
+                                    <div className="stock-field">
+                                        <label htmlFor="stock-minimum-quantity">Minimum Stok</label>
+                                        <input
+                                            id="stock-minimum-quantity"
+                                            type="number"
+                                            min="0"
+                                            step="any"
+                                            value={minimumQuantity}
+                                            onChange={(event) => setMinimumQuantity(event.target.value)}
+                                            placeholder="0"
+                                        />
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className="stock-field">
+                                    <label>Ürün</label>
+                                    <div className="stock-readonly-value">
+                                        {item?.productName ?? "—"}
+                                    </div>
+                                </div>
+
+                                <div className="stock-modal-grid">
+                                    <div className="stock-field">
+                                        <label>Mevcut Stok</label>
+                                        <div className="stock-readonly-value">
+                                            {item ? item.quantity : "—"}
+                                        </div>
+                                    </div>
+
+                                    <div className="stock-field">
+                                        <label htmlFor="stock-amount">
+                                            {isIncrease ? "Eklenecek Miktar" : "Çıkış Miktarı"}
+                                        </label>
+                                        <input
+                                            id="stock-amount"
+                                            type="number"
+                                            min="0"
+                                            step="any"
+                                            value={amount}
+                                            onChange={(event) => setAmount(event.target.value)}
+                                            placeholder="0"
+                                            autoFocus
+                                        />
+                                    </div>
+                                </div>
+                            </>
+                        )}
 
                         {error && <p className="stock-modal-error">{error}</p>}
 
@@ -139,10 +198,12 @@ function StockMovementModal({ open, mode, items, initialItemId, onCancel, onSubm
                         </button>
                         <button
                             type="submit"
-                            className={`stock-modal-submit ${isEntry ? "entry" : "exit"}`}
+                            className={`stock-modal-submit ${isIncrease || isCreate ? "entry" : "exit"}`}
                             disabled={isSubmitting}
                         >
-                            {isSubmitting ? "Kaydediliyor..." : isEntry ? "Stok Ekle" : "Stok Çıkar"}
+                            {isSubmitting
+                                ? "Kaydediliyor..."
+                                : isCreate ? "Oluştur" : isIncrease ? "Stok Ekle" : "Stok Çıkar"}
                         </button>
                     </div>
 

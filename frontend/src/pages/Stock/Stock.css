@@ -449,7 +449,7 @@
 
 .stock-table {
     width: 100%;
-    min-width: 860px;
+    min-width: 640px;
 
     border-collapse: collapse;
 }
@@ -507,11 +507,6 @@
 
 .stock-product-name {
     font-weight: 700;
-}
-
-.stock-category-cell,
-.stock-unit-cell {
-    color: #5f5e5e;
 }
 
 .stock-current {

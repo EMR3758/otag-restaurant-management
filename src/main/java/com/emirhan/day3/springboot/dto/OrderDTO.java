@@ -11,16 +11,18 @@ public class OrderDTO {
     private OrderStatus status;
     private Long total;
     private RestaurantTable table;
+    private String tableNumber;
 
 
     public OrderDTO() {
     }
-    public OrderDTO(Long id, LocalDateTime orderDate, OrderStatus status,Long total, RestaurantTable table) {
+    public OrderDTO(Long id, LocalDateTime orderDate, OrderStatus status,Long total, RestaurantTable table,String tableNumber) {
         this.id = id;
         this.orderDate = orderDate;
         this.status = status;
         this.total=total;
         this.table=table;
+        this.tableNumber = tableNumber;
     }
 
     public OrderStatus getStatus() {
@@ -61,5 +63,12 @@ public class OrderDTO {
 
     public void setTable(RestaurantTable table) {
         this.table = table;
+    }
+    public String getTableNumber() {
+        return tableNumber;
+    }
+
+    public void setTableNumber(String tableNumber) {
+        this.tableNumber = tableNumber;
     }
 }

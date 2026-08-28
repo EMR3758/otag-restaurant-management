@@ -1,8 +1,16 @@
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 
 function Sidebar({ open = false, onClose = () => {} }) {
+    const navigate = useNavigate();
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("role");
+
+        navigate("/login");
+    };
     return (
         <aside className={`sidebar ${open ? "open" : ""}`}>
 
@@ -273,7 +281,7 @@ function Sidebar({ open = false, onClose = () => {} }) {
             </nav>
 
 
-            <button className="logout-button">
+            <button className="logout-button" onClick={handleLogout}>
 
                 <span className="material-symbols-outlined">
                     logout

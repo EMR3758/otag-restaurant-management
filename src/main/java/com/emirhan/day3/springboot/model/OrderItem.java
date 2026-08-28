@@ -9,35 +9,49 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Bir siparişin içinde birçok OrderItem olabilir.
-    // Ama her OrderItem sadece bir Order'a aittir.
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
 
-    // Bir ürün birçok siparişte bulunabilir.
-    // Ama her OrderItem sadece bir Product'a aittir.
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
     private int quantity;
-
-    // Sipariş verildiği andaki fiyat
     private double unitPrice;
-
-    // Örneğin: "Soğansız", "Acısız", "Bol ketçap"
     private String note;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+    @Enumerated(EnumType.STRING)
+    private KdsStation station;
+
+    private boolean stockDeducted;
 
     public OrderItem() {
     }
 
-    public OrderItem(Order order, Product product, int quantity, double unitPrice, String note) {
+    public OrderItem(Order order, Product product, int quantity,
+                     double unitPrice, String note) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.note = note;
+        this.stockDeducted = false;
+    }
+
+    public OrderItem(Order order, Product product, int quantity,
+                     double unitPrice, String note,
+                     OrderStatus status, boolean stockDeducted) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.note = note;
+        this.status = status;
+        this.stockDeducted = stockDeducted;
     }
 
     public Long getId() {
@@ -86,5 +100,29 @@ public class OrderItem {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public boolean isStockDeducted() {
+        return stockDeducted;
+    }
+
+    public void setStockDeducted(boolean stockDeducted) {
+        this.stockDeducted = stockDeducted;
+    }
+
+    public KdsStation getStation() {
+        return station;
+    }
+
+    public void setStation(KdsStation station) {
+        this.station = station;
     }
 }

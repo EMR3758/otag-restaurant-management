@@ -1,0 +1,744 @@
+/* =========================================================
+   KDS ORTAK EKRAN (Mutfak / Bar / Nargile)
+========================================================= */
+
+.kds-page {
+    max-width: 1600px;
+
+    margin: 0 auto;
+    padding: 24px 32px;
+
+    background: #fbf9f5;
+    color: #1b1c1a;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+
+    font-family: "Hanken Grotesk", "Segoe UI", system-ui, sans-serif;
+}
+
+
+/* =========================================================
+   SAYFA BAŞLIĞI
+========================================================= */
+
+.kds-page-header h1 {
+    margin: 0 0 4px;
+
+    color: #9e3d00;
+
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.kds-page-header p {
+    margin: 0;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+    line-height: 20px;
+}
+
+
+/* =========================================================
+   ÖZET KARTLARI
+========================================================= */
+
+.kds-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+.kds-summary-card {
+    position: relative;
+    overflow: hidden;
+
+    padding: 14px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+}
+
+.kds-summary-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: #c8c6c5;
+}
+
+.kds-summary-preparing::before {
+    background: #f59e0b;
+}
+
+.kds-summary-ready::before {
+    background: #10b981;
+}
+
+.kds-summary-danger::before {
+    background: #ba1a1a;
+}
+
+.kds-summary-danger {
+    border-color: rgba(186, 26, 26, 0.3);
+}
+
+.kds-summary-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.kds-summary-danger .kds-summary-top {
+    color: #ba1a1a;
+}
+
+.kds-summary-top .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.kds-summary-value {
+    color: #1b1c1a;
+
+    font-size: 26px;
+    line-height: 32px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+.kds-summary-danger .kds-summary-value {
+    color: #ba1a1a;
+}
+
+
+/* =========================================================
+   FİLTRELER
+========================================================= */
+
+.kds-filters {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+.kds-filter-chip {
+    padding: 6px 14px;
+
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: 999px;
+
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.kds-filter-chip:hover {
+    border-color: #e0c0b2;
+}
+
+.kds-filter-chip.active {
+    background: #e4e2de;
+
+    color: #1b1c1a;
+    font-weight: 700;
+
+    border-color: #e0c0b2;
+}
+
+
+/* =========================================================
+   BOŞ DURUM
+========================================================= */
+
+.kds-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 40px 24px;
+
+    background: #ffffff;
+
+    border: 1px dashed #e0c0b2;
+    border-radius: 8px;
+
+    color: #5f5e5e;
+
+    text-align: center;
+}
+
+.kds-empty-state .material-symbols-outlined {
+    font-size: 32px;
+
+    color: #cac6bf;
+}
+
+.kds-empty-state p {
+    margin: 0;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   BİLET GRID
+========================================================= */
+
+.kds-ticket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+
+    gap: 14px;
+
+    align-items: start;
+}
+
+.kds-ticket {
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border: 1px solid #e0c0b2;
+    border-radius: 8px;
+
+    box-shadow: 0 4px 20px rgba(27, 28, 26, 0.04);
+
+    cursor: pointer;
+
+    transition: box-shadow 0.2s ease;
+}
+
+.kds-ticket:hover {
+    box-shadow: 0 8px 28px rgba(27, 28, 26, 0.09);
+}
+
+.kds-ticket-preparing {
+    border-color: #9e3d00;
+    border-width: 2px;
+}
+
+.kds-ticket-delayed {
+    border-color: #ba1a1a;
+    border-width: 2px;
+
+    box-shadow: 0 4px 24px rgba(186, 26, 26, 0.1);
+}
+
+.kds-ticket-cancelled {
+    opacity: 0.6;
+
+    border-style: dashed;
+}
+
+
+.kds-ticket-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 10px 12px;
+
+    background: #f5f3ef;
+
+    border-bottom: 1px solid #e0c0b2;
+
+    border-radius: 7px 7px 0 0;
+}
+
+.kds-ticket-header > div:first-child {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.kds-ticket-order {
+    color: #1b1c1a;
+
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 700;
+}
+
+.kds-ticket-table {
+    color: #5f5e5e;
+
+    font-size: 12px;
+}
+
+.kds-ticket-time {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    gap: 2px;
+}
+
+.kds-ticket-elapsed {
+    display: flex;
+    align-items: center;
+
+    gap: 4px;
+
+    color: #5f5e5e;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.kds-ticket-elapsed .material-symbols-outlined {
+    font-size: 14px;
+}
+
+.kds-ticket-elapsed.danger {
+    color: #ba1a1a;
+}
+
+.kds-ticket-clock {
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10px;
+}
+
+
+.kds-ticket-body {
+    padding: 10px 12px;
+
+    flex: 1;
+}
+
+.kds-ticket-items {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.kds-ticket-items li {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding-bottom: 8px;
+
+    border-bottom: 1px solid #efeeea;
+}
+
+.kds-ticket-items li:last-child {
+    padding-bottom: 0;
+
+    border-bottom: none;
+}
+
+.kds-item-qty {
+    min-width: 20px;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.kds-item-info {
+    flex: 1;
+}
+
+.kds-item-name {
+    margin: 0;
+
+    color: #1b1c1a;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.kds-item-mix {
+    margin: 2px 0 0;
+
+    color: #5f5e5e;
+
+    font-size: 12px;
+}
+
+.kds-item-note {
+    margin: 4px 0 0;
+
+    padding: 6px 8px;
+
+    background: #f5f3ef;
+    border-radius: 4px;
+
+    color: #5f5e5e;
+
+    font-size: 12px;
+    font-style: italic;
+}
+
+
+.kds-ticket-footer {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 12px;
+
+    border-top: 1px solid #efeeea;
+}
+
+.kds-advance-button {
+    flex: 1;
+
+    padding: 9px 0;
+
+    background: #9e3d00;
+    border: none;
+    border-radius: 6px;
+
+    color: #ffffff;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.kds-advance-button:hover {
+    background: #7c2e00;
+}
+
+.kds-cancel-button {
+    padding: 9px 12px;
+
+    background: transparent;
+    border: 1px solid #e0c0b2;
+    border-radius: 6px;
+
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.kds-cancel-button:hover {
+    background: #ffdad6;
+
+    color: #ba1a1a;
+
+    border-color: #ba1a1a;
+}
+
+.kds-ticket-status-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    width: 100%;
+
+    color: #5f5e5e;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.kds-ticket-status-label.cancelled {
+    color: #ba1a1a;
+}
+
+.kds-ticket-status-label.done {
+    color: #16a34a;
+}
+
+.kds-ticket-status-label .material-symbols-outlined {
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   DETAY PANELİ (DRAWER)
+========================================================= */
+
+.kds-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(27, 28, 26, 0.4);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    z-index: 1200;
+}
+
+.kds-drawer {
+    width: 100%;
+    max-width: 460px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    box-shadow: 0 20px 60px rgba(27, 28, 26, 0.25);
+}
+
+.kds-drawer-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 20px 24px;
+
+    border-bottom: 1px solid #e0c0b2;
+}
+
+.kds-drawer-header h3 {
+    margin: 0 0 4px;
+
+    color: #1b1c1a;
+
+    font-size: 20px;
+}
+
+.kds-drawer-header p {
+    margin: 0;
+
+    color: #5f5e5e;
+
+    font-size: 14px;
+}
+
+.kds-drawer-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+
+    color: #5f5e5e;
+
+    cursor: pointer;
+}
+
+.kds-drawer-close:hover {
+    background: #f5f3ef;
+}
+
+.kds-drawer-status {
+    padding: 20px 24px 0;
+}
+
+.kds-status-badge {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 4px 10px;
+
+    border-radius: 2px;
+
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.kds-status-badge .dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+.kds-status-badge.status-waiting {
+    color: #5f5e5e;
+    background: #efeeea;
+}
+
+.kds-status-badge.status-preparing {
+    color: #9e3d00;
+    background: rgba(158, 61, 0, 0.1);
+}
+
+.kds-status-badge.status-ready {
+    color: #16a34a;
+    background: rgba(34, 197, 94, 0.12);
+}
+
+.kds-status-badge.status-delivered {
+    color: #16a34a;
+    background: rgba(34, 197, 94, 0.12);
+}
+
+.kds-status-badge.status-cancelled {
+    color: #ba1a1a;
+    background: rgba(186, 26, 26, 0.1);
+}
+
+.kds-drawer-items {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 20px 24px 24px;
+}
+
+.kds-drawer-item {
+    padding: 12px;
+
+    background: #f5f3ef;
+    border-radius: 6px;
+}
+
+.kds-drawer-item-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    color: #1b1c1a;
+}
+
+.kds-drawer-item-top span {
+    color: #5f5e5e;
+
+    font-size: 14px;
+}
+
+.kds-drawer-item-mix,
+.kds-drawer-item-note {
+    margin: 6px 0 0;
+
+    color: #5f5e5e;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .kds-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 900px) {
+
+    .kds-page {
+        padding: 20px;
+
+        gap: 16px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .kds-page {
+        padding: 14px;
+
+        gap: 14px;
+    }
+
+    .kds-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .kds-ticket-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
