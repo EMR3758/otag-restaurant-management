@@ -33,10 +33,16 @@
     color: var(--site-on-surface);
 }
 
-.contact-info-item p {
+.contact-info-item p,
+.contact-info-item a {
     margin: 0;
     font-size: 14px;
     color: var(--site-on-surface-variant);
+    transition: color 0.2s ease;
+}
+
+.contact-info-item a:hover {
+    color: var(--site-primary);
 }
 
 .contact-form {
@@ -85,6 +91,26 @@
 .contact-field textarea:focus {
     outline: none;
     border-color: var(--site-primary);
+}
+
+.contact-form-success {
+    margin: 0;
+    padding: 10px 14px;
+    border-radius: var(--site-radius-sm);
+    background: rgba(46, 125, 50, 0.08);
+    border: 1px solid rgba(46, 125, 50, 0.35);
+    color: #2e7d32;
+    font-size: 13px;
+}
+
+.contact-form-error {
+    margin: 0;
+    padding: 10px 14px;
+    border-radius: var(--site-radius-sm);
+    background: rgba(211, 47, 47, 0.08);
+    border: 1px solid rgba(211, 47, 47, 0.35);
+    color: #b3261e;
+    font-size: 13px;
 }
 
 .contact-submit-button {

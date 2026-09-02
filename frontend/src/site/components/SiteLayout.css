@@ -6,7 +6,9 @@
 
 @media (min-width: 900px) {
     .site-main {
-        padding-top: 80px;
+        /* Navbar'ın 10px'lik üst boşluğuyla eşleşsin (bkz. SiteNavbar.css
+           top:10px ve HeroSection.css desktop margin-top). */
+        padding-top: 90px;
         padding-bottom: 0;
     }
 }

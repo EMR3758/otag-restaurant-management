@@ -3,7 +3,6 @@ import "./HeroSection.css";
 
 function HeroSection({ imageUrl }) {
     const navigate = useNavigate();
-
     return (
         <section className="hero-section">
             <div className="hero-media">

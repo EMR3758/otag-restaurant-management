@@ -2,11 +2,10 @@ import { NavLink } from "react-router-dom";
 import "./BottomNav.css";
 
 const BOTTOM_LINKS = [
-    { to: "/", label: "Home", icon: "home", end: true },
-    { to: "/full-menu", label: "Menu", icon: "restaurant_menu" },
-    { to: "/reservation", label: "Reservation", icon: "calendar_month" },
-    { to: "/cart", label: "Cart", icon: "shopping_bag" },
-    { to: "/account", label: "Profile", icon: "person" }
+    { to: "/", label: "Ana Sayfa", icon: "home", end: true },
+    { to: "/full-menu", label: "Menü", icon: "restaurant_menu" },
+    { to: "/reservation", label: "Rezervasyon", icon: "calendar_month" },
+    { to: "/contact", label: "İletişim", icon: "call" }
 ];
 
 function BottomNav() {

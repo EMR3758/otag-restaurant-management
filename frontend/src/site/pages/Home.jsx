@@ -1,27 +1,24 @@
-  import SiteLayout from "../components/SiteLayout";
+import SiteLayout from "../components/SiteLayout";
 import HeroSection from "../components/HeroSection";
 import QuickActions from "../components/QuickActions";
 import FeaturedProducts from "../components/FeaturedProducts";
-import CategoryShowcase from "../components/CategoryShowcase";
-import CampaignBanner from "../components/CampaignBanner";
-import { featuredProducts, categories, campaign, heroImage } from "../data/siteData";
+import { heroImage } from "../data/siteData";
+import { useSitePopularProducts } from "../data/useSiteProducts";
 
 function Home() {
-    const handleAddToCart = (product) => {
-        // Sepet sistemi devreye alındığında burada global cart state'ine
-        // (ör. CartContext) ekleme yapılacak. Şimdilik hazır bir hook noktası.
-        console.log("Sepete eklendi:", product.name);
-    };
-
+    const { products, loading, error } = useSitePopularProducts(4);
     return (
         <SiteLayout>
             <HeroSection imageUrl={heroImage} />
             <QuickActions />
-            <FeaturedProducts products={featuredProducts} onAddToCart={handleAddToCart} />
-            <CategoryShowcase categories={categories} />
-            <CampaignBanner campaign={campaign} />
+            {loading ? (
+                <p className="site-status-message">Menü yükleniyor...</p>
+            ) : error ? (
+                <p className="site-status-message">{error}</p>
+            ) : (
+                <FeaturedProducts products={products} />
+            )}
         </SiteLayout>
     );
 }
-
 export default Home;

@@ -3,14 +3,19 @@ package com.emirhan.day3.springboot.service;
 import com.emirhan.day3.springboot.dto.ProductCreateDTO;
 import com.emirhan.day3.springboot.dto.ProductDTO;
 import com.emirhan.day3.springboot.model.Category;
+import com.emirhan.day3.springboot.model.OrderItem;
 import com.emirhan.day3.springboot.model.Product;
 import com.emirhan.day3.springboot.repository.CategoryRepository;
+import com.emirhan.day3.springboot.repository.OrderItemRepository;
 import com.emirhan.day3.springboot.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -58,10 +63,13 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final OrderItemRepository orderItemRepository;
 
-    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository,
+                           OrderItemRepository orderItemRepository) {
         this.productRepository = productRepository;
         this.categoryRepository= categoryRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     private ProductDTO convertToDTO(Product product){
@@ -112,6 +120,33 @@ public class ProductService {
          return productDTOList;
 
     }
+
+    // En çok satılan ürünler. Admin Dashboard'daki "Popüler Ürünler" kartıyla
+    // (Dashboard.jsx) BİREBİR AYNI mantık: tüm OrderItem'lar üzerinden (durumdan
+    // bağımsız), ürün başına toplam satılan adet hesaplanır, azalan sırayla
+    // sıralanır. Müşteri sitesindeki "Öne Çıkan Lezzetler" de bu metodu
+    // kullanır — böylece dashboard'da en çok satan ürünlerle ana sayfada
+    // gösterilen ürünler aynı gerçek satış verisinden gelir.
+    public List<ProductDTO> getPopularProducts(int limit) {
+        Map<Long, Long> soldQuantityByProductId = new LinkedHashMap<>();
+        for (OrderItem item : orderItemRepository.findAll()) {
+            if (item.getProduct() == null) {
+                continue;
+            }
+            soldQuantityByProductId.merge(item.getProduct().getId(), (long) item.getQuantity(), Long::sum);
+        }
+
+        return productRepository.findAll().stream()
+                .filter(product -> soldQuantityByProductId.getOrDefault(product.getId(), 0L) > 0)
+                .sorted((a, b) -> Long.compare(
+                        soldQuantityByProductId.getOrDefault(b.getId(), 0L),
+                        soldQuantityByProductId.getOrDefault(a.getId(), 0L)
+                ))
+                .limit(limit)
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
         public ProductDTO addProduct(ProductCreateDTO dto){
           Product product = convertToProduct(dto);
           Product savedProduct = productRepository.save(product);

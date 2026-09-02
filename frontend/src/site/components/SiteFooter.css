@@ -9,7 +9,10 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 40px;
-    padding: 56px 0 32px;
+    /* Marka başlığının footer'ın üst kenarına yapışık görünmemesi için
+       üstte belirgin bir padding; alt bilgi (copyright) ayrı bir bölüm
+       olduğu için burada sadece grid içeriğinin kendi alt boşluğu var. */
+    padding: 64px 0 40px;
 }
 
 .site-footer-brand .site-logo {
@@ -43,9 +46,11 @@
     color: var(--site-on-surface);
 }
 
-.site-footer-col a {
+.site-footer-col a,
+.site-footer-text {
     color: var(--site-on-surface-variant);
     font-size: 14px;
+    line-height: 20px;
     transition: color 0.2s ease;
 }
 

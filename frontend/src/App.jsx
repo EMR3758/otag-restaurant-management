@@ -6,8 +6,6 @@ import FullMenu from "./site/pages/FullMenu";
 import Reservation from "./site/pages/Reservation";
 import About from "./site/pages/About";
 import Contact from "./site/pages/Contact";
-import Cart from "./site/pages/Cart";
-import Account from "./site/pages/Account";
 
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
@@ -67,16 +65,6 @@ function App() {
                     <Route
                         path="/contact"
                         element={<Contact />}
-                    />
-
-                    <Route
-                        path="/cart"
-                        element={<Cart />}
-                    />
-
-                    <Route
-                        path="/account"
-                        element={<Account />}
                     />
 
                     {/* =========================================

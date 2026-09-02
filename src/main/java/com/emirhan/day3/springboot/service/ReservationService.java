@@ -56,6 +56,9 @@ public class ReservationService {
 
     // Create/Update ortak validasyonu. tableId zaten çözülmüş RestaurantTable
     // ile birlikte çağrılır; guestCount ve tarih/saat burada kontrol edilir.
+    // table null olabilir: müşteri sitesindeki genel rezervasyon formu masa
+    // seçtirmiyor (bkz. create()) — bu durumda kapasite kontrolü atlanır,
+    // masa ataması personel tarafından daha sonra (admin panelden) yapılır.
     private void validateCore(String customerName, String customerPhone,
                                LocalDate reservationDate, LocalTime reservationTime,
                                int guestCount, RestaurantTable table) {
@@ -75,7 +78,7 @@ public class ReservationService {
         if (guestCount <= 0) {
             throw new ReservationValidationException("Kişi sayısı 0'dan büyük olmalı");
         }
-        if (guestCount > table.getCapacity()) {
+        if (table != null && guestCount > table.getCapacity()) {
             throw new ReservationValidationException(
                     "Kişi sayısı (" + guestCount + ") seçilen masanın kapasitesini (" + table.getCapacity() + ") aşıyor"
             );
@@ -124,13 +127,23 @@ public class ReservationService {
     }
 
     public ReservationResponseDTO create(ReservationCreateDTO dto) {
-        RestaurantTable table = restaurantTableRepository.findById(dto.getTableId())
-                .orElseThrow(() -> new ReservationNotFoundException("Masa bulunamadı"));
+        // tableId opsiyonel: müşteri sitesindeki genel rezervasyon formu bir
+        // masa seçtirmiyor (bkz. site/pages/Reservation.jsx), personel daha
+        // sonra admin panelden uygun masayı atar. Admin'in kendi rezervasyon
+        // ekranı (ReservationModal.jsx) her zaman bir tableId gönderir, o akış
+        // bu davranışla değişmez.
+        RestaurantTable table = null;
+        if (dto.getTableId() != null) {
+            table = restaurantTableRepository.findById(dto.getTableId())
+                    .orElseThrow(() -> new ReservationNotFoundException("Masa bulunamadı"));
+        }
 
         validateCore(dto.getCustomerName(), dto.getCustomerPhone(), dto.getReservationDate(),
                 dto.getReservationTime(), dto.getGuestCount(), table);
 
-        checkConflict(table.getId(), dto.getReservationDate(), dto.getReservationTime(), null);
+        if (table != null) {
+            checkConflict(table.getId(), dto.getReservationDate(), dto.getReservationTime(), null);
+        }
 
         Reservation reservation = new Reservation();
         reservation.setCustomerName(dto.getCustomerName());

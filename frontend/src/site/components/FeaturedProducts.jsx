@@ -2,13 +2,16 @@ import { useNavigate } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./FeaturedProducts.css";
 
-function FeaturedProducts({ products, onAddToCart }) {
+function FeaturedProducts({ products }) {
     const navigate = useNavigate();
 
     return (
         <section className="featured-products site-container">
             <div className="featured-products-header">
-                <h2>Öne Çıkan Lezzetler</h2>
+                <div className="featured-products-heading">
+                    <h2>Öne Çıkan Lezzetler</h2>
+                    <p>Otağ Cafe'nin sevilen lezzetlerinden seçmeler.</p>
+                </div>
                 <button
                     type="button"
                     className="featured-products-see-all featured-products-see-all-desktop"
@@ -21,7 +24,7 @@ function FeaturedProducts({ products, onAddToCart }) {
 
             <div className="featured-products-grid">
                 {products.map((product) => (
-                    <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
+                    <ProductCard key={product.id} product={product} />
                 ))}
             </div>
 

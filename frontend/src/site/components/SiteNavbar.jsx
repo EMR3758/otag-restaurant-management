@@ -1,19 +1,23 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import SiteSearch from "./SiteSearch";
 import "./SiteNavbar.css";
 
 const NAV_LINKS = [
-    { to: "/", label: "Home", end: true },
-    { to: "/full-menu", label: "Menu" },
-    { to: "/reservation", label: "Reservation" },
-    { to: "/about", label: "About" },
-    { to: "/contact", label: "Contact" }
+    { to: "/", label: "Ana Sayfa", end: true },
+    { to: "/full-menu", label: "Menü" },
+    { to: "/reservation", label: "Rezervasyon" },
+    { to: "/about", label: "Hakkımızda" },
+    { to: "/contact", label: "İletişim" }
 ];
 
 function SiteNavbar() {
     const navigate = useNavigate();
-
+    const { pathname } = useLocation();
+    const [searchOpen, setSearchOpen] = useState(false);
+    const isHome = pathname === "/";
     return (
-        <header className="site-navbar">
+        <header className={`site-navbar${isHome ? " site-navbar-overlay" : ""}`}>
             <div className="site-navbar-inner site-container">
                 <NavLink to="/" className="site-logo">
                     Otağ Cafe
@@ -38,30 +42,11 @@ function SiteNavbar() {
                     <button
                         type="button"
                         className="site-icon-button"
-                        aria-label="Ara"
-                        onClick={() => navigate("/full-menu")}
+                        aria-label="Ürün ara"
+                        onClick={() => setSearchOpen(true)}
                     >
                         <span className="material-symbols-outlined">search</span>
                     </button>
-
-                    <button
-                        type="button"
-                        className="site-icon-button"
-                        aria-label="Sepet"
-                        onClick={() => navigate("/cart")}
-                    >
-                        <span className="material-symbols-outlined">shopping_cart</span>
-                    </button>
-
-                    <button
-                        type="button"
-                        className="site-icon-button"
-                        aria-label="Profil"
-                        onClick={() => navigate("/account")}
-                    >
-                        <span className="material-symbols-outlined">person</span>
-                    </button>
-
                     <button
                         type="button"
                         className="site-cta-button"
@@ -71,6 +56,8 @@ function SiteNavbar() {
                     </button>
                 </div>
             </div>
+
+            {searchOpen && <SiteSearch onClose={() => setSearchOpen(false)} />}
         </header>
     );
 }

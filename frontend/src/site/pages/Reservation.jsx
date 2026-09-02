@@ -12,18 +12,49 @@ const INITIAL_FORM = {
     note: ""
 };
 
+const RESERVATIONS_ENDPOINT = "http://localhost:8080/reservations";
+
 function Reservation() {
     const [form, setForm] = useState(INITIAL_FORM);
     const [submitted, setSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState(null);
 
     const handleChange = (field) => (event) => {
         setForm((prev) => ({ ...prev, [field]: event.target.value }));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Rezervasyon API'si eklendiğinde burada backend'e POST atılacak.
-        setSubmitted(true);
+        setSubmitError(null);
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch(RESERVATIONS_ENDPOINT, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    customerName: form.name.trim(),
+                    customerPhone: form.phone.trim(),
+                    reservationDate: form.date,
+                    reservationTime: form.time,
+                    guestCount: Number(form.guests),
+                    note: form.note.trim() || null
+                })
+            });
+
+            if (!response.ok) {
+                const errorBody = await response.json().catch(() => null);
+                throw new Error(errorBody?.message || "Rezervasyon oluşturulamadı. Lütfen tekrar deneyin.");
+            }
+
+            setSubmitted(true);
+        } catch (error) {
+            console.error("Rezervasyon gönderilirken hata:", error);
+            setSubmitError(error.message || "Rezervasyon oluşturulamadı. Lütfen tekrar deneyin.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -131,8 +162,10 @@ function Reservation() {
                                 />
                             </div>
 
-                            <button type="submit" className="reservation-submit-button">
-                                Rezervasyonu Gönder
+                            {submitError && <p className="reservation-error">{submitError}</p>}
+
+                            <button type="submit" className="reservation-submit-button" disabled={isSubmitting}>
+                                {isSubmitting ? "Gönderiliyor..." : "Rezervasyonu Gönder"}
                             </button>
                         </form>
                     )}

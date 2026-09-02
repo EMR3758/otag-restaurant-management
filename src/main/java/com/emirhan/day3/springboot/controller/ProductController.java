@@ -20,6 +20,14 @@ public class ProductController {
         return  productService.getAllProducts();
     }
 
+    // Müşteri sitesindeki "Öne Çıkan Lezzetler" için: admin Dashboard'daki
+    // "Popüler Ürünler" ile aynı gerçek satış verisine (OrderItem toplamları)
+    // dayalı, en çok satılan ürünler. bkz. ProductService.getPopularProducts.
+    @GetMapping("/products/popular")
+    public List<ProductDTO> getPopularProducts(@RequestParam(defaultValue = "4") int limit) {
+        return productService.getPopularProducts(limit);
+    }
+
     @PostMapping("/products")
     public ProductDTO addProduct(@RequestBody ProductCreateDTO dto){
         return productService.addProduct(dto);

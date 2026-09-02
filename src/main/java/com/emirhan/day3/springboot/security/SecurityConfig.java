@@ -82,6 +82,23 @@ public class SecurityConfig {
                         .requestMatchers("/tables/**").permitAll()
                         .requestMatchers("/orders/**").permitAll()
                         .requestMatchers("/products/**").permitAll()
+
+                        // Müşteri (site) rezervasyon formu giriş yapmamış ziyaretçiler
+                        // tarafından da çağrılabilmeli. Rezervasyonların GET/PUT/PATCH/
+                        // DELETE'i (listeleme, düzenleme, silme) admin paneline özgü
+                        // olduğundan bilinçli olarak authenticated bırakıldı; sadece
+                        // POST (yeni kayıt) public.
+                        // (Not: "en çok satılan/öne çıkan ürünler" GET /products/popular
+                        // için ayrı bir kural gerekmiyor, zaten /products/** yukarıda
+                        // permitAll.)
+                        .requestMatchers(HttpMethod.POST, "/reservations").permitAll()
+
+                        // Müşteri (site) iletişim formu da aynı şekilde: sadece yeni
+                        // mesaj oluşturma (POST) public. Admin'in bildirim listeleme/
+                        // okuma/silme uçları (/notifications/**) burada değişmiyor,
+                        // anyRequest().authenticated() ile JWT korumalı kalmaya devam
+                        // ediyor.
+                        .requestMatchers(HttpMethod.POST, "/contact-messages").permitAll()
                         // Yukarıdakiler dışındaki bütün endpointler
                         // authentication (JWT) gerektirir.
                         .anyRequest().authenticated()

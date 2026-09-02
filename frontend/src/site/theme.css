@@ -85,8 +85,25 @@
 .otag-site .site-container {
     width: 100%;
     max-width: var(--site-max-width);
-    margin: 0 auto;
-    padding: 0 var(--site-gutter);
+    /* Sadece yatay ortalama ve gutter içindir. "margin: 0 auto" ve
+       "padding: 0 var(--site-gutter)" shorthand'ları dikey margin/padding'i
+       de 0'a sabitleyip, bu class'ı aynı elementte taşıyan section'ların
+       (ör. .quick-actions, .featured-products) kendi margin-top/bottom'unu
+       VE .site-footer-grid / .site-footer-bottom / .site-navbar-inner /
+       .site-page-header gibi elemanların kendi dikey padding'ini
+       specificity çakışmasıyla eziyordu (footer üst kenara, copyright alt
+       çizgiye, navbar içeriği üst-alt kenara yapışık görünüyordu). */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--site-gutter);
+    padding-right: var(--site-gutter);
+}
+
+.otag-site .site-status-message {
+    padding: 48px var(--site-gutter);
+    text-align: center;
+    font-size: 15px;
+    color: var(--site-on-surface-variant);
 }
 
 @media (max-width: 640px) {

@@ -136,6 +136,9 @@ function getNotificationIcon(type) {
         case "STOCK":
             return "warning";
 
+        case "CONTACT":
+            return "mail";
+
         case "TABLE":
             return "table_restaurant";
 
@@ -156,6 +159,9 @@ function getNotificationVariant(type) {
 
         case "STOCK":
             return "error";
+
+        case "CONTACT":
+            return "primary";
 
         default:
             return "muted";

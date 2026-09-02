@@ -1,15 +1,19 @@
 .hero-section {
     position: relative;
     width: 100%;
-    max-width: var(--site-max-width);
-    margin: var(--site-gutter) auto;
+    /* .site-main navbar boşluğu bırakmak için üstten padding veriyor (bkz.
+       SiteLayout.css); hero'yu bunun üstüne çekip fotoğrafın viewport'un en
+       tepesinden, sabit navbar'ın ARKASINDAN başlamasını sağlıyoruz. Navbar
+       kendisi position:fixed + yüksek z-index olduğu için hep üstte kalır. */
+    margin-top: -72px;
 
-    min-height: 70vh;
+    min-height: 82vh;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
+    padding-bottom: 56px;
 
-    border-radius: var(--site-radius-lg);
+    border-radius: 0;
     overflow: hidden;
 }
 
@@ -25,14 +29,16 @@
     object-fit: cover;
 }
 
+/* Sadece panelin oturduğu alt bölgeyi hafifçe koyulaştırır; neon tabela ve
+   fotoğrafın üst/orta kısmı tamamen açık ve canlı kalır. */
 .hero-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(
         to top,
-        rgba(252, 249, 245, 0.95) 0%,
-        rgba(252, 249, 245, 0.45) 45%,
-        rgba(252, 249, 245, 0.1) 100%
+        rgba(12, 8, 5, 0.55) 0%,
+        rgba(12, 8, 5, 0.22) 32%,
+        rgba(12, 8, 5, 0) 62%
     );
 }
 
@@ -41,35 +47,37 @@
     z-index: 1;
 
     width: calc(100% - 32px);
-    max-width: 720px;
+    max-width: 640px;
     margin: 0 16px;
 
     text-align: center;
-    padding: 32px 24px;
+    padding: 28px 24px;
     border-radius: var(--site-radius-lg);
 
-    background: rgba(252, 249, 245, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(229, 225, 218, 0.5);
+    background: rgba(20, 14, 10, 0.42);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: var(--site-shadow-lift);
 }
 
 .hero-card h1 {
     margin: 0 0 16px;
-    font-size: 30px;
-    line-height: 38px;
+    font-size: 28px;
+    line-height: 36px;
     font-weight: 700;
     letter-spacing: -0.02em;
-    color: var(--site-on-surface);
+    color: #ffffff;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
 }
 
 .hero-card p {
-    margin: 0 auto 28px;
-    max-width: 540px;
+    margin: 0 auto 24px;
+    max-width: 520px;
     font-size: 15px;
     line-height: 24px;
-    color: var(--site-on-surface-variant);
+    color: rgba(255, 255, 255, 0.88);
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
 }
 
 .hero-actions {
@@ -104,12 +112,12 @@
 
 .hero-button-secondary {
     background: transparent;
-    color: var(--site-on-surface);
-    border: 1px solid var(--site-outline);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.55);
 }
 
 .hero-button-secondary:hover {
-    background: var(--site-surface-container);
+    background: rgba(255, 255, 255, 0.12);
 }
 
 @media (min-width: 640px) {
@@ -126,20 +134,25 @@
 
 @media (min-width: 900px) {
     .hero-section {
-        min-height: 88vh;
+        /* .site-main'in yeni padding-top'uyla (90px) eşleşir; hero'yu
+           navbar'ın (artık 10px yukarıda başlayan) ARKASINDAN, viewport'un
+           en tepesinden başlatmaya devam eder. */
+        margin-top: -90px;
+        min-height: 90vh;
+        padding-bottom: 72px;
     }
 
     .hero-card {
-        padding: 56px 64px;
+        padding: 40px 56px;
     }
 
     .hero-card h1 {
-        font-size: 48px;
-        line-height: 56px;
+        font-size: 44px;
+        line-height: 52px;
     }
 
     .hero-card p {
-        font-size: 18px;
-        line-height: 28px;
+        font-size: 17px;
+        line-height: 27px;
     }
 }

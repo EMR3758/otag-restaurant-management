@@ -1,4 +1,5 @@
 .quick-actions {
+    margin-top: var(--site-section-gap);
     margin-bottom: var(--site-section-gap);
 }
 
